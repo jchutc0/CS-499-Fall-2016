@@ -1,12 +1,29 @@
 <!DOCTYPE html>
+<title>AudioPhile CS499</title>
+<script type="text/javascript"></script>
 <html>
-    <head>
+<head>
 
-    </head>
+</head>
 
-    <body>
-        <h1>This is our project so far!</h1>
-        <h2>Great work huh?</h2>
-    </body>
+<body>
+    <h1>This is our project so far!</h1>
+    <h2>Great work huh?</h2>
+    <script>
+        function hasGetUserMedia() {
+            return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+        }
+
+        if (hasGetUserMedia()) {
+            alert('It is part of your browser!');
+        }
+        else {
+            alert('The hasGetUserMedia does not work in this browser...');
+        }
+    </script>
+
+    
+
+</body>
 
 </html>
