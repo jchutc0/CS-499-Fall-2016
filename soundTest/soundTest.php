@@ -72,17 +72,17 @@ var oscillator2;
 var gainNode2;
 
 /*
-   var canvas;
-   var canvasContext;
+var canvas;
+var canvasContext;
 
-   window.onLoad=function(){ init();};
+window.onLoad=function(){ init();};
 
-   function init()
-   {
-   canvas = document.getElementById("outputTestCanvas");
-   canvasContext = canvas.getContext("2d");
-   }
- */
+function init()
+{
+	canvas = document.getElementById("outputTestCanvas");
+	canvasContext = canvas.getContext("2d");
+}
+*/
 var drawVisual;
 var visualSetting = 0; //0 = off, 1 = wave, 2 = freq
 var userVisualSetting = 1;
@@ -96,7 +96,7 @@ function visualize()
 	WIDTH = 300;
 	HEIGHT = 150;
 
-
+	
 	if(visualSetting == 1)
 	{
 		//Waveform
@@ -174,14 +174,14 @@ function visualize()
 			for(var i = 0; i < bufferLength; i++)
 			{
 				barHeight = dataArray[i];
-
+				
 				canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
 				canvasContext.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
 
 				x += barWidth + 1;
 			}
 		};
-
+		
 		draw();
 	}
 	else if(visualSetting == 0)
@@ -389,5 +389,3 @@ function playSound() {
 
 </body>
 </html>
-
-
