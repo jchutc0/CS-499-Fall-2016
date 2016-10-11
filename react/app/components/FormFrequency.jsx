@@ -1,40 +1,35 @@
 var React = require('react');
 
 var FormFrequency = React.createClass({
-  onButtonClick: function(e) {
-    e.preventDefault();
-
-    var name = this.refs.name.value;
-    this.setState({
-      name: name});
-    this.refs.name.value = '';
-
-    // alert(name);
-  },
-
-  getDefaultProps: function() {
-    return {
-      name: 'React'
-    };
-  },
 
   getInitialState: function() {
     return {
-      name: this.props.name
+      play: 0
     };
   },
 
+  toggleUserFrequency: function(e) {
+    e.preventDefault();
+    var frequency1 = this.refs.frequency1.value;
+    var frequency2 = this.refs.frequency2.value;
+    if(frequency1 != '') {
+      console.log('Frequency1 is: ' + frequency1);
+    }
+    if (frequency2 != '') {
+      console.log('Frequency2 is: ' + frequency2);
+    }
+  },
+
   render: function() {
-    var name = this.state.name;
     return (
       <div>
         <fieldset>
         <legend>Sound Info</legend>
         <label htmlFor='frequency1' >Frequency 1:</label>
-        <input type='number' name='frequency1' id='frequency1' maxLength="5" />
+        <input type='number' ref='frequency1' name='frequency1' id='frequency1' maxLength="5" />
         <label htmlFor='frequency2' >Frequency 2:</label>
-        <input type='number' name='frequency2' id='frequency2' maxLength="5" />
-        <button id='toggleSound' onclick='toggleUserFrequency()'>Play Frequency</button><br/>
+        <input type='number' ref='frequency2' name='frequency2' id='frequency2' maxLength="5" />
+        <button className='button' id='toggleSound' onClick={this.toggleUserFrequency}>Play Frequency</button><br/>
         <br/>
         </fieldset>
       </div>
