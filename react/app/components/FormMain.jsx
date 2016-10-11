@@ -1,77 +1,51 @@
 var React = require('react');
-var {Link, IndexLink} = require('react-router');
 
 var FormNav = require('FormNav');
+var FormNumberPad = require('FormNumberPad');
+var FormFrequency = require('FormFrequency');
 
-// var FormMain = React.createClass({
-//   getDefaultProps: function() {
-//     return {
-//       name: 'React'
-//     };
-//   },
-//
-//   getInitialState: function() {
-//     return {
-//       displayedForm: 0
-//     };
-//   },
-//
-//   getDisplayForm: function() {
-//     var displayedForm = this.state.displayedForm;
-//     switch(displayedForm) {
-//       case 1:
-//       return (
-//         <div>
-//           <FormNumberPad/>
-//         </div>
-//       );
-//       break;
-//       default:
-//     };
-//     return (
-//       <div>
-//         <FormFrequency/>
-//       </div>
-//     );
-//   },
-//
-//   setForm: function(newState) {
-//     alert("got here!")
-//     // this.setState({
-//     //   displayedForm: newState
-//     // });
-//   },
-//
-//   render: function() {
-//     var name = this.props.name;
-//     var formState = this.getDisplayForm();
-//     return (
-//       <div>
-//         <p>Rendered FormMain</p>
-//         <form>
-//           <select onChange={this.setForm(0)}>
-//             <option>One</option>
-//             <option>Two</option>
-//           </select>
-//         </form>
-//         <p>Name: {name}</p>
-//         <div>
-//           {formState}
-//         </div>
-//       </div>
-//     );
-//   }
-// });
+var FormMain = React.createClass({
+	propTypes: {
+		handlePlayTelephony: React.PropTypes.func.isRequired,
+		handleStopSound: React.PropTypes.func.isRequired
+	},
 
-var FormMain = (props) => {
-	return (
-    <div>
-      <FormNav/>
-      <div>
-        {props.children}
-      </div>
-    </div>
-	)
-};
+	getInitialState: function() {
+		return {
+			formDisplayed: 0
+		};
+	},
+
+	renderCurrentFrom: function() {
+		if(this.state.formDisplayed === 1) {
+			return(
+				<FormNumberPad playTelephony={this.props.handlePlayTelephony}
+					stopSound={this.props.handleStopSound}/>
+			);
+		}
+		return (
+			<FormFrequency/>
+		);
+	},
+
+	setCurrentForm: function(formNumber) {
+		if(this.state.formDisplayed != formNumber) {
+			this.setState ({
+				formDisplayed: formNumber
+			});
+		}
+	},
+
+	render: function() {
+		return (
+			<div>
+				<FormNav setForm={this.setCurrentForm}/>
+				<div>
+					{this.renderCurrentFrom()}
+				</div>
+			</div>
+		);
+	}
+});
 
 module.exports = FormMain;

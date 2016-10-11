@@ -28,14 +28,15 @@ var FormFrequency = React.createClass({
     var name = this.state.name;
     return (
       <div>
-        <p>
-          Rendered FormFrequency <br/>
-          Name: {name}
-        </p>
-        <form onSubmit={this.onButtonClick}>
-          <input type="text" ref="name"/>
-          <button>Set name</button>
-        </form>
+        <fieldset>
+        <legend>Sound Info</legend>
+        <label htmlFor='frequency1' >Frequency 1:</label>
+        <input type='number' name='frequency1' id='frequency1' maxLength="5" />
+        <label htmlFor='frequency2' >Frequency 2:</label>
+        <input type='number' name='frequency2' id='frequency2' maxLength="5" />
+        <button id='toggleSound' onclick='toggleUserFrequency()'>Play Frequency</button><br/>
+        <br/>
+        </fieldset>
       </div>
     );
   }

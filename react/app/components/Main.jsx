@@ -1,5 +1,4 @@
 var React = require('react');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
 
 var GraphWave = require('GraphWave');
 var GraphFrequency = require('GraphFrequency');
@@ -12,34 +11,53 @@ var FormNumberPad = require('FormNumberPad');
 
 
 var Main = React.createClass({
+
+  getInitialState: function() {
+    return {
+      userMessage: 'Default user message'
+    };
+  },
+
+  handlePlayTelephony: function(numPressed) {
+    this.setState( {
+      userMessage: 'Number pressed was: ' + numPressed
+    });
+  },
+
+  handleStopSound: function() {
+    this.setState( {
+      userMessage: 'No numbers pressed.'
+    });
+  },
+
   render: function() {
     return (
       <div>
-        <div>
-          <p>Rendered Main</p>
-        </div>
-        <div>
-          <div>
-            <GraphWave/>
-          </div>
-          <div>
-            <GraphFrequency/>
-          </div>
-          <div>
-            <Router history={hashHistory}>
-              <Route path="/" component={FormMain}>
-                <Route path="numpad" component={FormNumberPad} />
-                <IndexRoute component={FormFrequency} />
-              </Route>
-            </Router>
+        <p>Rendered Main</p>
+        <div className="row">
+          <div className="columns medium-10 small-centered">
+            <div className="columns small-6">
+              <div>
+                <GraphWave/>
+              </div>
+              <div>
+                <GraphFrequency/>
+              </div>
+            </div>
+            <div className="columns small-6">
+              <FormMain handlePlayTelephony={this.handlePlayTelephony}
+                handleStopSound={this.handleStopSound}/>
+            </div>
           </div>
         </div>
-        <div>
-          <NotesToUser/>
+        <div className="row">
+          <div className="columns small-12">
+            <NotesToUser message={this.state.userMessage}/>
+          </div>
         </div>
       </div>
-    );
-  }
-});
+      );
+    }
+  });
 
 module.exports = Main;
