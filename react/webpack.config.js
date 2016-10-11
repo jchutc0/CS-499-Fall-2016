@@ -22,13 +22,14 @@ module.exports = {
 	resolve: {
 		root: __dirname,
 		alias: {
-			Main: 'app/components/Main.jsx',
-			GraphWave: 'app/components/GraphWave.jsx',
-			GraphFrequency: 'app/components/GraphFrequency.jsx',
-			FormMain: 'app/components/FormMain.jsx',
-			NotesToUser: 'app/components/NotesToUser.jsx',
-			FormFrequency: 'app/components/FormFrequency.jsx',
-			FormNumberPad: 'app/components/FormNumberPad.jsx',
+			Main: 						'app/components/Main.jsx',
+			GraphWave: 				'app/components/GraphWave.jsx',
+			GraphFrequency: 	'app/components/GraphFrequency.jsx',
+			FormMain: 				'app/components/FormMain.jsx',
+			NotesToUser: 			'app/components/NotesToUser.jsx',
+			FormFrequency: 		'app/components/FormFrequency.jsx',
+			FormNumberPad: 		'app/components/FormNumberPad.jsx',
+			FormNav:			 		'app/components/FormNav.jsx',
 			applicationStyles: 'app/styles/app.scss'
 		},
 		extensions: ['', '.js', '.jsx']

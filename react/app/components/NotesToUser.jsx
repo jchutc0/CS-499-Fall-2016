@@ -4,6 +4,7 @@ var NotesToUser = (props) => {
   return (
     <div>
       <p>Rendered NotesToUser</p>
+      <p>Name: {name}</p>
     </div>
   );
 };

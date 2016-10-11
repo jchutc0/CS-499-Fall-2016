@@ -1,11 +1,13 @@
 var React = require('react');
 
-var GraphFrequency = (props) => {
-  return (
-    <div>
-      <p>Rendered GraphFrequency</p>
-    </div>
-  );
-};
+var GraphFrequency = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <p>Rendered GraphFrequency</p>
+      </div>
+    );
+  }
+});
 
 module.exports = GraphFrequency;
