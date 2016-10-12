@@ -20,13 +20,18 @@ var Main = React.createClass({
 
   handlePlayTelephony: function(numPressed) {
     this.setState( {
-      userMessage: 'Number pressed was: ' + numPressed
+      userMessage: 'Last number pressed was: ' + numPressed
     });
   },
 
   handleStopSound: function() {
     this.setState( {
-      userMessage: 'No numbers pressed.'
+      // userMessage: this.state.userMessage + {"\n"} + 'No numbers pressed.'
+      userMessage:
+      <div>
+        {this.state.userMessage} <br/>
+        No numbers pressed
+      </div>
     });
   },
 
