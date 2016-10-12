@@ -30,6 +30,10 @@ module.exports = {
 			FormFrequency: 		'app/components/FormFrequency.jsx',
 			FormNumberPad: 		'app/components/FormNumberPad.jsx',
 			FormNav:			 		'app/components/FormNav.jsx',
+			AudioIn:					'app/components/AudioIn.jsx',
+			AudioOut:					'app/components/AudioOut.jsx',
+			GraphMain:				'app/components/GraphMain.jsx',
+			KeyboardIn:				'app/components/KeyboardIn.jsx',
 			applicationStyles: 'app/styles/app.scss'
 		},
 		extensions: ['', '.js', '.jsx']
