@@ -48,7 +48,7 @@ var Main = React.createClass({
       <div>
         <p>Rendered Main</p>
         <div className="row">
-          <div className="columns medium-10 small-centered">
+          <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 medium-6">
               <div>
                 <GraphWave/>
