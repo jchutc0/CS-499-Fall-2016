@@ -8,11 +8,11 @@ The major required components of the class are:
 2 - Creating the class as a variable with React.createClass()
 	- React.createClass() requires a parameter that is an object
 		- one element of that object MUST be a function that maps to render
-		- the render function is what is called when the class is initialized
+		- the render function is called when the class is initialized
 		- the return value of render is sent to the browser to display
 		- as a convention, I've been putting render as the last element in the
       class so I know where to find it
-3 - Exporting the class be setting module.exports
+3 - Exporting the class by setting module.exports
 
 A very basic React class could be:
 
