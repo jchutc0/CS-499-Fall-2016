@@ -7,7 +7,8 @@ var FormFrequency = require('FormFrequency');
 var FormMain = React.createClass({
 	propTypes: {
 		handlePlayTelephony: React.PropTypes.func.isRequired,
-		handleStopSound: React.PropTypes.func.isRequired
+		handleStopSound: React.PropTypes.func.isRequired,
+		handlePlayFrequency: React.PropTypes.func.isRequired
 	},
 
 	getInitialState: function() {
@@ -24,7 +25,7 @@ var FormMain = React.createClass({
 			);
 		}
 		return (
-			<FormFrequency/>
+			<FormFrequency playFrequency={this.props.handlePlayFrequency}/>
 		);
 	},
 

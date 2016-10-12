@@ -30,6 +30,14 @@ var Main = React.createClass({
     });
   },
 
+  handlePlayFrequency: function(frequencyObj) {
+    this.setState( {
+      userMessage: 'handlePlayFrequency -- ' +
+      'frequency1: ' + frequencyObj.frequency1 + '; ' +
+      'frequency2: ' + frequencyObj.frequency2
+    });
+  },
+
   render: function() {
     return (
       <div>
@@ -46,7 +54,8 @@ var Main = React.createClass({
             </div>
             <div className="columns small-6">
               <FormMain handlePlayTelephony={this.handlePlayTelephony}
-                handleStopSound={this.handleStopSound}/>
+                handleStopSound={this.handleStopSound}
+                handlePlayFrequency={this.handlePlayFrequency}/>
             </div>
           </div>
         </div>
