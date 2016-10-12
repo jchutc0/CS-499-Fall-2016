@@ -10,6 +10,7 @@ var AudioOut = require('AudioOut');
 var FormFrequency = require('FormFrequency');
 var FormNumberPad = require('FormNumberPad');
 
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var Main = React.createClass({
 
