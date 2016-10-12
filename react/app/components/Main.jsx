@@ -44,7 +44,7 @@ var Main = React.createClass({
         <p>Rendered Main</p>
         <div className="row">
           <div className="columns medium-10 small-centered">
-            <div className="columns small-6">
+            <div className="columns small-12 medium-6">
               <div>
                 <GraphWave/>
               </div>
@@ -52,7 +52,7 @@ var Main = React.createClass({
                 <GraphFrequency/>
               </div>
             </div>
-            <div className="columns small-6">
+            <div className="columns small-12 medium-6">
               <FormMain handlePlayTelephony={this.handlePlayTelephony}
                 handleStopSound={this.handleStopSound}
                 handlePlayFrequency={this.handlePlayFrequency}/>
