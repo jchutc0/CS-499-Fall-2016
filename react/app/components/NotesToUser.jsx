@@ -12,7 +12,7 @@ var NotesToUser = React.createClass({
     return (
       <div>
         <p>Rendered NotesToUser</p>
-        <p>{this.props.message}</p>
+        <div>{this.props.message}</div>
       </div>
     );
   }
