@@ -13,17 +13,11 @@ var FormFrequency = React.createClass({
 
   toggleUserFrequency: function(e) {
     e.preventDefault();
-    // var frequency1 = this.refs.frequency1.value;
-    // var frequency2 = this.refs.frequency2.value;
-    // if(frequency1 != '') {
-    //   console.log('Frequency1 is: ' + frequency1);
-    // }
-    // if (frequency2 != '') {
-    //   console.log('Frequency2 is: ' + frequency2);
-    // }
     var frequencyObject = {
       frequency1: this.refs.frequency1.value,
-      frequency2: this.refs.frequency2.value
+      gain1: 0.1,
+      frequency2: this.refs.frequency2.value,
+      gain2: 0.1
     };
     this.props.playFrequency(frequencyObject);
   },
