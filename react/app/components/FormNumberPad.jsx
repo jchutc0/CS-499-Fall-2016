@@ -7,6 +7,64 @@ var FormNumberPad = React.createClass({
     stopSound: React.PropTypes.func.isRequired
   },
 
+  componentWillMount: function() {
+    window.addEventListener('keydown', this.handleKeypress);
+    window.addEventListener('keyup', this.handleKeyRelease);
+  },
+
+  handleKeypress: function(key) {
+    switch (key.keyCode) {
+  case (49):
+      // console.log('1');
+      this.playTelephony(0);
+      break;
+  case (50):
+      // console.log('2');
+      this.playTelephony(1);
+      break;
+  case (51):
+      // console.log('3');
+      this.playTelephony(2);
+      break;
+  case (52):
+      // console.log('4');
+      this.playTelephony(3);
+      break;
+  case (53):
+      // console.log('5');
+      this.playTelephony(4);
+      break;
+  case (54):
+      // console.log('6');
+      this.playTelephony(5);
+      break;
+  case (55):
+      // console.log('7');
+      this.playTelephony(6);
+      break;
+  case (56):
+      // console.log('8');
+      this.playTelephony(7);
+      break;
+  case (57):
+      // console.log('9');
+      this.playTelephony(8);
+      break;
+  case (48):
+      // console.log('0');
+      this.playTelephony(10);
+      break;
+      // 49 - 57 1 - 9; 48 = 0
+
+    };
+  },
+
+  handleKeyRelease: function(key) {
+    if((key.keyCode > 47) && key.keyCode < 58) {
+      return this.stopSound();
+    }
+  },
+
   playTelephony: function(numPressed) {
     return this.props.playTelephony(numPressed);
   },
