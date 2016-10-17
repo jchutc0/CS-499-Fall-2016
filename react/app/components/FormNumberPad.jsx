@@ -12,6 +12,11 @@ var FormNumberPad = React.createClass({
     window.addEventListener('keyup', this.handleKeyRelease);
   },
 
+  componentWillUnmount: function() {
+    window.removeEventListener('keydown', this.handleKeypress);
+    window.removeEventListener('keyup', this.handleKeyRelease);
+  },
+
   handleKeypress: function(key) {
     switch (key.keyCode) {
   case (49):
