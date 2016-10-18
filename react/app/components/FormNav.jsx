@@ -6,8 +6,11 @@ var FormNav = React.createClass({
 		setForm: React.PropTypes.func.isRequired
 	},
 
-	setForm: function(formNumber) {
-		return this.props.setForm(formNumber);
+	handleDropdown: function() {
+		var selection = this.refs.selection.selectedIndex;
+
+		console.log('Got here. ' + selection);
+		return this.props.setForm(selection);
 	},
 
 	render: function() {
@@ -16,10 +19,13 @@ var FormNav = React.createClass({
 				<div className="top-bar-left">
 					<ul className="menu">
 						<li>
-							<a onClick={() => {this.setForm(0)}}>Frequency</a>
+							Choose One:
 						</li>
 						<li>
-							<a onClick={() => {this.setForm(1)}}>Number Pad</a>
+							<select onChange={() => {this.handleDropdown(1)}} ref='selection'>
+								<option>Frequency</option>
+								<option>Number Pad</option>
+							</select>
 						</li>
 					</ul>
 				</div>
