@@ -21,6 +21,23 @@ var AudioOut = React.createClass({
     var gain1 = context.createGain();
     var gain2 = context.createGain();
 
+    /*
+        from: http://noisehack.com/generate-noise-web-audio-api/
+    */
+    var bufferSize = 4096;
+    var whiteNoise = context.createScriptProcessor(bufferSize, 1, 1);
+
+    whiteNoise.onaudioprocess = function(e) {
+      var output = e.outputBuffer.getChannelData(0);
+      for(var i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+    }
+
+    /*
+        end noisehack code
+    */
+
     return {
       context: context,
       oscillator1: oscillator1,
@@ -28,12 +45,17 @@ var AudioOut = React.createClass({
       gain1: gain1,
       oscillator2: oscillator2,
       gain2: gain2,
-      isPlaying2: false
+      isPlaying2: false,
+      whiteNoise: whiteNoise
     };
   },
 
   componentWillReceiveProps: function(nextProps) {
     var context = this.state.context;
+    var whiteNoise = this.state.whiteNoise;
+
+    // turn off white noise generator
+    whiteNoise.disconnect();
 
     if(this.state.isPlaying1) {
       var oscillator1 = this.state.oscillator1;
@@ -117,6 +139,16 @@ var AudioOut = React.createClass({
 
   },
 
+  playWhiteNoise: function() {
+
+    var context = this.state.context;
+    var whiteNoise = this.state.whiteNoise;
+
+    whiteNoise.connect(context.destination);
+
+  },
+
+
   playTelephony: function(buttonID) {
     var frequency1;
     var frequency2;
@@ -180,6 +212,8 @@ var AudioOut = React.createClass({
   render: function() {
     if(this.props.frequencyObj.playTelephony !== undefined) {
       this.playTelephony(this.props.frequencyObj.playTelephony);
+    } else if (this.props.frequencyObj.frequency1 === '999') {
+      this.playWhiteNoise();
     } else {
       this.playSound(
         this.props.frequencyObj.frequency1,
