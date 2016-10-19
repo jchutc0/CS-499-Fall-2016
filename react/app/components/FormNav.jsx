@@ -23,8 +23,9 @@ var FormNav = React.createClass({
 						</li>
 						<li>
 							<select onChange={() => {this.handleDropdown(1)}} ref='selection'>
-								<option>Frequency</option>
+								<option>Frequency Generator</option>
 								<option>Number Pad</option>
+								<option>White Noise Generator</option>
 							</select>
 						</li>
 					</ul>

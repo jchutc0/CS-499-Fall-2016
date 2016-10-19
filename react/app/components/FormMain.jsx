@@ -3,6 +3,7 @@ var React = require('react');
 var FormNav = require('FormNav');
 var FormNumberPad = require('FormNumberPad');
 var FormFrequency = require('FormFrequency');
+var FormWhiteNoise = require('FormWhiteNoise');
 
 var FormMain = React.createClass({
 	propTypes: {
@@ -22,6 +23,10 @@ var FormMain = React.createClass({
 			return(
 				<FormNumberPad playTelephony={this.props.handlePlayTelephony}
 					stopSound={this.props.handleStopSound}/>
+			);
+		} else if(this.state.formDisplayed === 2) {
+			return(
+				<FormWhiteNoise playWhiteNoise={this.props.handlePlayFrequency}/>
 			);
 		}
 		return (

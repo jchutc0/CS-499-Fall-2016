@@ -48,7 +48,8 @@ var Main = React.createClass({
         frequency1: frequencyObj.frequency1,
         gain1: frequencyObj.gain1,
         frequency2: frequencyObj.frequency2,
-        gain2: frequencyObj.gain2
+        gain2: frequencyObj.gain2,
+        whiteNoise: frequencyObj.whiteNoise
       },
     });
   },

@@ -47,7 +47,19 @@ var FormFrequency = React.createClass({
     this.refs.gain2.value = '';
   },
 
-  renderPlayButton: function() {
+  renderPlayFrequencyButton: function() {
+    if(this.state.playing) {
+      return (
+        <button className='secondary button' id='stopSound' onClick={this.stopUserFrequency}>Stop Frequency</button>
+      );
+    } else {
+      return (
+        <button className='button' id='startSound' onClick={this.playUserFrequency}>Play Frequency</button>
+      );
+    }
+  },
+
+  renderPlayWhiteNoiseButton: function() {
     if(this.state.playing) {
       return (
         <button className='secondary button' id='stopSound' onClick={this.stopUserFrequency}>Stop Frequency</button>
@@ -90,7 +102,7 @@ var FormFrequency = React.createClass({
         </fieldset>
         <div className='row'>
           <div className='columns small-12 medium-6'>
-            {this.renderPlayButton()}
+            {this.renderPlayFrequencyButton()}
           </div>
           <div className='columns small-12 medium-6'>
             <button className='button' id='clearForm' onClick={this.clearForm}>Clear Form</button><br/>

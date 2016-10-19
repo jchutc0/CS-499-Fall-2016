@@ -21,22 +21,10 @@ var AudioOut = React.createClass({
     var gain1 = context.createGain();
     var gain2 = context.createGain();
 
-    /*
-        from: http://noisehack.com/generate-noise-web-audio-api/
-    */
     var bufferSize = 4096;
     var whiteNoise = context.createScriptProcessor(bufferSize, 1, 1);
 
-    whiteNoise.onaudioprocess = function(e) {
-      var output = e.outputBuffer.getChannelData(0);
-      for(var i = 0; i < bufferSize; i++) {
-        output[i] = Math.random() * 2 - 1;
-      }
-    }
-
-    /*
-        end noisehack code
-    */
+    whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
     return {
       context: context,
@@ -46,7 +34,8 @@ var AudioOut = React.createClass({
       oscillator2: oscillator2,
       gain2: gain2,
       isPlaying2: false,
-      whiteNoise: whiteNoise
+      whiteNoise: whiteNoise,
+      whiteNoiseBufferSize: bufferSize
     };
   },
 
@@ -109,6 +98,21 @@ var AudioOut = React.createClass({
         isPlaying2: isPlaying2
       });
     }
+
+    // if whiteNoise is defined, generate whiteNoiseBuffer
+    if (nextProps.frequencyObj.whiteNoise !== undefined) {
+      console.log('Will set next whiteNoise');
+      var bufferSize = this.state.whiteNoiseBufferSize;
+      var whiteNoiseBuffer = new Array(bufferSize);
+
+      for(var i = 0; i < bufferSize; i++) {
+        whiteNoiseBuffer[i] = Math.random() * 2 * nextProps.frequencyObj.whiteNoise - 1;
+      }
+      for(var i = 0; i < 5; i++) {
+        console.log('whiteNoiseBuffer[' + i + '] = ' + whiteNoiseBuffer[i]);
+      }
+    }
+
   },
 
   playSound: function(frequency1, gain1, frequency2, gain2) {
@@ -139,13 +143,23 @@ var AudioOut = React.createClass({
 
   },
 
+  generateWhiteNoise: function(e) {
+    var bufferSize = this.state.whiteNoiseBufferSize;
+
+    var output = e.outputBuffer.getChannelData(0);
+    for(var i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 * this.props.frequencyObj.whiteNoise - 1;
+    }
+  },
+
   playWhiteNoise: function() {
 
     var context = this.state.context;
     var whiteNoise = this.state.whiteNoise;
 
-    whiteNoise.connect(context.destination);
-
+    if(this.props.frequencyObj.whiteNoise > 0) {
+      whiteNoise.connect(context.destination);
+    }
   },
 
 
@@ -212,7 +226,7 @@ var AudioOut = React.createClass({
   render: function() {
     if(this.props.frequencyObj.playTelephony !== undefined) {
       this.playTelephony(this.props.frequencyObj.playTelephony);
-    } else if (this.props.frequencyObj.frequency1 === '999') {
+    } else if (this.props.frequencyObj.whiteNoise !== undefined) {
       this.playWhiteNoise();
     } else {
       this.playSound(

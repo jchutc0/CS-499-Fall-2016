@@ -34,6 +34,7 @@ module.exports = {
 			AudioOut:					'app/components/AudioOut.jsx',
 			GraphMain:				'app/components/GraphMain.jsx',
 			KeyboardIn:				'app/components/KeyboardIn.jsx',
+			FormWhiteNoise:		'app/components/FormWhiteNoise.jsx',
 			applicationStyles: 'app/styles/app.scss'
 		},
 		extensions: ['', '.js', '.jsx']
