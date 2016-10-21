@@ -1,1 +1,3 @@
-Boilerplate React app
+CS 499 Project
+Audio Frequency Analyzer
+Group 5
