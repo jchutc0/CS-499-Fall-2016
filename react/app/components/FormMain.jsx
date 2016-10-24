@@ -1,6 +1,15 @@
+/*****
+FormMain class
+
+The purpose of this class is to take input from the user about one or two
+tones and send those tones back to the calling class through the required
+playFrequency function
+*****/
+
 // Require the React framework
 var React = require('react');
 
+// Require other components for sub-forms
 var FormNav = require('FormNav');
 var FormNumberPad = require('FormNumberPad');
 var FormFrequency = require('FormFrequency');
@@ -55,4 +64,5 @@ var FormMain = React.createClass({
 	}
 });
 
+// export FormMain for other modules to use
 module.exports = FormMain;
