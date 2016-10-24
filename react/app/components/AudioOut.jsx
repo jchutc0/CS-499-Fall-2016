@@ -1,6 +1,21 @@
+/*****
+AudioOut Class
+
+The purpose of this class is to generate and play audio data for the user
+*****/
+
+// Require the React framework
 var React = require('react');
 
+// create the AudioOut class
 var AudioOut = React.createClass({
+
+  /*
+  getDefaultProps function
+
+  Sets default component properties in the event the calling function did not
+  pass them -- a frequency or a gain value of 0 will not play a tone
+  */
   getDefaultProps: function() {
     return {
       frequencyObj: {
@@ -8,22 +23,37 @@ var AudioOut = React.createClass({
         gain1: 0,
         frequency2: 0,
         gain2: 0
-      }
-    };
-  },
+      }   // return object
+    };    // return value
+  },      // getDefaultProps function
 
+  /*
+  getInitialState function
+
+  Creates the audio context used to generate sound and the oscillator and gain
+  values used to play a desired frequency. Also sets up an audio buffer for
+  white noise generation and sets up the whiteNoise script processor to
+  generate white noise. Also sets up isPlaying so the component knows if a
+  sound is playing.
+  */
   getInitialState: function() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
+    // set up the AudioContext
     var context = new AudioContext();
+    // set up the frequency oscillators
     var oscillator1 = context.createOscillator();
     var oscillator2 = context.createOscillator();
+    // set up the gain values
     var gain1 = context.createGain();
     var gain2 = context.createGain();
 
+    // white noise sound buffer
     var bufferSize = 4096;
+    // white noise script processor
     var whiteNoise = context.createScriptProcessor(bufferSize, 1, 1);
 
+    // set the script processor to another function in this class
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
     return {
@@ -36,9 +66,21 @@ var AudioOut = React.createClass({
       isPlaying2: false,
       whiteNoise: whiteNoise,
       whiteNoiseBufferSize: bufferSize
-    };
-  },
+    };      // return value
+  },        // getInitialState function
 
+
+  /*
+  componentWillReceiveProps function
+
+  This function is called before the component starts rendering to make it
+  possible to set state variables based on the upcoming components without
+  causing an infinite loop. Sets the next isPlaying1 and isPlaying2 state
+  variables and the whiteNoise buffer
+
+  Takes: nextProps - an object of props that are coming into the component
+  for its upcoming render
+  */
   componentWillReceiveProps: function(nextProps) {
     var context = this.state.context;
     var whiteNoise = this.state.whiteNoise;
@@ -46,6 +88,8 @@ var AudioOut = React.createClass({
     // turn off white noise generator
     whiteNoise.disconnect();
 
+    // if frequency1 is playing, stop it and create a new oscillator to play
+    //   it again if needed
     if(this.state.isPlaying1) {
       var oscillator1 = this.state.oscillator1;
       oscillator1.stop();
@@ -53,18 +97,23 @@ var AudioOut = React.createClass({
       oscillator1 = context.createOscillator();
       this.setState({
         oscillator1: oscillator1
-      });
-    }
+      });   // setState object
+    }       // if frequency 1 is playing
 
+    // if frequency2 is playing, stop it and create a new oscillator to play
+    //   it again if needed
     if(this.state.isPlaying2) {
       var oscillator2 = this.state.oscillator2;
       oscillator2.stop();
       oscillator2 = context.createOscillator();
       this.setState({
         oscillator2: oscillator2,
-      });
-    }
+      });   // setState object
+    }       // if frequency 2 is playing
 
+    // setting isPlaying1 and isPlaying2 based on upcoming props
+    // step 1: both are true if playTelephony is passed because of the
+    //   dual tone from telephony
     var isPlaying2;
     var isPlaying1 = isPlaying2 = (
       (nextProps.frequencyObj.playTelephony !== undefined) &&
@@ -72,6 +121,8 @@ var AudioOut = React.createClass({
       (nextProps.frequencyObj.playTelephony <= 11)
     )
 
+    // check frequency1 for a valid (>0) frequency and gain value and set
+    //   isPlaying1 true if so (or if it was before)
     isPlaying1 = (
       (
         (nextProps.frequencyObj.frequency1 !== undefined) &&
@@ -80,12 +131,15 @@ var AudioOut = React.createClass({
       ) || isPlaying1
     );
 
+    // if isPlaying1 isn't already at the correct value, set it
     if(isPlaying1 !== this.state.isPlaying1) {
       this.setState({
         isPlaying1: isPlaying1
       });
-    }
+    }       // if we need to update isPlaying1
 
+    // check frequency2 for a valid (>0) frequency and gain value and set
+    //   isPlaying2 true if so (or if it was before)
     var isPlaying2 = (
       (
         (nextProps.frequencyObj.frequency2 !== undefined) &&
@@ -93,11 +147,13 @@ var AudioOut = React.createClass({
         (nextProps.frequencyObj.gain2 > 0)
       ) || isPlaying2
     );
+
+    // if isPlaying2 isn't already at the correct value, set it
     if(isPlaying2 !== this.state.isPlaying2) {
       this.setState({
         isPlaying2: isPlaying2
       });
-    }
+    }       // if we need to update isPlaying2
 
     // if whiteNoise is defined, generate whiteNoiseBuffer
     if (nextProps.frequencyObj.whiteNoise !== undefined) {
@@ -107,14 +163,22 @@ var AudioOut = React.createClass({
 
       for(var i = 0; i < bufferSize; i++) {
         whiteNoiseBuffer[i] = Math.random() * 2 * nextProps.frequencyObj.whiteNoise - 1;
-      }
+      }     // randomizing for loop
       for(var i = 0; i < 5; i++) {
         console.log('whiteNoiseBuffer[' + i + '] = ' + whiteNoiseBuffer[i]);
-      }
-    }
+      }     // logging for loop
+    }       // if white noise is requested
+  },        // componentWillReceiveProps function
 
-  },
+  /*
+  playSound function
 
+  This function takes two frequency and gain values and plays a tone based on
+  those values
+
+  Takes: frequency1, gain1 -- frequency and gain values for tone 1;
+  frequency2, gain2 -- frequency and gain values for tone 2
+  */
   playSound: function(frequency1, gain1, frequency2, gain2) {
 
     var context = this.state.context;
@@ -123,6 +187,8 @@ var AudioOut = React.createClass({
     var gainNode1 = this.state.gain1;
     var gainNode2 = this.state.gain2;
 
+    // check valid (>0) values for frequency and gain for tone 1
+    // if they are valid, generate tone 1
     if((frequency1 > 0) && (gain1 > 0)) {
         		gainNode1.gain.value = gain1;
         		oscillator1.frequency.value = frequency1;
@@ -130,8 +196,10 @@ var AudioOut = React.createClass({
         		gainNode1.connect(context.destination);
 
         		oscillator1.start(0);
-    }
+    }     // if valid frequency, gain
 
+    // check valid (>0) values for frequency and gain for tone 2
+    // if they are valid, generate tone 2
     if((frequency2 > 0) && (gain2 > 0)) {
       gainNode2.gain.value = gain2;
       oscillator2.frequency.value = frequency2;
@@ -139,19 +207,34 @@ var AudioOut = React.createClass({
       gainNode2.connect(context.destination);
 
       oscillator2.start(0);
-    }
+    }     // if valid frequency, gain
 
-  },
+  },      // playSound function
 
+  /*
+  generateWhiteNoise function
+
+  event handler that uses random values to generate randomized values to send
+  to the sound generator to simulate white noise
+
+  Takes: e event from onaudioprocess from whiteNoise state value
+  */
   generateWhiteNoise: function(e) {
     var bufferSize = this.state.whiteNoiseBufferSize;
 
     var output = e.outputBuffer.getChannelData(0);
+
+    // loop through the sound buffer and plug in random numbers
     for(var i = 0; i < bufferSize; i++) {
       output[i] = Math.random() * 2 * this.props.frequencyObj.whiteNoise - 1;
-    }
-  },
+    }       // randomize for loop
+  },        // generateWhiteNoise function
 
+  /*
+  playWhiteNoise function
+
+  Enables the white noise generator
+  */
   playWhiteNoise: function() {
 
     var context = this.state.context;
@@ -159,75 +242,88 @@ var AudioOut = React.createClass({
 
     if(this.props.frequencyObj.whiteNoise > 0) {
       whiteNoise.connect(context.destination);
-    }
-  },
+    }     // if whiteNoise > 0
+  },      // playWhiteNoise function
 
+  /*
+  playTelephony function
 
+  Takes a buttonID and sends a corresponding DTMF frequency pair to the
+  playSound function
+  */
   playTelephony: function(buttonID) {
-    var frequency1;
-    var frequency2;
+    // gain value to send
+    var gain = 0.1;
 
     switch(buttonID)
     {
       case 0:
       //1 Key
-      this.playSound(1209, 0.1, 697, 0.1);
+      this.playSound(1209, gain, 697, gain);
       break;
       case 1:
       //2 Key
-      this.playSound(1336, 0.1, 697, 0.1);
+      this.playSound(1336, gain, 697, gain);
       break;
       case 2:
       //3 Key
-      this.playSound(1477, 0.1, 697, 0.1);
+      this.playSound(1477, gain, 697, gain);
       break;
       case 3:
       //4 Key
-      this.playSound(1209, 0.1, 770, 0.1);
+      this.playSound(1209, gain, 770, gain);
       break;
       case 4:
       //5 Key
-      this.playSound(1336, 0.1, 770, 0.1);
+      this.playSound(1336, gain, 770, gain);
       break;
       case 5:
       //6 Key
-      this.playSound(1477, 0.1, 770, 0.1);
+      this.playSound(1477, gain, 770, gain);
       break;
       case 6:
       //7 Key
-      this.playSound(1209, 0.1, 852, 0.1);
+      this.playSound(1209, gain, 852, gain);
       break;
       case 7:
       //8 Key
-      this.playSound(1336, 0.1, 852, 0.1);
+      this.playSound(1336, gain, 852, gain);
       break;
       case 8:
       //9 Key
-      this.playSound(1477, 0.1, 852, 0.1);
+      this.playSound(1477, gain, 852, gain);
       break;
       case 9:
       //* Key
-      this.playSound(1209, 0.1, 941, 0.1);
+      this.playSound(1209, gain, 941, gain);
       break;
       case 10:
       //0 Key
-      this.playSound(1336, 0.1, 941, 0.1);
+      this.playSound(1336, gain, 941, gain);
       break;
       case 11:
       //# Key
-      this.playSound(1477, 0.1, 941, 0.1);
+      this.playSound(1477, gain, 941, gain);
       break;
       default:
       this.playSound(0, 0, 0, 0);
       break;
-    }
-  },
+    }     // switch statement
+  },      // playTelephony function
 
+  /*
+  render function
+
+  renders the component to the web browser -- the default entry point
+  */
   render: function() {
+    // if playTelephony was passed in through the frequencyObj, playTelephony
     if(this.props.frequencyObj.playTelephony !== undefined) {
       this.playTelephony(this.props.frequencyObj.playTelephony);
+    // if whiteNoise was passed in through the frequencyObj, playWhiteNoise
     } else if (this.props.frequencyObj.whiteNoise !== undefined) {
       this.playWhiteNoise();
+    // otherwise, playSound with the frequencyObj values
     } else {
       this.playSound(
         this.props.frequencyObj.frequency1,
@@ -237,12 +333,15 @@ var AudioOut = React.createClass({
       );
     }
 
+
+    // visual aspect of the component
     return(
       <div>
         Rendered AudioOut
       </div>
-    );
-  }
-});
+    );  // return value
+  }     // render function
+});     // AudioOut class
 
+// export AudioOut for other modules to use
 module.exports = AudioOut;

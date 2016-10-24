@@ -1,3 +1,4 @@
+// Require the React framework
 var React = require('react');
 
 var FormWhiteNoise = React.createClass({
