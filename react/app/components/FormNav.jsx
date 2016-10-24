@@ -1,6 +1,6 @@
 // Require the React framework
 var React = require('react');
-var {Link, IndexLink} = require('react-router');
+// var {Link, IndexLink} = require('react-router');
 
 var FormNav = React.createClass({
 	propTypes: {
@@ -10,7 +10,6 @@ var FormNav = React.createClass({
 	handleDropdown: function() {
 		var selection = this.refs.selection.selectedIndex;
 
-		console.log('Got here. ' + selection);
 		return this.props.setForm(selection);
 	},
 

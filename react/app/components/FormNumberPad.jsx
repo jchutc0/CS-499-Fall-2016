@@ -4,8 +4,7 @@ var React = require('react');
 var FormNumberPad = React.createClass({
 
   propTypes: {
-    playTelephony: React.PropTypes.func.isRequired,
-    stopSound: React.PropTypes.func.isRequired
+    playFrequency: React.PropTypes.func.isRequired
   },
 
   componentWillMount: function() {
@@ -65,18 +64,91 @@ var FormNumberPad = React.createClass({
     };
   },
 
+  /*
+  playTelephony function
+
+  Takes a buttonID and sends a corresponding DTMF frequency pair to the
+  playSound function
+  */
+  playTelephony: function(buttonID) {
+    // gain value to send
+    var gain = 0.1;
+
+    switch(buttonID)
+    {
+      case 0:
+      //1 Key
+      this.playSound(1209, gain, 697, gain);
+      break;
+      case 1:
+      //2 Key
+      this.playSound(1336, gain, 697, gain);
+      break;
+      case 2:
+      //3 Key
+      this.playSound(1477, gain, 697, gain);
+      break;
+      case 3:
+      //4 Key
+      this.playSound(1209, gain, 770, gain);
+      break;
+      case 4:
+      //5 Key
+      this.playSound(1336, gain, 770, gain);
+      break;
+      case 5:
+      //6 Key
+      this.playSound(1477, gain, 770, gain);
+      break;
+      case 6:
+      //7 Key
+      this.playSound(1209, gain, 852, gain);
+      break;
+      case 7:
+      //8 Key
+      this.playSound(1336, gain, 852, gain);
+      break;
+      case 8:
+      //9 Key
+      this.playSound(1477, gain, 852, gain);
+      break;
+      case 9:
+      //* Key
+      this.playSound(1209, gain, 941, gain);
+      break;
+      case 10:
+      //0 Key
+      this.playSound(1336, gain, 941, gain);
+      break;
+      case 11:
+      //# Key
+      this.playSound(1477, gain, 941, gain);
+      break;
+      default:
+      this.playSound(0, 0, 0, 0);
+      break;
+    }     // switch statement
+  },      // playTelephony function
+
+  playSound: function(frequency1, gain1, frequency2, gain2) {
+    var frequencyObj = {
+      frequency1  : frequency1,
+      gain1       : gain1,
+      frequency2  : frequency2,
+      gain2       : gain2
+    };
+
+    return this.props.playFrequency(frequencyObj);
+  },
+
   handleKeyRelease: function(key) {
     if((key.keyCode > 47) && key.keyCode < 58) {
-      return this.stopSound();
+      return this.playSound(0, 0, 0, 0);
     }
   },
 
-  playTelephony: function(numPressed) {
-    return this.props.playTelephony(numPressed);
-  },
-
   stopSound: function() {
-    return this.props.stopSound();
+    return this.playSound(0, 0, 0, 0);
   },
 
   render: function() {

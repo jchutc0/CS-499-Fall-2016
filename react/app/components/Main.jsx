@@ -19,27 +19,6 @@ var Main = React.createClass({
     };
   },
 
-  handlePlayTelephony: function(numPressed) {
-
-    this.setState( {
-      userMessage: 'Last number pressed was: ' + numPressed,
-      audioOutObject: {
-        playTelephony: numPressed
-      }
-    });
-  },
-
-  handleStopSound: function() {
-    this.setState( {
-      userMessage:
-      <div>
-        {this.state.userMessage} <br/>
-        No numbers pressed
-      </div>,
-      audioOutObject: undefined
-    });
-  },
-
   handlePlayFrequency: function(frequencyObj) {
     this.setState( {
       userMessage: 'handlePlayFrequency -- ' +
@@ -58,7 +37,7 @@ var Main = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Rendered Main</p>
+        <p>Rendered Main hi</p>
         <div className="row">
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
@@ -70,9 +49,7 @@ var Main = React.createClass({
               </div>
             </div>
             <div className="columns small-12 large-6">
-              <FormMain handlePlayTelephony={this.handlePlayTelephony}
-                handleStopSound={this.handleStopSound}
-                handlePlayFrequency={this.handlePlayFrequency}/>
+              <FormMain handlePlayFrequency={this.handlePlayFrequency}/>
             </div>
           </div>
         </div>

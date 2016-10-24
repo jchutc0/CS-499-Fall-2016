@@ -17,8 +17,6 @@ var FormWhiteNoise = require('FormWhiteNoise');
 
 var FormMain = React.createClass({
 	propTypes: {
-		handlePlayTelephony: React.PropTypes.func.isRequired,
-		handleStopSound: React.PropTypes.func.isRequired,
 		handlePlayFrequency: React.PropTypes.func.isRequired
 	},
 
@@ -31,8 +29,7 @@ var FormMain = React.createClass({
 	renderCurrentFrom: function() {
 		if(this.state.formDisplayed === 1) {
 			return(
-				<FormNumberPad playTelephony={this.props.handlePlayTelephony}
-					stopSound={this.props.handleStopSound}/>
+				<FormNumberPad playFrequency={this.props.handlePlayFrequency}/>
 			);
 		} else if(this.state.formDisplayed === 2) {
 			return(
