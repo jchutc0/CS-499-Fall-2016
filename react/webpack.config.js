@@ -35,6 +35,7 @@ module.exports = {
 			GraphMain:				'app/components/GraphMain.jsx',
 			KeyboardIn:				'app/components/KeyboardIn.jsx',
 			FormWhiteNoise:		'app/components/FormWhiteNoise.jsx',
+			ErrorModal:				'app/components/ErrorModal.jsx',
 			applicationStyles: 'app/styles/app.scss'
 		},
 		extensions: ['', '.js', '.jsx']
