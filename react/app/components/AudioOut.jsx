@@ -162,7 +162,8 @@ var AudioOut = React.createClass({
       var whiteNoiseBuffer = new Array(bufferSize);
 
       for(var i = 0; i < bufferSize; i++) {
-        whiteNoiseBuffer[i] = Math.random() * 2 * nextProps.frequencyObj.whiteNoise - 1;
+        whiteNoiseBuffer[i] = Math.random() * 2 *
+        nextProps.frequencyObj.whiteNoise - 1;
       }     // randomizing for loop
       for(var i = 0; i < 5; i++) {
         console.log('whiteNoiseBuffer[' + i + '] = ' + whiteNoiseBuffer[i]);
