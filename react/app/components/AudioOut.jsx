@@ -10,6 +10,9 @@ var React = require('react');
 // create the AudioOut class
 var AudioOut = React.createClass({
 
+  // set up whiteNoiseBufferSize constant
+  whiteNoiseBufferSize: 4096,
+
   /*
   getDefaultProps function
 
@@ -48,10 +51,8 @@ var AudioOut = React.createClass({
     var gain1 = context.createGain();
     var gain2 = context.createGain();
 
-    // white noise sound buffer
-    var bufferSize = 4096;
     // white noise script processor
-    var whiteNoise = context.createScriptProcessor(bufferSize, 1, 1);
+    var whiteNoise = context.createScriptProcessor(this.whiteNoiseBufferSize, 1, 1);
 
     // set the script processor to another function in this class
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
@@ -64,8 +65,7 @@ var AudioOut = React.createClass({
       oscillator2: oscillator2,
       gain2: gain2,
       isPlaying2: false,
-      whiteNoise: whiteNoise,
-      whiteNoiseBufferSize: bufferSize
+      whiteNoise: whiteNoise
     };      // return value
   },        // getInitialState function
 
@@ -158,7 +158,7 @@ var AudioOut = React.createClass({
     // if whiteNoise is defined, generate whiteNoiseBuffer
     if (nextProps.frequencyObj.whiteNoise !== undefined) {
       console.log('Will set next whiteNoise');
-      var bufferSize = this.state.whiteNoiseBufferSize;
+      var bufferSize = this.whiteNoiseBufferSize;
       var whiteNoiseBuffer = new Array(bufferSize);
 
       for(var i = 0; i < bufferSize; i++) {
@@ -221,7 +221,7 @@ var AudioOut = React.createClass({
   Takes: e event from onaudioprocess from whiteNoise state value
   */
   generateWhiteNoise: function(e) {
-    var bufferSize = this.state.whiteNoiseBufferSize;
+    var bufferSize = this.whiteNoiseBufferSize;
 
     var output = e.outputBuffer.getChannelData(0);
 
