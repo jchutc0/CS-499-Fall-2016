@@ -43,6 +43,7 @@ var FormMain = React.createClass({
 
 	setCurrentForm: function(formNumber) {
 		if(this.state.formDisplayed != formNumber) {
+			this.props.handlePlayFrequency(0, 0, 0, 0);
 			this.setState ({
 				formDisplayed: formNumber
 			});

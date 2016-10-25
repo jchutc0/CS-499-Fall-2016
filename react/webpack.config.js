@@ -32,6 +32,8 @@ module.exports = {
 			FormNav:			 		'app/components/FormNav.jsx',
 			AudioIn:					'app/components/AudioIn.jsx',
 			AudioOut:					'app/components/AudioOut.jsx',
+			AudioOutTone:			'app/components/AudioOutTone.jsx',
+			AudioOutWhiteNoise:			'app/components/AudioOutWhiteNoise.jsx',
 			GraphMain:				'app/components/GraphMain.jsx',
 			KeyboardIn:				'app/components/KeyboardIn.jsx',
 			FormWhiteNoise:		'app/components/FormWhiteNoise.jsx',

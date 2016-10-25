@@ -1,38 +1,22 @@
 /*****
-AudioOut Class
+AudioOutWhiteNoise Class
 
-The purpose of this class is to generate and play audio data for the user
+The purpose of this class is
 *****/
 
 // Require the React framework
 var React = require('react');
 
-// Require AudioOutTone and AudioOutWhiteNoise classes
-var AudioOutTone = require('AudioOutTone');
-var AudioOutWhiteNoise = require('AudioOutWhiteNoise');
-
 // create the AudioOut class
-var AudioOut = React.createClass({
+var AudioOutWhiteNoise = React.createClass({
 
-  // // set up whiteNoiseBufferSize constant
-  // whiteNoiseBufferSize: 4096,
+  // set up whiteNoiseBufferSize constant
+  whiteNoiseBufferSize: 4096,
 
-  /*
-  getDefaultProps function
-
-  Sets default component properties in the event the calling function did not
-  pass them -- a frequency or a gain value of 0 will not play a tone
-  */
-  getDefaultProps: function() {
-    return {
-      frequencyObj: {
-        frequency1: 0,
-        gain1: 0,
-        frequency2: 0,
-        gain2: 0
-      }   // return object
-    };    // return value
-  },      // getDefaultProps function
+  propTypes: {
+    amplitude   : React.PropTypes.number.isRequired,
+    context     : React.PropTypes.object.isRequired
+  },
 
   /*
   getInitialState function
@@ -44,16 +28,9 @@ var AudioOut = React.createClass({
   sound is playing.
   */
   getInitialState: function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
     // set up the AudioContext
-    var context = new AudioContext();
-    // set up the frequency oscillators
-    var oscillator1 = context.createOscillator();
-    var oscillator2 = context.createOscillator();
-    // set up the gain values
-    var gain1 = context.createGain();
-    var gain2 = context.createGain();
+    var context = this.props.context;
+    var amplitude = this.props.amplitude;
 
     // white noise script processor
     var whiteNoise = context.createScriptProcessor(this.whiteNoiseBufferSize, 1, 1);
@@ -61,14 +38,13 @@ var AudioOut = React.createClass({
     // set the script processor to another function in this class
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
+    console.log('AudioOutWhiteNoise');
+
+    if(amplitude > 0) {
+      whiteNoise.connect(context.destination);
+    }     // if whiteNoise > 0
+
     return {
-      context: context,
-      oscillator1: oscillator1,
-      isPlaying1: false,
-      gain1: gain1,
-      oscillator2: oscillator2,
-      gain2: gain2,
-      isPlaying2: false,
       whiteNoise: whiteNoise
     };      // return value
   },        // getInitialState function
@@ -86,6 +62,24 @@ var AudioOut = React.createClass({
   for its upcoming render
   */
   // componentWillReceiveProps: function(nextProps) {
+  //   var context = this.props.context;
+  //   var amplidude = nextProps.amplidude;
+  //   var whiteNoise = this.state.whiteNoise;
+  //
+  //   console.log('whiteNoiseGenerator');
+  //
+  //   whiteNoise.disconnect();
+  //
+  //   if(amplitude > 0) {
+  //     whiteNoise.connect(context.destination);
+  //   }     // if whiteNoise > 0
+  // },
+
+  componentWillUnmount: function() {
+    this.state.whiteNoise.disconnect();
+  },
+
+
   //   var context = this.state.context;
   //   var whiteNoise = this.state.whiteNoise;
   //
@@ -231,24 +225,24 @@ var AudioOut = React.createClass({
 
     // loop through the sound buffer and plug in random numbers
     for(var i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 * this.props.frequencyObj.whiteNoise - 1;
+      output[i] = Math.random() * 2 * this.props.amplitude - 1;
     }       // randomize for loop
   },        // generateWhiteNoise function
 
   /*
   playWhiteNoise function
 
-  Enables the white noise generator
-  */
-  playWhiteNoise: function() {
-
-    var context = this.state.context;
-    var whiteNoise = this.state.whiteNoise;
-
-    if(this.props.frequencyObj.whiteNoise > 0) {
-      whiteNoise.connect(context.destination);
-    }     // if whiteNoise > 0
-  },      // playWhiteNoise function
+  // Enables the white noise generator
+  // */
+  // playWhiteNoise: function() {
+  //
+  //   var context = this.props.context;
+  //   var whiteNoise = this.state.whiteNoise;
+  //
+  //   if(this.props.frequencyObj.whiteNoise > 0) {
+  //     whiteNoise.connect(context.destination);
+  //   }     // if whiteNoise > 0
+  // },      // playWhiteNoise function
 
   /*
   render function
@@ -269,40 +263,14 @@ var AudioOut = React.createClass({
     //   );
     // }
 
-    function renderAudioOut(props, context) {
-      var toneGenerator = (
-        <div>
-          <AudioOutTone frequency = {Number(props.frequencyObj.frequency1)}
-            amplitude = {Number(props.frequencyObj.gain1)}
-            context = {context} />
-          <AudioOutTone frequency = {Number(props.frequencyObj.frequency2)}
-            amplitude = {Number(props.frequencyObj.gain2)}
-            context = {context} />
-        </div>
-      );
-      var whiteNoiseGenerator = (
-        <div>
-          <AudioOutWhiteNoise amplitude = {Number(props.frequencyObj.whiteNoise)}
-            context = {context}/>
-        </div>
-      );
-
-      if (props.frequencyObj.whiteNoise !== undefined) {
-        return whiteNoiseGenerator;
-      } else {
-        return toneGenerator;
-      }
-    }
-
     // visual aspect of the component
     return(
       <div>
-        Rendered AudioOut
-        {renderAudioOut(this.props, this.state.context)}
+        Rendered AudioOutWhiteNoise
       </div>
     );  // return value
   }     // render function
 });     // AudioOut class
 
 // export AudioOut for other modules to use
-module.exports = AudioOut;
+module.exports = AudioOutWhiteNoise;
