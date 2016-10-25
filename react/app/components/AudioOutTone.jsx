@@ -1,7 +1,7 @@
 /*****
 AudioOutTone Class
 
-The purpose of this class
+The purpose of this class is to act as a single tone generator
 *****/
 
 // Require the React framework
@@ -19,11 +19,8 @@ var AudioOutTone = React.createClass({
   /*
   getInitialState function
 
-  Creates the audio context used to generate sound and the oscillator and gain
-  values used to play a desired frequency. Also sets up an audio buffer for
-  white noise generation and sets up the whiteNoise script processor to
-  generate white noise. Also sets up isPlaying so the component knows if a
-  sound is playing.
+  Creates the oscillator and gain values used to play a desired frequency.
+  Also sets up isPlaying so the component knows if a sound is playing.
   */
   getInitialState: function() {
     // set up the frequency oscillators and gain values
@@ -31,6 +28,7 @@ var AudioOutTone = React.createClass({
     var oscillator  = context.createOscillator();
     var gain        = context.createGain();
 
+    // set those values in the state
     return {
       oscillator    : oscillator,
       gain          : gain,
@@ -43,7 +41,10 @@ var AudioOutTone = React.createClass({
 
   This function is called before the component starts rendering to make it
   possible to set state variables based on the upcoming components without
-  causing an infinite loop. Sets the next isPlaying state
+  causing an infinite loop.
+
+  Determines if a sound is to play, uses the oscillator and gain node to
+  play that sound, and sets the state
 
   Takes: nextProps - an object of props that are coming into the component
   for its upcoming render
@@ -74,7 +75,7 @@ var AudioOutTone = React.createClass({
         (nextProps.amplitude > 0)
     );
 
-    // if isPlaying isn't already at the correct value, set it
+    // if isPlaying isn't already at the correct value in the state, set it
     if(isPlaying !== this.state.isPlaying) {
       this.setState({
         isPlaying: isPlaying
@@ -91,6 +92,14 @@ var AudioOutTone = React.createClass({
     }       // if sound is to play
   },        // componentWillReceiveProps function
 
+
+  /*
+  componentWillUnmount function
+
+  This function is called as the component is no longer rendering
+
+  Stops the oscillator to turn off tone generation
+  */
   componentWillUnmount: function() {
     if(this.state.isPlaying) {
       this.state.oscillator.stop();
@@ -112,7 +121,7 @@ var AudioOutTone = React.createClass({
       </div>
     );  // return value
   }     // render function
-});     // AudioOut class
+});     // AudioOutTone class
 
-// export AudioOut for other modules to use
+// export AudioOutTone for other modules to use
 module.exports = AudioOutTone;
