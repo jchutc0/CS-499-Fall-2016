@@ -1,26 +1,44 @@
+/*****
+Main class
+
+The purpose of this class is to act as a controller class. It gets user input
+from forms and sends the information to the output classes. It acts as an
+entry point to the program.
+*****/
+
 // Require the React framework
 var React = require('react');
 
+// require helper components to render the graphs, forms, notes, and audio
 var GraphWave = require('GraphWave');
 var GraphFrequency = require('GraphFrequency');
 var FormMain = require('FormMain');
 var NotesToUser = require('NotesToUser');
 var AudioOut = require('AudioOut');
 
-// Load menu modules
-var FormFrequency = require('FormFrequency');
-var FormNumberPad = require('FormNumberPad');
-
+// Create the Main class
 var Main = React.createClass({
 
+  /*
+  getInitialState function
+
+  Sets default state values
+  */
   getInitialState: function() {
     return {
       userMessage: 'Default user message'
-    };
-  },
+    };        // state object
+  },          // getInitialState function
 
+  /*
+  handlePlayFrequency function
+
+  Invoked from form classes
+  Saves gathered frequency information to state for passing to AudioOut and
+  NotesToUser
+  */
   handlePlayFrequency: function(frequencyObj) {
-    this.setState( {
+    this.setState({
       userMessage: 'handlePlayFrequency -- ' +
       'frequency1: ' + frequencyObj.frequency1 + '; ' +
       'frequency2: ' + frequencyObj.frequency2,
@@ -30,10 +48,15 @@ var Main = React.createClass({
         frequency2: frequencyObj.frequency2,
         gain2: frequencyObj.gain2,
         whiteNoise: frequencyObj.whiteNoise
-      },
-    });
-  },
+      },      // audioOutObject
+    });       // state object
+  },          // handlePlayFrequency function
 
+  /*
+  render function
+
+  renders the component to the web browser -- the default entry point
+  */
   render: function() {
     return (
       <div>
@@ -60,8 +83,9 @@ var Main = React.createClass({
           </div>
         </div>
       </div>
-      );
-    }
-  });
+      );        // return value
+    }           // render function
+  });           // Main class
 
+// export Main for other modules to use
 module.exports = Main;

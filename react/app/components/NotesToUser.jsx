@@ -33,9 +33,9 @@ var NotesToUser = React.createClass({
         <p>Rendered NotesToUser</p>
         <div>{this.props.message}</div>
       </div>
-    );
-  }
-});
+    );        // return value
+  }           // render function
+});           // NotesToUser class
 
 // export NotesToUser for other modules to use
 module.exports = NotesToUser;
