@@ -81,16 +81,13 @@ var FormFrequency = React.createClass({
       playing: false
     });
 
-    // set up blank frequencyObject to send back to calling component
-    var frequencyObject = {
+    // send blank frequencyObject back to calling component
+    this.props.playFrequency({
       frequency1: 0,
       gain1: 0,
       frequency2: 0,
       gain2: 0
-    };      // frequencyObject
-
-    // send frequencyObject back to calling component
-    this.props.playFrequency(frequencyObject);
+    });
   },        // stopUserFrequency function
 
   /*
