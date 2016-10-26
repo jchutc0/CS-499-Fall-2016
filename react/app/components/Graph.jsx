@@ -41,6 +41,20 @@ var Graph = React.createClass({
   },        // generateWaveform function
 
   /*
+  generateFrequencyWave
+
+  Uses generateWaveform and alters the result to give values between 0 and 1
+  */
+  generateFrequencyWave: function(size, count) {
+    var returnArray = this.generateWaveform(size, count);
+    for(var i = 0; i < returnArray.length; i++) {
+      returnArray[i] = returnArray[i] * 0.5 + 0.5;
+    }         // for loop
+
+    return returnArray;
+  },          // generateFrequencyWave function
+
+  /*
   render function
 
   renders the component to the web browser -- the default entry point
@@ -48,12 +62,14 @@ var Graph = React.createClass({
   render: function() {
     // create generic data to send to GraphWave
     var graphWaveArray = this.generateWaveform(1024, 11);
+    var graphFreqArray = this.generateFrequencyWave(128, 3);
+    // [.1, .2, .3, .4, .5];
 
     return (
       <div>
         <p>Rendered Graph</p>
         <GraphWave data={graphWaveArray}/>
-        <GraphFrequency />
+        <GraphFrequency data={graphFreqArray}/>
       </div>
     );        // return value
   }           // render function

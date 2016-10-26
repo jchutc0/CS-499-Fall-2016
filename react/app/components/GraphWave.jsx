@@ -35,9 +35,14 @@ var GraphWave = React.createClass({
     var drawContext = canvas.getContext('2d');
 
     // draws the horizontal line through the center of the graph
+    drawContext.beginPath();
+    drawContext.strokeStyle = '#FF0000';
     drawContext.moveTo(0, this.height / 2);
     drawContext.lineTo(this.width, this.height / 2);
     drawContext.stroke();
+
+    drawContext.beginPath();
+    drawContext.strokeStyle = '#0000FF';
 
     // now generate arrays of horizontal and vertical coordinates
     var horizontalCoords = this.generateHorizontalCoords(data.length);
