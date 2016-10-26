@@ -47,7 +47,7 @@ var Graph = React.createClass({
   */
   render: function() {
     // create generic data to send to GraphWave
-    var graphWaveArray = this.generateWaveform(1024, 1, 11);
+    var graphWaveArray = this.generateWaveform(1024, 11);
 
     return (
       <div>
