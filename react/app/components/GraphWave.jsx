@@ -66,7 +66,8 @@ var GraphWave = React.createClass({
 
     // to fit the graph right, we need to rescale the numbers around 0 and then
     //   shift them up so they're at the center of the graph
-    var scalingFactor = height / 2 * usable / 100;
+    // scaling factor add * -1 since graph origin is at (0, this.height)
+    var scalingFactor = -1 * height / 2 * usable / 100;
     var shiftingFactor = height / 2;
 
     // set up array to return values
