@@ -10,8 +10,9 @@ entry point to the program.
 var React = require('react');
 
 // require helper components to render the graphs, forms, notes, and audio
-var GraphWave = require('GraphWave');
-var GraphFrequency = require('GraphFrequency');
+// var GraphWave = require('GraphWave');
+// var GraphFrequency = require('GraphFrequency');
+var Graph = require('Graph');
 var FormMain = require('FormMain');
 var NotesToUser = require('NotesToUser');
 var AudioOut = require('AudioOut');
@@ -65,10 +66,7 @@ var Main = React.createClass({
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
               <div>
-                <GraphWave/>
-              </div>
-              <div>
-                <GraphFrequency/>
+                <Graph />
               </div>
             </div>
             <div className="columns small-12 large-6">

@@ -23,6 +23,7 @@ module.exports = {
 		root: __dirname,
 		alias: {
 			Main: 						'app/components/Main.jsx',
+			Graph:		 				'app/components/Graph.jsx',
 			GraphWave: 				'app/components/GraphWave.jsx',
 			GraphFrequency: 	'app/components/GraphFrequency.jsx',
 			FormMain: 				'app/components/FormMain.jsx',

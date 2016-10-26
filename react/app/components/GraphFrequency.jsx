@@ -23,8 +23,8 @@ var GraphFrequency = React.createClass({
 
     return (
       <div>
-        <p>Rendered GraphWave</p>
-          <canvas id="GraphWaveCanvas" width="400" height="200" style={canvasStyle}>
+        <p>Rendered GraphFrequency</p>
+          <canvas id="GraphFrequencyCanvas" width="400" height="200" style={canvasStyle}>
           </canvas>
       </div>
     );        // return value

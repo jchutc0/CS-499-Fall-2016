@@ -10,6 +10,27 @@ var React = require('react');
 // Create the GraphWave class
 var GraphWave = React.createClass({
 
+  // declare width and height constants for easy changes
+  width: 400,
+  height: 200,
+
+  /*
+  componentDidMount function
+
+  invoked after component mounts
+  Draws the graph
+  */
+  componentDidMount: function() {
+    // defines the canvas and the draw context for the graph
+    var canvas = this.refs.waveGraphCanvas;
+    var drawContext = canvas.getContext('2d');
+
+    // draws the horizontal line through the center of the graph
+    drawContext.moveTo(0, this.height / 2);
+    drawContext.lineTo(this.width, this.height / 2);
+    drawContext.stroke();
+  },
+
   /*
   render function
 
@@ -24,7 +45,8 @@ var GraphWave = React.createClass({
     return (
       <div>
         <p>Rendered GraphWave</p>
-          <canvas id="GraphWaveCanvas" width="400" height="200" style={canvasStyle}>
+          <canvas id="GraphWaveCanvas" width={this.width}
+            height={this.height} ref='waveGraphCanvas' style={canvasStyle}>
           </canvas>
       </div>
     );        // return value
