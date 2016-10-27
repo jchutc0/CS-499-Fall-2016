@@ -48,7 +48,7 @@ var Graph = React.createClass({
           freqArray: freqArray
         });
       }
-    }, 250);
+    }, 25);
 
     return ({
       waveArray: {},
