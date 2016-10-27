@@ -127,17 +127,33 @@ var FormFrequency = React.createClass({
     if(this.state.playing) {
       // return stop button
       return (
-        <button className='secondary button' id='stopSound'
-          onClick={this.stopUserFrequency}>Stop Frequency</button>
+        <div classname='row'>
+          <div className='columns small-12 medium-6 text-center'>
+            <button className='button' id='stopSound'
+              onClick={this.stopUserFrequency}>Stop Frequency</button>
+          </div>
+          <div className='columns small-12 medium-6 text-center'>
+            <button className='button' id='startSound'
+              onClick={this.playUserFrequency}>Update Frequency</button>
+          </div>
+        </div>
       );
     } else {
       // return play button
       return (
-        <button className='button' id='startSound'
-          onClick={this.playUserFrequency}>Play Frequency</button>
+        <div className='row'>
+          <div className='columns small-12 medium-6 text-center'>
+            <button className='button' id='startSound'
+              onClick={this.playUserFrequency}>Play Frequency</button>
+          </div>
+          <div className='columns small-12 medium-6 text-center'>
+            <button className='button' id='clearForm'
+              onClick={this.clearForm}>Clear Form</button><br/>
+          </div>
+        </div>
       );      // return
     }         // else case (this.state.playing is not true)
-  },          // renderPlayFrequencyButton function
+    },          // renderPlayFrequencyButton function
 
   /*
   render function
@@ -178,12 +194,8 @@ var FormFrequency = React.createClass({
           </div>
         </fieldset>
         <div className='row'>
-          <div className='columns small-12 medium-6'>
+          <div>
             {this.renderPlayFrequencyButton()}
-          </div>
-          <div className='columns small-12 medium-6'>
-            <button className='button' id='clearForm'
-              onClick={this.clearForm}>Clear Form</button><br/>
           </div>
         </div>
       </div>
