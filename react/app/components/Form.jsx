@@ -56,6 +56,23 @@ var Form = React.createClass({
 		}					// if the formDisplayed changed
 	},					// setCurrentForm function
 
+	handlePlayFrequency: function(frequencyObj) {
+		function gainFix(gain) {
+			if(gain === undefined) {
+				return undefined;
+			}
+			return (gain % 100) / 100.0;
+		}			// gainFix function
+
+		return this.props.handlePlayFrequency({
+			frequency1: 	frequencyObj.frequency1,
+      gain1: 				gainFix(frequencyObj.gain1),
+      frequency2: 	frequencyObj.frequency2,
+      gain2: 				gainFix(frequencyObj.gain2),
+			whiteNoise:		gainFix(frequencyObj.whiteNoise)
+		});
+	},
+
 	/*
   render function
 
@@ -69,9 +86,8 @@ var Form = React.createClass({
 		finds the current form to display from the form parameter and renders the
 		proper form
 		*/
-		function renderCurrentFrom(form, props) {
+		function renderCurrentFrom(form, props, handlePlayFrequency) {
 			var {
-				handlePlayFrequency,
 				context,
 				analyser
 			} = props;
@@ -115,7 +131,8 @@ var Form = React.createClass({
 				<div>
 					{renderCurrentFrom(
 						this.state.formDisplayed,
-						this.props
+						this.props,
+						this.handlePlayFrequency
 					)}
 				</div>
 			</div>

@@ -42,7 +42,8 @@ var FormWhiteNoise = React.createClass({
       playing: true
     });       // setState
 
-    var whiteNoiseGain = (this.refs.whiteNoiseGain.value % 100) / 100.0;
+    // var whiteNoiseGain = (this.refs.whiteNoiseGain.value % 100) / 100.0;
+    var whiteNoiseGain = this.refs.whiteNoiseGain.value;
 
     this.props.playWhiteNoise({
       whiteNoise: whiteNoiseGain
