@@ -24,29 +24,35 @@ var Graph = React.createClass({
 
     var analyser = this.props.analyser;
 
-    analyser.fftSize = 2048;
+    analyser.fftSize = 32768;
     var bufferLength = analyser.fftSize;
-    var dataArray = new Uint8Array(bufferLength);
-    analyser.getByteTimeDomainData(dataArray);
+    // var dataArray = new Uint8Array(bufferLength);
+    // analyser.getByteTimeDomainData(dataArray);
 
     this.timer = setInterval(() => {
-      var dataArray = new Uint8Array(analyser.fftSize);
-      analyser.getByteTimeDomainData(dataArray);
+      var waveArray = new Uint8Array(analyser.fftSize);
+      var freqArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteTimeDomainData(waveArray);
+      analyser.getByteFrequencyData(freqArray);
       // console.log(dataArray);
       // this.handleGraphUpdate(dataArray);
       if(this.props.context.state === 'suspended') {
         this.setState({
-          waveArray: {}
+          waveArray: {},
+          freqArray: {}
         });
       } else {
+        // console.log(freqArray);
         this.setState({
-          waveArray: dataArray
+          waveArray: waveArray,
+          freqArray: freqArray
         });
       }
     }, 250);
 
     return ({
-      waveArray: {}
+      waveArray: {},
+      freqArray: {}
     });
   },
 
@@ -106,7 +112,7 @@ var Graph = React.createClass({
   render: function() {
     // create generic data to send to GraphWave
     var graphWaveArray = this.state.waveArray; // this.generateWaveform(1024, 11);
-    var graphFreqArray = this.generateFrequencyWave(128, 3);
+    var graphFreqArray = this.state.freqArray;   //  this.generateFrequencyWave(128, 3);
     // [.1, .2, .3, .4, .5];
 
     return (

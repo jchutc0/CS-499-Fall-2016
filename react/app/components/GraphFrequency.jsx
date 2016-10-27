@@ -15,7 +15,7 @@ var GraphFrequency = React.createClass({
 
   // component takes a required array of numbers
   propTypes: {
-    data   : React.PropTypes.array.isRequired
+    data   : React.PropTypes.object.isRequired
   },    // propTypes
 
   /*
@@ -25,6 +25,20 @@ var GraphFrequency = React.createClass({
   Draws the graph
   */
   componentDidMount: function() {
+    this.drawGraph();
+  },      // componentDidMount function
+
+  /*
+  componentDidUpdate function
+
+  invoked after component's props change
+  Draws the graph
+  */
+  componentDidUpdate: function() {
+    this.drawGraph();
+  },      // componentDidUpdate function
+
+  drawGraph: function() {
     var data = this.props.data;
 
     // defines the canvas and the draw context for the graph
@@ -43,6 +57,12 @@ var GraphFrequency = React.createClass({
     gradient.addColorStop(0.6, 'yellow');
     gradient.addColorStop(1, 'green');
     drawContext.fillStyle = gradient;
+    // console.log('data.length: '+data.length);
+
+    // clears the box
+    drawContext.fillStyle = '#FFFFFF';
+    drawContext.fillRect(0, 0, this.width, this.height);
+
 
     for(var i = 0; i < data.length; i++) {
       drawContext.fillStyle = gradient;
@@ -68,8 +88,8 @@ var GraphFrequency = React.createClass({
     // scale the data to fit the graph right
     // scaling factor add * -1 since graph origin is at (0, this.height)
     // shiftingFactor to shift to the bottom of the graph
-    var scalingFactor = height;
-    var shiftingFactor = 0;
+    var scalingFactor = -1 * height / 256;
+    var shiftingFactor = height;
 
     // set up array to return values
     var returnArray = new Array(data.length);
