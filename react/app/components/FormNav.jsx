@@ -2,7 +2,7 @@
 FormNav class
 
 The purpose of this class is to display the navigation panel and to report any
-change in the form through the setForm prop to FormMain
+change in the form through the setForm prop to Form
 *****/
 
 // Require the React framework

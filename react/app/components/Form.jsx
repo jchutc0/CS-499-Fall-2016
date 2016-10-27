@@ -1,5 +1,5 @@
 /*****
-FormMain class
+Form class
 
 The purpose of this class is to manage the display of the forms and to pass
 information between main and the sub-forms
@@ -14,8 +14,8 @@ var FormNumberPad = require('FormNumberPad');
 var FormFrequency = require('FormFrequency');
 var FormWhiteNoise = require('FormWhiteNoise');
 
-// Create the FormMain class
-var FormMain = React.createClass({
+// Create the Form class
+var Form = React.createClass({
 	// require the handlePlayFrequency function to pass frequency information
 	//   back through Main
 	propTypes: {
@@ -95,5 +95,5 @@ var FormMain = React.createClass({
 	}
 });
 
-// export FormMain for other modules to use
-module.exports = FormMain;
+// export Form for other modules to use
+module.exports = Form;

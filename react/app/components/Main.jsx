@@ -13,7 +13,7 @@ var React = require('react');
 // var GraphWave = require('GraphWave');
 // var GraphFrequency = require('GraphFrequency');
 var Graph = require('Graph');
-var FormMain = require('FormMain');
+var Form = require('Form');
 var NotesToUser = require('NotesToUser');
 var AudioOut = require('AudioOut');
 
@@ -70,7 +70,7 @@ var Main = React.createClass({
               </div>
             </div>
             <div className="columns small-12 large-6">
-              <FormMain handlePlayFrequency={this.handlePlayFrequency}/>
+              <Form handlePlayFrequency={this.handlePlayFrequency}/>
             </div>
           </div>
         </div>

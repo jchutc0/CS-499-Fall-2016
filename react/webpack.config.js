@@ -26,7 +26,7 @@ module.exports = {
 			Graph:		 				'app/components/Graph.jsx',
 			GraphWave: 				'app/components/GraphWave.jsx',
 			GraphFrequency: 	'app/components/GraphFrequency.jsx',
-			FormMain: 				'app/components/FormMain.jsx',
+			Form: 						'app/components/Form.jsx',
 			NotesToUser: 			'app/components/NotesToUser.jsx',
 			FormFrequency: 		'app/components/FormFrequency.jsx',
 			FormNumberPad: 		'app/components/FormNumberPad.jsx',
