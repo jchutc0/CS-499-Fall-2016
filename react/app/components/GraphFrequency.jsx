@@ -111,14 +111,13 @@ var GraphFrequency = React.createClass({
     var {width, usable} = this;
     var length = data.length;
 
-    // to scale the data to the graph size
-    var scalingFactor = width / (length + 1);
+    var maxLog = Math.log2(data.length);
 
-    // set up array to return values
     var returnArray = new Array(length);
 
+    // implement logarithmic scale
     for(var i = 0; i < length; i++) {
-      returnArray[i] = Math.floor((i + 1) * scalingFactor);
+      returnArray[i] = Math.log2(i) / maxLog * width;
     }
 
     return returnArray;
