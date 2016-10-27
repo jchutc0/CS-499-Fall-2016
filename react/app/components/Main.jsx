@@ -72,7 +72,7 @@ var Main = React.createClass({
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
               <div>
-                <Graph />
+                <Graph context={this.state.context}/>
               </div>
             </div>
             <div className="columns small-12 large-6">

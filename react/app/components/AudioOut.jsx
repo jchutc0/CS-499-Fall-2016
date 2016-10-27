@@ -14,6 +14,12 @@ var AudioOutWhiteNoise = require('AudioOutWhiteNoise');
 
 // create the AudioOut class
 var AudioOut = React.createClass({
+
+  // Require the context object as a prop
+  propTypes: {
+    context     : React.PropTypes.object.isRequired
+  },  // propTypes
+
   /*
   getDefaultProps function
 

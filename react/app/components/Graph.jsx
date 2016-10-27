@@ -15,6 +15,11 @@ var GraphFrequency = require('GraphFrequency');
 // Create the Graph class
 var Graph = React.createClass({
 
+  // Require the context object as a prop
+  propTypes: {
+    context     : React.PropTypes.object.isRequired
+  },  // propTypes
+
   /*
   generateWaveform
 
