@@ -13,6 +13,9 @@ var FormNav = require('FormNav');
 var FormNumberPad = require('FormNumberPad');
 var FormFrequency = require('FormFrequency');
 var FormWhiteNoise = require('FormWhiteNoise');
+var FormKeyboard = require('FormKeyboard');
+var FormMicrophone = require('FormMicrophone');
+var FormWavIn = require('FormWavIn');
 
 // Create the Form class
 var Form = React.createClass({
@@ -76,7 +79,22 @@ var Form = React.createClass({
 				return (
 					<FormWhiteNoise playWhiteNoise={handlePlayFrequency}/>
 				);			// case 2 return
-				break
+				break;
+				case 3:
+				return (
+					<FormKeyboard/>
+				);			// case 2 return
+				break;
+				case 4:
+				return (
+					<FormMicrophone/>
+				);			// case 2 return
+				break;
+				case 5:
+				return (
+					<FormWavIn/>
+				);			// case 2 return
+				break;
 				default:
 				return (
 					<FormFrequency playFrequency={handlePlayFrequency}/>

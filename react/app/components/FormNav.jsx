@@ -25,10 +25,10 @@ var FormNav = React.createClass({
 	},			// handleDropdown
 
 	/*
-  render function
+	render function
 
-  renders the component to the web browser -- the default entry point
-  */
+	renders the component to the web browser -- the default entry point
+	*/
 	render: function() {
 		return (
 			<div className="top-bar">
@@ -42,6 +42,9 @@ var FormNav = React.createClass({
 								<option>Frequency Generator</option>
 								<option>Number Pad</option>
 								<option>White Noise Generator</option>
+								<option>Music Keybaord Input</option>
+								<option>Microphone Input</option>
+								<option>Wav File Input</option>
 							</select>
 						</li>
 					</ul>
