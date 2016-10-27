@@ -142,8 +142,11 @@ var AudioOutTone = React.createClass({
   componentWillUnmount: function() {
     if(this.state.isPlaying) {
       this.state.oscillator.stop();
-      this.state.oscillator.disconnect();
     }
+    this.state.oscillator.disconnect();
+    this.state.gain.disconnect();
+    this.props.analyser.disconnect();
+
   },
 
   /*

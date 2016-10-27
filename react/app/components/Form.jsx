@@ -22,7 +22,8 @@ var Form = React.createClass({
 	// require the handlePlayFrequency function to pass frequency information
 	//   back through Main
 	propTypes: {
-		handlePlayFrequency: React.PropTypes.func.isRequired
+		handlePlayFrequency: React.PropTypes.func.isRequired,
+		context: React.PropTypes.object.isRequired
 	},		// propTypes
 
 	/*
@@ -68,7 +69,12 @@ var Form = React.createClass({
 		finds the current form to display from the form parameter and renders the
 		proper form
 		*/
-		function renderCurrentFrom(form, handlePlayFrequency) {
+		function renderCurrentFrom(form, props) {
+			var {
+				handlePlayFrequency,
+				context,
+				analyser
+			} = props;
 			switch(form) {
 				case 1:
 				return (
@@ -87,7 +93,8 @@ var Form = React.createClass({
 				break;
 				case 4:
 				return (
-					<FormMicrophone/>
+					<FormMicrophone context={context}
+						analyser={analyser}/>
 				);			// case 2 return
 				break;
 				case 5:
@@ -106,7 +113,10 @@ var Form = React.createClass({
 			<div>
 				<FormNav setForm={this.setCurrentForm}/>
 				<div>
-					{renderCurrentFrom(this.state.formDisplayed, this.props.handlePlayFrequency)}
+					{renderCurrentFrom(
+						this.state.formDisplayed,
+						this.props
+					)}
 				</div>
 			</div>
 		);

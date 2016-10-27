@@ -71,7 +71,7 @@ var Main = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Rendered Main hi</p>
+        <p>Rendered Main</p>
         <div className="row">
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
@@ -81,7 +81,9 @@ var Main = React.createClass({
               </div>
             </div>
             <div className="columns small-12 large-6">
-              <Form handlePlayFrequency={this.handlePlayFrequency}/>
+              <Form handlePlayFrequency={this.handlePlayFrequency}
+                context={this.state.context}
+                analyser={this.state.analyser}/>
             </div>
           </div>
         </div>
