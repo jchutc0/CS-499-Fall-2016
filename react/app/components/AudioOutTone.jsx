@@ -91,9 +91,12 @@ var AudioOutTone = React.createClass({
       context.resume();
       gain.gain.value = amplitude;
       oscillator.frequency.value = frequency;
-      oscillator.connect(analyser);
-      analyser.connect(gain);
-      gain.connect(context.destination);
+      oscillator.connect(gain);
+      // oscillator.connect(analyser);
+      // analyser.connect(gain);
+      // gain.connect(context.destination);
+      gain.connect(analyser);
+      analyser.connect(context.destination);
       oscillator.start(0);
     }       // if sound is to play
   },        // componentWillReceiveProps function
