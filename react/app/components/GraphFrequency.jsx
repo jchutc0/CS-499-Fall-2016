@@ -39,7 +39,8 @@ var GraphFrequency = React.createClass({
     // add gradients to the boxes to make green/yellow/red colors
     var gradient = drawContext.createLinearGradient(0,0,0,200);
     gradient.addColorStop(0, 'red');
-    gradient.addColorStop(0.5, 'yellow');
+    gradient.addColorStop(0.4, 'yellow');
+    gradient.addColorStop(0.6, 'yellow');
     gradient.addColorStop(1, 'green');
     drawContext.fillStyle = gradient;
 
