@@ -1,8 +1,8 @@
 /*****
 AudioOut Class
 
-The purpose of this class is to hold the audio context and make decisions about
-which other audio classes to render
+The purpose of this class is to make decisions about which other audio
+classes to render
 *****/
 
 // Require the React framework
@@ -30,22 +30,6 @@ var AudioOut = React.createClass({
       }   // return object
     };    // return value
   },      // getDefaultProps function
-
-  /*
-  getInitialState function
-
-  Creates the audio context used to generate sound and stores it in the state
-  */
-  getInitialState: function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-    // set up the AudioContext
-    var context = new AudioContext();
-
-    return {
-      context: context
-    };      // return value
-  },        // getInitialState function
 
   /*
   render function
@@ -94,7 +78,7 @@ var AudioOut = React.createClass({
     return(
       <div>
         Rendered AudioOut
-        {renderAudioOut(this.props, this.state.context)}
+        {renderAudioOut(this.props, this.props.context)}
       </div>
     );  // return value
   }     // render function

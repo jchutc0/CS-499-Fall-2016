@@ -24,10 +24,16 @@ var Main = React.createClass({
   getInitialState function
 
   Sets default state values
+  Creates the audio context used to generate sound and stores it in the state
   */
   getInitialState: function() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    var context = new AudioContext();
+
     return {
-      userMessage: 'Default user message'
+      userMessage: 'Default user message',
+      context: context
     };        // state object
   },          // getInitialState function
 
@@ -77,7 +83,8 @@ var Main = React.createClass({
         <div className="row">
           <div className="columns small-12">
             <NotesToUser message={this.state.userMessage}/>
-            <AudioOut frequencyObj={this.state.audioOutObject}/>
+            <AudioOut frequencyObj={this.state.audioOutObject}
+              context={this.state.context}/>
           </div>
         </div>
       </div>
