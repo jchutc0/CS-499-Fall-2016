@@ -127,13 +127,13 @@ var FormFrequency = React.createClass({
     if(this.state.playing) {
       // return stop button
       return (
-        <div classname='row'>
-          <div className='columns small-12 medium-6 text-center'>
-            <button className='button' id='stopSound'
+        <div className='row'>
+          <div className='columns small-12 medium-6'>
+            <button className='expanded button' id='stopSound'
               onClick={this.stopUserFrequency}>Stop Frequency</button>
           </div>
-          <div className='columns small-12 medium-6 text-center'>
-            <button className='button' id='startSound'
+          <div className='columns small-12 medium-6'>
+            <button className='expanded button' id='startSound'
               onClick={this.playUserFrequency}>Update Frequency</button>
           </div>
         </div>
@@ -142,12 +142,12 @@ var FormFrequency = React.createClass({
       // return play button
       return (
         <div className='row'>
-          <div className='columns small-12 medium-6 text-center'>
-            <button className='button' id='startSound'
+          <div className='columns small-12 medium-6'>
+            <button className='expanded button' id='startSound'
               onClick={this.playUserFrequency}>Play Frequency</button>
           </div>
-          <div className='columns small-12 medium-6 text-center'>
-            <button className='button' id='clearForm'
+          <div className='columns small-12 medium-6'>
+            <button className='expanded button' id='clearForm'
               onClick={this.clearForm}>Clear Form</button><br/>
           </div>
         </div>
@@ -193,11 +193,7 @@ var FormFrequency = React.createClass({
               </div>
           </div>
         </fieldset>
-        <div className='row'>
-          <div>
-            {this.renderPlayFrequencyButton()}
-          </div>
-        </div>
+        {this.renderPlayFrequencyButton()}
       </div>
     );      // return value
   }         // render function

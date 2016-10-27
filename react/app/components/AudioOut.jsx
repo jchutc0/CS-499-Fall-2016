@@ -52,15 +52,21 @@ var AudioOut = React.createClass({
     generator
     */
     function renderAudioOut(props, context) {
+      var {frequency1, frequency2, gain1, gain2, whiteNoise} =
+      props.frequencyObj;
       // set up the HTML for the dual tone generator
-      var toneGenerator = (
+      var toneGenerator1 = (
         <div>
-          <AudioOutTone frequency = {Number(props.frequencyObj.frequency1)}
-            amplitude = {Number(props.frequencyObj.gain1)}
+          <AudioOutTone frequency = {Number(frequency1)}
+            amplitude = {Number(gain1)}
             context = {context}
             analyser = {props.analyser}/>
-          <AudioOutTone frequency = {Number(props.frequencyObj.frequency2)}
-            amplitude = {Number(props.frequencyObj.gain2)}
+        </div>
+      );
+      var toneGenerator2 = (
+        <div>
+          <AudioOutTone frequency = {Number(frequency2)}
+            amplitude = {Number(gain2)}
             context = {context}
             analyser = {props.analyser}/>
         </div>
@@ -68,19 +74,48 @@ var AudioOut = React.createClass({
       // set up the HTML for the white noise generator
       var whiteNoiseGenerator = (
         <div>
-          <AudioOutWhiteNoise amplitude = {Number(props.frequencyObj.whiteNoise)}
+          <AudioOutWhiteNoise amplitude = {Number(whiteNoise)}
             context = {context}
             analyser = {props.analyser}/>
         </div>
       );
 
+      var showTone1 = ((frequency1 > 0) && (gain1 > 0));
+      var showTone2 = ((frequency2 > 0) && (gain2 > 0));
+      console.log('showTone1: ' + showTone1);
+      console.log('showTone1: ' + showTone2);
+
       // check for props.frequencyObj.whiteNoise -- generate white noise if
       //   present, generate tones if not
       if (props.frequencyObj.whiteNoise !== undefined) {
         return whiteNoiseGenerator;
+      } else if(showTone1 && !showTone2) {
+        return (
+          <div>
+            {toneGenerator1}
+          </div>
+        );
+      } else if(!showTone1 && showTone2) {
+        return (
+          <div>
+            {toneGenerator2}
+          </div>
+        );
+      } else if(showTone1 && showTone2) {
+        return (
+          <div>
+            {toneGenerator1}
+            {toneGenerator2}
+          </div>
+        );
       } else {
-        return toneGenerator;
-      }     // check props if..else statement
+        context.suspend();
+        return (
+          <div>
+            No audio tones.
+          </div>
+        );
+      }
     }       // renderAudioOut function
 
     // visual aspect of the component
