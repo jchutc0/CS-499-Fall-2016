@@ -43,7 +43,7 @@ var Graph = React.createClass({
           waveArray: dataArray
         });
       }
-    }, 1000);
+    }, 250);
 
     return ({
       waveArray: {}
