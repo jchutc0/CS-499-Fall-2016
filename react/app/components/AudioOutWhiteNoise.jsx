@@ -27,17 +27,21 @@ var AudioOutWhiteNoise = React.createClass({
   getInitialState: function() {
     // pull in the AudioContext and amplitude from props
     var {context, amplitude, analyser} = this.props;
+    console.log(amplitude);
 
     // define the white noise script processor
-    var whiteNoise = context.createScriptProcessor(this.whiteNoiseBufferSize, 1, 1);
+    var whiteNoise =
+    context.createScriptProcessor(this.whiteNoiseBufferSize, 1, 1);
 
     // set the script processor to another function in this class
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
     if(amplitude > 0) {
       context.resume();
-      analyser.connect(whiteNoise);
-      whiteNoise.connect(context.destination);
+      // analyser.connect(whiteNoise);
+      // whiteNoise.connect(context.destination);
+      whiteNoise.connect(analyser);
+      analyser.connect(context.destination);
     }     // if whiteNoise > 0
 
     return {
@@ -72,7 +76,8 @@ var AudioOutWhiteNoise = React.createClass({
 
     // loop through the sound buffer and plug in random numbers
     for(var i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 * this.props.amplitude - 1;
+      output[i] = Math.random() * 2 * this.props.amplitude -
+      this.props.amplitude;
     }       // randomize for loop
   },        // generateWhiteNoise function
 
