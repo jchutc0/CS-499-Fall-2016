@@ -82,6 +82,18 @@ var AudioOutWhiteNoise = React.createClass({
   },        // generateWhiteNoise function
 
   /*
+  componentWillUnmount function
+
+  This function is called as the component is no longer rendering
+
+  Stops the oscillator to turn off tone generation
+  */
+  componentWillUnmount: function() {
+    this.state.whiteNoise.disconnect();
+    this.props.analyser.disconnect();
+  },
+
+  /*
   render function
 
   renders the component to the web browser -- the default entry point
