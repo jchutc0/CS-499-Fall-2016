@@ -35,9 +35,16 @@ var GraphFrequency = React.createClass({
     var horizontalCoords = this.generateHorizontalCoords(data);
     var verticalCoords = this.generateVerticalCoords(data);
 
-    drawContext.fillStyle = '#333333';
+
+    // add gradients to the boxes to make green/yellow/red colors
+    var gradient = drawContext.createLinearGradient(0,0,0,200);
+    gradient.addColorStop(0, 'red');
+    gradient.addColorStop(0.5, 'yellow');
+    gradient.addColorStop(1, 'green');
+    drawContext.fillStyle = gradient;
 
     for(var i = 0; i < data.length; i++) {
+      drawContext.fillStyle = gradient;
       // since axes are flipped starting from (x, y) and working down
       drawContext.fillRect(
         horizontalCoords[i] - 1, verticalCoords[i],
