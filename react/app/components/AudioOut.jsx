@@ -57,17 +57,20 @@ var AudioOut = React.createClass({
         <div>
           <AudioOutTone frequency = {Number(props.frequencyObj.frequency1)}
             amplitude = {Number(props.frequencyObj.gain1)}
-            context = {context} />
+            context = {context}
+            analyser = {props.analyser}/>
           <AudioOutTone frequency = {Number(props.frequencyObj.frequency2)}
             amplitude = {Number(props.frequencyObj.gain2)}
-            context = {context} />
+            context = {context}
+            analyser = {props.analyser}/>
         </div>
       );
       // set up the HTML for the white noise generator
       var whiteNoiseGenerator = (
         <div>
           <AudioOutWhiteNoise amplitude = {Number(props.frequencyObj.whiteNoise)}
-            context = {context}/>
+            context = {context}
+            analyser = {props.analyser}/>
         </div>
       );
 

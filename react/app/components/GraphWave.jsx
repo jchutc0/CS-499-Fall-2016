@@ -18,7 +18,7 @@ var GraphWave = React.createClass({
 
   // component takes a required array of numbers
   propTypes: {
-    data   : React.PropTypes.array.isRequired
+    data   : React.PropTypes.object.isRequired
   },    // propTypes
 
   /*
@@ -28,11 +28,23 @@ var GraphWave = React.createClass({
   Draws the graph
   */
   componentDidMount: function() {
+    this.drawGraph();
+  },      // componentDidMount function
+
+  componentDidUpdate() {
+    this.drawGraph();
+  },
+
+  drawGraph: function() {
     var data = this.props.data;
 
     // defines the canvas and the draw context for the graph
     var canvas = this.refs.waveGraphCanvas;
     var drawContext = canvas.getContext('2d');
+
+    // clears the box
+    drawContext.fillStyle = '#FFFFFF';
+    drawContext.fillRect(0, 0, this.width, this.height);
 
     // draws the horizontal line through the center of the graph
     drawContext.beginPath();
@@ -57,7 +69,7 @@ var GraphWave = React.createClass({
     }     // array iteration for loop
 
     drawContext.stroke();
-  },      // componentDidMount function
+  },      // drawGraph function
 
   /*
   generateVerticalCoords function
@@ -72,8 +84,10 @@ var GraphWave = React.createClass({
     // to fit the graph right, we need to rescale the numbers around 0 and then
     //   shift them up so they're at the center of the graph
     // scaling factor add * -1 since graph origin is at (0, this.height)
-    var scalingFactor = -1 * height / 2 * usable / 100;
-    var shiftingFactor = height / 2;
+    // var scalingFactor = -1 * height / 2 * usable / 100 / 128;
+    // var shiftingFactor = height / 2;
+    var scalingFactor = -1 * height / 256;
+    var shiftingFactor = height;
 
     // set up array to return values
     var returnArray = new Array(data.length);

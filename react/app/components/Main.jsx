@@ -27,13 +27,17 @@ var Main = React.createClass({
   Creates the audio context used to generate sound and stores it in the state
   */
   getInitialState: function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var context = new (window.AudioContext || window.webkitAudioContext)();
+    var analyser = context.createAnalyser();
 
-    var context = new AudioContext();
+    context.onstatechange = function() {
+      console.log(context.state);
+    };
 
     return {
       userMessage: 'Default user message',
-      context: context
+      context: context,
+      analyser: analyser
     };        // state object
   },          // getInitialState function
 
@@ -72,7 +76,8 @@ var Main = React.createClass({
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
               <div>
-                <Graph context={this.state.context}/>
+                <Graph context={this.state.context}
+                  analyser={this.state.analyser}/>
               </div>
             </div>
             <div className="columns small-12 large-6">
@@ -84,7 +89,8 @@ var Main = React.createClass({
           <div className="columns small-12">
             <NotesToUser message={this.state.userMessage}/>
             <AudioOut frequencyObj={this.state.audioOutObject}
-              context={this.state.context}/>
+              context={this.state.context}
+              analyser={this.state.analyser}/>
           </div>
         </div>
       </div>

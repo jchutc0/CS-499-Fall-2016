@@ -55,12 +55,16 @@ var AudioOutTone = React.createClass({
     var gain          = this.state.gain;
     var amplitude     = nextProps.amplitude;
     var frequency     = nextProps.frequency;
+    var analyser      = nextProps.analyser;
 
     // if isPlaying, stop tone and create a new oscillator to play next tone
     //   if needed
     if(this.state.isPlaying) {
+      context.suspend();
       oscillator.stop();
       oscillator.disconnect();
+      // analyser.disconnect();
+      gain.disconnect();
       oscillator = context.createOscillator();
       this.setState({
         oscillator: oscillator
@@ -84,9 +88,11 @@ var AudioOutTone = React.createClass({
 
     // if sound is to play, play sound
     if(isPlaying) {
+      context.resume();
       gain.gain.value = amplitude;
       oscillator.frequency.value = frequency;
-      oscillator.connect(gain);
+      oscillator.connect(analyser);
+      analyser.connect(gain);
       gain.connect(context.destination);
       oscillator.start(0);
     }       // if sound is to play

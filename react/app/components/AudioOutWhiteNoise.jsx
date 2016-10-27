@@ -26,7 +26,7 @@ var AudioOutWhiteNoise = React.createClass({
   */
   getInitialState: function() {
     // pull in the AudioContext and amplitude from props
-    var {context, amplitude} = this.props;
+    var {context, amplitude, analyser} = this.props;
 
     // define the white noise script processor
     var whiteNoise = context.createScriptProcessor(this.whiteNoiseBufferSize, 1, 1);
@@ -35,6 +35,8 @@ var AudioOutWhiteNoise = React.createClass({
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
     if(amplitude > 0) {
+      context.resume();
+      analyser.connect(whiteNoise);
       whiteNoise.connect(context.destination);
     }     // if whiteNoise > 0
 
