@@ -4,7 +4,7 @@ Modules to work on:
 - [x] Graph master class that renders above two graphs
 - [x] FFT implementation — Emily? What do we need? What will we get?
 - [ ] (Music) Keyboard implementation — probably easier, using same handleFrequency calls as keypad
-- [ ] Others? .wav file, extract stream in, read
+- [ ] .wav file, extract stream in, read
 - [x] Update Main to make decisions to graph on input, output
 - [x] Move AudioContext to main, need it for mic read
 - [x] Update FormMain, webpack to add other forms (quick)
@@ -18,5 +18,31 @@ Modules to work on:
 - [ ] Mouse drag for create sounds ?: just in freq mode? Does it matter?
 - [ ] Canvas animation (?)
 - [ ] Redo white noise as buffer (?)
+- [ ] error checking / modal?
+- [ ] Instructions to the user / NotesToUser or Main update
+- [ ] Form sending changeFormState (or something) to Main
+- [ ] Bars for logarithmic scale on freq graph
 - [ ] TESTING
 - [ ] Other usage suggestions?
+- [ ]
+
+Mouse Coordinates Tutorial:
+http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
+
+Mozilla Web Audio API:
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+
+Mozilla Web Audio API Analyzer Node:
+https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+
+Voice Change-o-matic script from Mozilla Web Audio API
+https://github.com/mdn/voice-change-o-matic/blob/gh-pages/scripts/app.js
+
+w3schools HTML5 Canvas Tutorial
+http://www.w3schools.com/graphics/canvas_intro.asp
+
+Noisehack How to Generate Noise with the Web Audio API
+http://noisehack.com/generate-noise-web-audio-api/
+
+Rectangleworld Dragging Objects - A Very Simple HTML5 Canvas Example
+http://rectangleworld.com/blog/archives/15
