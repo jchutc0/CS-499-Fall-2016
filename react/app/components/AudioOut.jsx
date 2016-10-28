@@ -82,8 +82,8 @@ var AudioOut = React.createClass({
 
       var showTone1 = ((frequency1 > 0) && (gain1 > 0));
       var showTone2 = ((frequency2 > 0) && (gain2 > 0));
-      console.log('showTone1: ' + showTone1);
-      console.log('showTone1: ' + showTone2);
+      // console.log('showTone1: ' + showTone1);
+      // console.log('showTone1: ' + showTone2);
 
       // check for props.frequencyObj.whiteNoise -- generate white noise if
       //   present, generate tones if not

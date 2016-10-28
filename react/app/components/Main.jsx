@@ -30,9 +30,10 @@ var Main = React.createClass({
     var context = new (window.AudioContext || window.webkitAudioContext)();
     var analyser = context.createAnalyser();
 
-    context.onstatechange = function() {
-      console.log(context.state);
-    };
+    // set up context on state change watcher
+    // context.onstatechange = function() {
+    //   console.log(context.state);
+    // };
 
     return {
       userMessage: 'Default user message',

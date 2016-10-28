@@ -23,7 +23,7 @@ var AudioOutTone = React.createClass({
   Also sets up isPlaying so the component knows if a sound is playing.
   */
   getInitialState: function() {
-    console.log('  frequency: ' + this.props.frequency);
+    // console.log('  frequency: ' + this.props.frequency);
     // set up the frequency oscillators and gain values
     var context     = this.props.context;
     var oscillator  = context.createOscillator();
