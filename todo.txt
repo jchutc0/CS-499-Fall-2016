@@ -1,0 +1,22 @@
+Modules to work on:
+- [x] Graph for Wave (line/point) 0.025 seconds (1/40 second)
+- [x] Graph for Frequency analysis (20-20k Hz logarithmic scale)
+- [x] Graph master class that renders above two graphs
+- [x] FFT implementation — Emily? What do we need? What will we get?
+- [ ] (Music) Keyboard implementation — probably easier, using same handleFrequency calls as keypad
+- [ ] Others? .wav file, extract stream in, read
+- [x] Update Main to make decisions to graph on input, output
+- [x] Move AudioContext to main, need it for mic read
+- [x] Update FormMain, webpack to add other forms (quick)
+- [x] Update FormMain to return stream direction to Main
+- [x] Microphone class to take in stream — might be easier to get graphs working first
+- [x] Fix gain scale in freq form, move from white noise form to forms
+- [ ] Labels for graphs?
+- [ ] More responsiveness? Threading?
+- [ ] Git rid of garbage text
+- [ ] enable space to pause  ?: pause graph, or graph and all sounds?
+- [ ] Mouse drag for create sounds ?: just in freq mode? Does it matter?
+- [ ] Canvas animation (?)
+- [ ] Redo white noise as buffer (?)
+- [ ] TESTING
+- [ ] Other usage suggestions?
