@@ -9,13 +9,14 @@ information between main and the sub-forms
 var React = require('react');
 
 // Require other components for sub-forms and form navigation
-var FormNav = require('FormNav');
-var FormNumberPad = require('FormNumberPad');
+var FormErrorTest = require('FormErrorTest');
 var FormFrequency = require('FormFrequency');
-var FormWhiteNoise = require('FormWhiteNoise');
 var FormKeyboard = require('FormKeyboard');
 var FormMicrophone = require('FormMicrophone');
+var FormNav = require('FormNav');
+var FormNumberPad = require('FormNumberPad');
 var FormWavIn = require('FormWavIn');
+var FormWhiteNoise = require('FormWhiteNoise');
 
 // Create the Form class
 var Form = React.createClass({
@@ -104,19 +105,24 @@ var Form = React.createClass({
 				break;
 				case 3:
 				return (
-					<FormKeyboard/>
-				);			// case 2 return
+					<FormMicrophone context={context}
+						analyser={analyser}/>
+				);			// case 3 return
 				break;
 				case 4:
 				return (
-					<FormMicrophone context={context}
-						analyser={analyser}/>
-				);			// case 2 return
+					<FormErrorTest/>
+				);			// case 4 return
 				break;
 				case 5:
 				return (
+					<FormKeyboard/>
+				);			// case 5 return
+				break;
+				case 6:
+				return(
 					<FormWavIn/>
-				);			// case 2 return
+				);			// case 6 return
 				break;
 				default:
 				return (

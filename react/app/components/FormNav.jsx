@@ -42,9 +42,10 @@ var FormNav = React.createClass({
 								<option>Frequency Generator</option>
 								<option>Number Pad</option>
 								<option>White Noise Generator</option>
-								<option>Music Keybaord Input</option>
 								<option>Microphone Input</option>
-								<option>Wav File Input</option>
+								<option>testing - error modal</option>
+								<option>TODO: Music Keybaord Input</option>
+								<option>TODO: Wav File Input</option>
 							</select>
 						</li>
 					</ul>

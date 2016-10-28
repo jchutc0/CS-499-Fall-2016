@@ -26,6 +26,9 @@ Modules to work on:
 - [ ] Other usage suggestions?
 - [ ]
 
+React Component Lifecycle
+https://facebook.github.io/react/docs/react-component.html
+
 Mouse Coordinates Tutorial:
 http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
 
