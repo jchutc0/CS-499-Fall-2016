@@ -18,7 +18,7 @@ Modules to work on:
 - [ ] Mouse drag for create sounds ?: just in freq mode? Does it matter?
 - [ ] Canvas animation (?)
 - [ ] Redo white noise as buffer (?)
-- [ ] error checking / modal?
+- [ ] error checking / modal?     -- Adam
 - [ ] Instructions to the user / NotesToUser or Main update
 - [ ] Form sending changeFormState (or something) to Main
 - [ ] Bars for logarithmic scale on freq graph
