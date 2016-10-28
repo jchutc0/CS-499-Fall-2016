@@ -49,3 +49,9 @@ http://noisehack.com/generate-noise-web-audio-api/
 
 Rectangleworld Dragging Objects - A Very Simple HTML5 Canvas Example
 http://rectangleworld.com/blog/archives/15
+
+Michael Jackson Expect Library (for testing)
+https://github.com/mjackson/expect
+
+Foundation Classes Docs
+http://foundation.zurb.com/sites/docs/
