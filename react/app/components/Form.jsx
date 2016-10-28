@@ -92,43 +92,27 @@ var Form = React.createClass({
 				context,
 				analyser
 			} = props;
-			switch(form) {
-				case 1:
-				return (
-					<FormNumberPad playFrequency={handlePlayFrequency}/>
-				);			// case 1 return
-				break;
-				case 2:
-				return (
-					<FormWhiteNoise playWhiteNoise={handlePlayFrequency}/>
-				);			// case 2 return
-				break;
-				case 3:
-				return (
-					<FormMicrophone context={context}
-						analyser={analyser}/>
-				);			// case 3 return
-				break;
-				case 4:
-				return (
-					<FormErrorTest/>
-				);			// case 4 return
-				break;
-				case 5:
-				return (
-					<FormKeyboard/>
-				);			// case 5 return
-				break;
-				case 6:
-				return(
-					<FormWavIn/>
-				);			// case 6 return
-				break;
-				default:
-				return (
-					<FormFrequency playFrequency={handlePlayFrequency}/>
-				);			// default case (0) return
-			};				// switch statement
+
+			var formsArray = [
+				<FormFrequency playFrequency={handlePlayFrequency}/>,
+				<FormNumberPad playFrequency={handlePlayFrequency}/>,
+				<FormWhiteNoise playWhiteNoise={handlePlayFrequency}/>,
+				<FormMicrophone context={context}
+					analyser={analyser}/>,
+				<FormErrorTest/>,
+				<FormKeyboard/>,
+				<FormWavIn/>
+			];
+
+			if(
+				(Number.isInteger(form)) &&
+				(form >= 0) &&
+				(form <= formsArray.length)
+			) {
+				return formsArray[form];
+			} else {
+				return formsArray[0];
+			}
 		}						// renderCurrentFrom function
 
 		return (
