@@ -44,10 +44,6 @@ var FormFrequency = React.createClass({
     // prevent a full page reload
     e.preventDefault();
 
-    // set playing state true
-    this.setState({
-      playing: true
-    });
 
     // set up frequencyObj to send back to calling component
     var frequencyObject = {
@@ -57,8 +53,27 @@ var FormFrequency = React.createClass({
       gain2: this.refs.gain2.value
     };    // frequencyObject
 
-    // send frequencyObject back to calling component
-    this.props.playFrequency(frequencyObject);
+    if(
+      (
+        (frequencyObject.frequency1 > 0) &&
+        (frequencyObject.gain1 > 0)
+      ) ||
+      (
+        (frequencyObject.frequency2 > 0) &&
+        (frequencyObject.gain2 > 0)
+      )
+    ) {
+      // set playing state true
+      this.setState({
+        playing: true
+      });
+
+      // send frequencyObject back to calling component
+      this.props.playFrequency(frequencyObject);
+    } else {
+      alert('Please enter a valid frequency');
+    }
+
   },      // playUserFrequency function
 
   /*
@@ -143,7 +158,7 @@ var FormFrequency = React.createClass({
       return (
         <div className='row'>
           <div className='columns small-12 medium-6'>
-            <button className='expanded button' id='startSound'
+            <button className='expanded button' ref='startSound'
               onClick={this.playUserFrequency}>Play Frequency</button>
           </div>
           <div className='columns small-12 medium-6'>
@@ -163,37 +178,39 @@ var FormFrequency = React.createClass({
   render: function() {
     return (
       <div>
-        <fieldset className="frequency-fieldset">
-          <legend>Tone 1</legend>
-          <div className="row">
-            <div className="columns small-12 medium-6">
-              <label htmlFor='frequency1'>Frequency:</label>
-              <input type='number' ref='frequency1' name='frequency1'
-                id='frequency1' maxLength="5" />
-            </div>
-            <div className="columns small-12 medium-6">
-              <label htmlFor='gain1' >Gain:</label>
-              <input type='number' ref='gain1' name='gain1'
-                id='gain1' maxLength="5" />
-            </div>
-          </div>
-        </fieldset>
-        <fieldset className="frequency-fieldset">
-          <legend>Tone 2</legend>
+        <form ref='frequency-form'>
+          <fieldset className="frequency-fieldset">
+            <legend>Tone 1</legend>
             <div className="row">
               <div className="columns small-12 medium-6">
-                <label htmlFor='frequency2'>Frequency:</label>
-                <input type='number' ref='frequency2' name='frequency2'
-                  id='frequency2' maxLength="5" />
+                <label htmlFor='frequency1'>Frequency:</label>
+                <input type='number' ref='frequency1' name='frequency1'
+                  id='frequency1' maxLength="5" />
               </div>
               <div className="columns small-12 medium-6">
-                <label htmlFor='gain2' >Gain:</label>
-                <input type='number' ref='gain2' name='gain2' id='gain2'
-                  maxLength="5" />
+                <label htmlFor='gain1' >Gain:</label>
+                <input type='number' ref='gain1' name='gain1'
+                  id='gain1' maxLength="5" />
               </div>
-          </div>
-        </fieldset>
-        {this.renderPlayFrequencyButton()}
+            </div>
+          </fieldset>
+          <fieldset className="frequency-fieldset">
+            <legend>Tone 2</legend>
+              <div className="row">
+                <div className="columns small-12 medium-6">
+                  <label htmlFor='frequency2'>Frequency:</label>
+                  <input type='number' ref='frequency2' name='frequency2'
+                    id='frequency2' maxLength="5" />
+                </div>
+                <div className="columns small-12 medium-6">
+                  <label htmlFor='gain2' >Gain:</label>
+                  <input type='number' ref='gain2' name='gain2' id='gain2'
+                    maxLength="5" />
+                </div>
+            </div>
+          </fieldset>
+          {this.renderPlayFrequencyButton()}
+        </form>
       </div>
     );      // return value
   }         // render function
