@@ -24,7 +24,7 @@ Modules to work on:
 - [ ] Bars for logarithmic scale on freq graph
 - [ ] TESTING
 - [ ] Other usage suggestions?
-- [ ]
+- [ ] BUG -- 440/10, 350/10 playing, change 350/10 to 350/0 and update -- all audio stops
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
