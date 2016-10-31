@@ -30,4 +30,14 @@ describe('FormFrequency', () => {
         gain2: ''
       });
   });
-});
+
+  // describe('render', () => {
+  //   it('should render pause when started', () => {
+  //     var formFrequency = TestUtils.renderIntoDocument(<FormFrequency/>);
+  //     var $el = $(ReactDOM.findDOMNode(controls));
+  //     var $pauseButton = $el.find('button:contains(Pause)');
+  //
+  //     expect($pauseButton.length).toBe(1);
+  //   }); // should render pause when started block
+  });   // render describe block
+});     // FormFrequency describe block
