@@ -39,5 +39,5 @@ describe('FormFrequency', () => {
   //
   //     expect($pauseButton.length).toBe(1);
   //   }); // should render pause when started block
-  });   // render describe block
+  // });   // render describe block
 });     // FormFrequency describe block
