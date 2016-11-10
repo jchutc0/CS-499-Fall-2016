@@ -10,6 +10,12 @@ var React = require('react');
 // create the FormKeyboard class
 var FormKeyboard = React.createClass({
 
+  // require the handlePlayFrequency function to pass frequency information
+  //   back through Forms
+  propTypes: {
+    playFrequency: React.PropTypes.func.isRequired
+  },		// propTypes
+
   /*
   handleButtonDown function
 
@@ -17,6 +23,42 @@ var FormKeyboard = React.createClass({
   */
   handleButtonDown: function(buttonID) {
     console.log('Button Pressed' + buttonID);
+    var frequencyArray = [
+      523.25,   // C
+      493.88,   // B
+      466.16,   // Bb
+      440.00,   // A
+      415.30,   // Ab
+      392.00,   // G
+      369.99,   // F#
+      349.23,   // F
+      329.63,   // E
+      311.13,   // Eb
+      293.66,   // D
+      277.18,   // C#
+      261.63,   // C
+      246.94,   // B
+      233.08,   // Bb
+      220.00,   // A
+      207.65,   // Ab
+      196.00,   // G
+      185.00,   // F#
+      174.61,   // F
+      164.81,   // E
+      155.56,   // Eb
+      146.83,   // D
+      138.59,   // C#
+      130.81    // C
+    ];
+    var button = parseInt(buttonID);
+
+    if((button < 0)  || (button >= frequencyArray.size)) {
+      button = 0;
+    }
+    return this.props.playFrequency({
+      frequency1: frequencyArray[button],
+      gain1: 10
+    });
   },
 
   /*
@@ -26,6 +68,11 @@ var FormKeyboard = React.createClass({
   */
   handleButtonUp: function() {
     console.log('Button Released');
+    return this.props.playFrequency({
+      frequency1: 0,
+      gain1: 0
+    });
+
   },
 
   /*
@@ -44,31 +91,31 @@ var FormKeyboard = React.createClass({
         <div className="keyboard-white">
           <div className="keyboard-black">
             <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(1)}}
+              onMouseDown={() => {this.handleButtonDown(2)}}
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(2)}}
+            onMouseDown={() => {this.handleButtonDown(1)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <div className="keyboard-black">
             <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(3)}}
+              onMouseDown={() => {this.handleButtonDown(4)}}
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(4)}}
+            onMouseDown={() => {this.handleButtonDown(3)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <div className="keyboard-black">
             <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(5)}}
+              onMouseDown={() => {this.handleButtonDown(6)}}
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(6)}}
+            onMouseDown={() => {this.handleButtonDown(5)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -79,31 +126,26 @@ var FormKeyboard = React.createClass({
         <div className="keyboard-white">
           <div className="keyboard-black">
             <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(8)}}
+              onMouseDown={() => {this.handleButtonDown(9)}}
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(9)}}
+            onMouseDown={() => {this.handleButtonDown(8)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <div className="keyboard-black">
             <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(10)}}
+              onMouseDown={() => {this.handleButtonDown(11)}}
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(11)}}
+            onMouseDown={() => {this.handleButtonDown(10)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <button className='keyboard-white'
             onMouseDown={() => {this.handleButtonDown(12)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(13)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -113,7 +155,7 @@ var FormKeyboard = React.createClass({
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(15)}}
+            onMouseDown={() => {this.handleButtonDown(13)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -123,7 +165,7 @@ var FormKeyboard = React.createClass({
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(17)}}
+            onMouseDown={() => {this.handleButtonDown(15)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -133,12 +175,12 @@ var FormKeyboard = React.createClass({
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(19)}}
+            onMouseDown={() => {this.handleButtonDown(17)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(20)}}
+            onMouseDown={() => {this.handleButtonDown(19)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -148,7 +190,7 @@ var FormKeyboard = React.createClass({
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(22)}}
+            onMouseDown={() => {this.handleButtonDown(20)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
@@ -158,12 +200,12 @@ var FormKeyboard = React.createClass({
               onMouseUp={this.handleButtonUp}></button>
           </div>
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(24)}}
+            onMouseDown={() => {this.handleButtonDown(22)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
         <div className="keyboard-white">
           <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(25)}}
+            onMouseDown={() => {this.handleButtonDown(24)}}
             onMouseUp={this.handleButtonUp}></button>
         </div>
       </div>

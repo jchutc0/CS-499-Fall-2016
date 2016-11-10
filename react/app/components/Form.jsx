@@ -100,7 +100,7 @@ var Form = React.createClass({
 				<FormMicrophone context={context}
 					analyser={analyser}/>,
 				<FormErrorTest/>,
-				<FormKeyboard/>,
+				<FormKeyboard playFrequency={handlePlayFrequency}/>,
 				<FormWavIn/>
 			];
 
