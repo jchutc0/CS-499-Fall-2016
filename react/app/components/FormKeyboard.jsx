@@ -22,7 +22,6 @@ var FormKeyboard = React.createClass({
   taken as a call from a button press - plays a defined frequency
   */
   handleButtonDown: function(buttonID) {
-    console.log('Button Pressed' + buttonID);
     var frequencyArray = [
       523.25,   // C
       493.88,   // B
@@ -67,12 +66,10 @@ var FormKeyboard = React.createClass({
   taken as a call from a button release - stops playing
   */
   handleButtonUp: function() {
-    console.log('Button Released');
     return this.props.playFrequency({
       frequency1: 0,
       gain1: 0
     });
-
   },
 
   /*
