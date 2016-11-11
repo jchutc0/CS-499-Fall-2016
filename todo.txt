@@ -3,7 +3,7 @@ Modules to work on:
 - [x] Graph for Frequency analysis (20-20k Hz logarithmic scale)
 - [x] Graph master class that renders above two graphs
 - [x] FFT implementation — Emily? What do we need? What will we get?
-- [ ] (Music) Keyboard implementation — probably easier, using same handleFrequency calls as keypad
+- [x] (Music) Keyboard implementation — probably easier, using same handleFrequency calls as keypad
 - [ ] .wav file, extract stream in, read
 - [x] Update Main to make decisions to graph on input, output
 - [x] Move AudioContext to main, need it for mic read
@@ -25,6 +25,10 @@ Modules to work on:
 - [ ] TESTING
 - [ ] Other usage suggestions?
 - [ ] BUG -- 440/10, 350/10 playing, change 350/10 to 350/0 and update -- all audio stops
+- [ ] BUG -- press and drag off button (in keyboard/dial pad mode) keeps playing
+      onmouseout HTML would work but will send extra stop sound calls
+      ondragleave HTML might be better?
+- [ ] maybe add scrolling <div> at the bottom for keyboard window
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
