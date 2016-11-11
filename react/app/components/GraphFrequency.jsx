@@ -49,7 +49,6 @@ var GraphFrequency = React.createClass({
     var horizontalCoords = this.generateHorizontalCoords(data);
     var verticalCoords = this.generateVerticalCoords(data);
 
-
     // add gradients to the boxes to make green/yellow/red colors
     var gradient = drawContext.createLinearGradient(0,0,0,200);
     gradient.addColorStop(0, 'red');
@@ -63,6 +62,17 @@ var GraphFrequency = React.createClass({
     drawContext.fillStyle = '#FFFFFF';
     drawContext.fillRect(0, 0, this.width, this.height);
 
+
+    //------draws the vertical lines through the graph at 440 Hz---------
+    drawContext.beginPath();
+    //drawContext.strokeStyle = '#FF0000';
+    drawContext.moveTo(170,0);
+    drawContext.lineTo(170,200);
+    drawContext.stroke();
+
+    //drawContext.beginPath();
+    //drawContext.strokeStyle = '#0000FF';
+    //---------------------------------------------------------
 
     for(var i = 0; i < data.length; i++) {
       drawContext.fillStyle = gradient;
