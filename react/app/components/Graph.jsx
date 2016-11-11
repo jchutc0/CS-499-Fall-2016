@@ -24,7 +24,7 @@ var Graph = React.createClass({
 
     var analyser = this.props.analyser;
 
-    analyser.fftSize = 2048;
+    analyser.fftSize = 16384;
     var bufferLength = analyser.fftSize;
     // var dataArray = new Uint8Array(bufferLength);
     // analyser.getByteTimeDomainData(dataArray);

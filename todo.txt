@@ -29,6 +29,8 @@ Modules to work on:
       onmouseout HTML would work but will send extra stop sound calls
       ondragleave HTML might be better?
 - [ ] maybe add scrolling <div> at the bottom for keyboard window
+- [ ] implement Shepherd's Paradox
+
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
