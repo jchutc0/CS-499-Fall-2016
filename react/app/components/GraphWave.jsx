@@ -16,6 +16,11 @@ var GraphWave = React.createClass({
   // declare the usable percentage of the graph (to make it pretty)
   usable: 75,
 
+  // declare a graph scaling factor to allow adjusting the FFT size without
+  //   making the graph unusable
+  // this should be >0 and <=1 to be useful
+  scale: 0.02,
+
   // component takes a required array of numbers
   propTypes: {
     data   : React.PropTypes.object.isRequired
@@ -57,7 +62,9 @@ var GraphWave = React.createClass({
     drawContext.strokeStyle = '#0000FF';
 
     // now generate arrays of horizontal and vertical coordinates
-    var horizontalCoords = this.generateHorizontalCoords(data.length);
+    var horizontalCoords = this.generateHorizontalCoords(
+      Math.floor(data.length * this.scale)
+    );
     var verticalCoords = this.generateVerticalCoords(data);
 
     for(var i = 0; i < data.length; i++) {
@@ -109,7 +116,7 @@ var GraphWave = React.createClass({
     var {width, usable} = this;
 
     // we should never get < 0 element arrays, but just in case
-    if (length <= 0) {
+    if ((length <= 0) || (length === undefined) || isNaN(length)) {
       return [];
     } else if (length == 1) {
       // prevent a divide by 0 error in case of 1 element arrays
