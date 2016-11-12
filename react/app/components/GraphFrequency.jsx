@@ -63,12 +63,12 @@ var GraphFrequency = React.createClass({
     drawContext.fillRect(0, 0, this.width, this.height);
 
 
-    //------draws the vertical lines through the graph at 440 Hz---------
-    drawContext.beginPath();
-    //drawContext.strokeStyle = '#FF0000';
-    drawContext.moveTo(170,0);
-    drawContext.lineTo(170,200);
-    drawContext.stroke();
+    // //------draws the vertical lines through the graph at 440 Hz---------
+    // drawContext.beginPath();
+    // //drawContext.strokeStyle = '#FF0000';
+    // drawContext.moveTo(170,0);
+    // drawContext.lineTo(170,200);
+    // drawContext.stroke();
 
     //drawContext.beginPath();
     //drawContext.strokeStyle = '#0000FF';
@@ -82,6 +82,18 @@ var GraphFrequency = React.createClass({
         2, this.height - verticalCoords[i]
       );
     }     // array iteration for loop
+
+    this.drawFrequencyDivision(27.5, drawContext, data.length);
+    this.drawFrequencyDivision(55, drawContext, data.length);
+    this.drawFrequencyDivision(110, drawContext, data.length);
+    this.drawFrequencyDivision(220, drawContext, data.length);
+    this.drawFrequencyDivision(440, drawContext, data.length);
+    this.drawFrequencyDivision(880, drawContext, data.length);
+    this.drawFrequencyDivision(1760, drawContext, data.length);
+    this.drawFrequencyDivision(3520, drawContext, data.length);
+    this.drawFrequencyDivision(7040, drawContext, data.length);
+    this.drawFrequencyDivision(14080, drawContext, data.length);
+
 
   },      // componentDidMount function
 
@@ -132,6 +144,30 @@ var GraphFrequency = React.createClass({
 
     return returnArray;
   },      // generateVerticalCoords function
+
+  drawFrequencyDivision: function(frequency, context, samples) {
+    // console.log('drawFrequencyDivision '+ samples);
+    var maxFreq = 20000;
+    var minFreq = 20;
+
+    // check for valid number of samples to avoid divide by 0
+    if((samples <= 0) || (samples === undefined) || (isNaN(samples))) {
+      return;
+    }
+
+    // determine which division corresponds to the frequency
+    var division = samples / (maxFreq-minFreq) * (frequency-minFreq);
+
+    // determine the corresponding graph location
+    var maxLog = Math.log2(samples);
+    var location = Math.floor(Math.log2(division) / maxLog * this.width) - 1;
+
+    context.strokeStyle = '#CCCCCC';
+    context.beginPath();
+    context.moveTo(location,0);
+    context.lineTo(location,this.height);
+    context.stroke();
+  },
 
   /*
   render function
