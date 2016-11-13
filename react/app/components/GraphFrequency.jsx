@@ -16,7 +16,7 @@ var GraphFrequency = React.createClass({
   // component takes a required array of numbers
   propTypes: {
     data   : React.PropTypes.object.isRequired,
-    fftSize : React.PropTypes.number.isRequired
+    frequencyBinCount : React.PropTypes.number.isRequired
   },    // propTypes
 
   /*
@@ -40,7 +40,6 @@ var GraphFrequency = React.createClass({
   },      // componentDidUpdate function
 
   drawGraph: function() {
-    // console.log('fftSize: '+this.props.fftSize);
     var data = this.props.data;
 
     // defines the canvas and the draw context for the graph
@@ -141,7 +140,9 @@ var GraphFrequency = React.createClass({
     // console.log('drawFrequencyDivision '+ samples);
     var maxFreq = 20000;
     var minFreq = 20;
-    var samples = this.props.fftSize;
+    var samples = this.props.frequencyBinCount;
+
+    // console.log('binSize: '+ this.props.binSize);
 
     // check for valid number of samples to avoid divide by 0
     if((samples <= 0) || (samples === undefined) || (isNaN(samples))) {
@@ -149,8 +150,10 @@ var GraphFrequency = React.createClass({
     }
 
     // determine which division corresponds to the frequency
-    var division440 = samples / (maxFreq-minFreq) * (440-minFreq);
-    var division880 = samples / (maxFreq-minFreq) * (880-minFreq);
+    // var division440 = samples / (maxFreq-minFreq) * (440-minFreq);
+    // var division880 = samples / (maxFreq-minFreq) * (880-minFreq);
+    var division440 = 440 / this.props.binSize;
+    var division880 = 880 / this.props.binSize;
 
     // determine the corresponding graph location
     var maxLog = Math.log2(samples);

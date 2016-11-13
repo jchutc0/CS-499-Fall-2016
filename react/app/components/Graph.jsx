@@ -120,7 +120,8 @@ var Graph = React.createClass({
         <p>Rendered Graph</p>
         <GraphWave data={this.state.waveArray}/>
         <GraphFrequency data={graphFreqArray}
-          fftSize={this.props.analyser.fftSize / 2} />
+          frequencyBinCount={this.props.analyser.frequencyBinCount}
+          binSize={this.props.context.sampleRate / this.props.analyser.fftSize}/>
       </div>
     );        // return value
   }           // render function
