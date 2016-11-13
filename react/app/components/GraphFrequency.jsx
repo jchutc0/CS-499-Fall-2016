@@ -15,7 +15,8 @@ var GraphFrequency = React.createClass({
 
   // component takes a required array of numbers
   propTypes: {
-    data   : React.PropTypes.object.isRequired
+    data   : React.PropTypes.object.isRequired,
+    fftSize : React.PropTypes.number.isRequired
   },    // propTypes
 
   /*
@@ -39,6 +40,7 @@ var GraphFrequency = React.createClass({
   },      // componentDidUpdate function
 
   drawGraph: function() {
+    // console.log('fftSize: '+this.props.fftSize);
     var data = this.props.data;
 
     // defines the canvas and the draw context for the graph
@@ -83,17 +85,7 @@ var GraphFrequency = React.createClass({
       );
     }     // array iteration for loop
 
-    this.drawFrequencyDivision(27.5, drawContext, data.length);
-    this.drawFrequencyDivision(55, drawContext, data.length);
-    this.drawFrequencyDivision(110, drawContext, data.length);
-    this.drawFrequencyDivision(220, drawContext, data.length);
-    this.drawFrequencyDivision(440, drawContext, data.length);
-    this.drawFrequencyDivision(880, drawContext, data.length);
-    this.drawFrequencyDivision(1760, drawContext, data.length);
-    this.drawFrequencyDivision(3520, drawContext, data.length);
-    this.drawFrequencyDivision(7040, drawContext, data.length);
-    this.drawFrequencyDivision(14080, drawContext, data.length);
-
+    this.drawFrequencyDivision(440, drawContext);
 
   },      // componentDidMount function
 
@@ -145,10 +137,11 @@ var GraphFrequency = React.createClass({
     return returnArray;
   },      // generateVerticalCoords function
 
-  drawFrequencyDivision: function(frequency, context, samples) {
+  drawFrequencyDivision: function(frequency, context) {
     // console.log('drawFrequencyDivision '+ samples);
     var maxFreq = 20000;
     var minFreq = 20;
+    var samples = this.props.fftSize;
 
     // check for valid number of samples to avoid divide by 0
     if((samples <= 0) || (samples === undefined) || (isNaN(samples))) {
@@ -156,17 +149,43 @@ var GraphFrequency = React.createClass({
     }
 
     // determine which division corresponds to the frequency
-    var division = samples / (maxFreq-minFreq) * (frequency-minFreq);
+    var division440 = samples / (maxFreq-minFreq) * (440-minFreq);
+    var division880 = samples / (maxFreq-minFreq) * (880-minFreq);
 
     // determine the corresponding graph location
     var maxLog = Math.log2(samples);
-    var location = Math.floor(Math.log2(division) / maxLog * this.width) - 1;
+    var location440 = (
+      Math.log2(division440) / maxLog * this.width
+    );
+    var location880 = (
+      Math.log2(division880) / maxLog * this.width
+    );
 
-    context.strokeStyle = '#CCCCCC';
-    context.beginPath();
-    context.moveTo(location,0);
-    context.lineTo(location,this.height);
-    context.stroke();
+    var locationDifference = location880 - location440;
+
+    for(
+      var location = location440;
+      location > minFreq;
+      location -= locationDifference
+    ) {
+      context.strokeStyle = '#999999';
+      context.beginPath();
+      context.moveTo(location,0);
+      context.lineTo(location,this.height);
+      context.stroke();
+    }
+    for(
+      var location = location880;
+      location < maxFreq;
+      location += locationDifference
+    ) {
+      context.strokeStyle = '#999999';
+      context.beginPath();
+      context.moveTo(location,0);
+      context.lineTo(location,this.height);
+      context.stroke();
+    }
+
   },
 
   /*

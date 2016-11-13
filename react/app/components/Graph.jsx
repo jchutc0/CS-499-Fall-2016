@@ -119,7 +119,8 @@ var Graph = React.createClass({
       <div>
         <p>Rendered Graph</p>
         <GraphWave data={this.state.waveArray}/>
-        <GraphFrequency data={graphFreqArray}/>
+        <GraphFrequency data={graphFreqArray}
+          fftSize={this.props.analyser.fftSize / 2} />
       </div>
     );        // return value
   }           // render function
