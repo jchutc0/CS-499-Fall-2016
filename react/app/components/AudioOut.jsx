@@ -24,16 +24,13 @@ var AudioOut = React.createClass({
   getDefaultProps function
 
   Sets default component properties in the event the calling function did not
-  pass them -- a frequency or a gain value of 0 will not play a tone
+  pass them -- an empty frequency or gain array will not play a tone
   */
   getDefaultProps: function() {
     return {
-      frequencyObj: {
-        frequency1: 0,
-        gain1: 0,
-        frequency2: 0,
-        gain2: 0
-      }   // return object
+      frequencyArray: [],
+      gainArray: [],
+      whiteNoise: undefined
     };    // return value
   },      // getDefaultProps function
 
@@ -51,64 +48,23 @@ var AudioOut = React.createClass({
     a whiteNoise value has been passed down or else renders the dual tone
     generator
     */
-    function renderAudioOut(props, context) {
-      var {frequency1, frequency2, gain1, gain2, whiteNoise} =
-      props.frequencyObj;
-      // set up the HTML for the dual tone generator
-      var toneGenerator1 = (
-        <div>
-          <AudioOutTone frequency = {Number(frequency1)}
-            amplitude = {Number(gain1)}
-            context = {context}
-            analyser = {props.analyser}/>
-        </div>
-      );
-      var toneGenerator2 = (
-        <div>
-          <AudioOutTone frequency = {Number(frequency2)}
-            amplitude = {Number(gain2)}
-            context = {context}
-            analyser = {props.analyser}/>
-        </div>
-      );
-      // set up the HTML for the white noise generator
-      var whiteNoiseGenerator = (
-        <div>
-          <AudioOutWhiteNoise amplitude = {Number(whiteNoise)}
-            context = {context}
-            analyser = {props.analyser}/>
-        </div>
-      );
+    var renderAudioOut = (props) => {
+      var {frequencyArray, gainArray, whiteNoise, analyser, context} = props;
+      if(frequencyArray.length !== gainArray.length) {
+        return;
+      }
 
-      var showTone1 = ((frequency1 > 0) && (gain1 > 0));
-      var showTone2 = ((frequency2 > 0) && (gain2 > 0));
-      // console.log('showTone1: ' + showTone1);
-      // console.log('showTone1: ' + showTone2);
+      if (whiteNoise !== undefined) {
+        return (
+          <div>
+            <AudioOutWhiteNoise amplitude = {Number(whiteNoise)}
+              context = {context}
+              analyser = {analyser}/>
+          </div>
+        );
+      }
 
-      // check for props.frequencyObj.whiteNoise -- generate white noise if
-      //   present, generate tones if not
-      if (props.frequencyObj.whiteNoise !== undefined) {
-        return whiteNoiseGenerator;
-      } else if(showTone1 && !showTone2) {
-        return (
-          <div>
-            {toneGenerator1}
-          </div>
-        );
-      } else if(!showTone1 && showTone2) {
-        return (
-          <div>
-            {toneGenerator2}
-          </div>
-        );
-      } else if(showTone1 && showTone2) {
-        return (
-          <div>
-            {toneGenerator1}
-            {toneGenerator2}
-          </div>
-        );
-      } else {
+      if(frequencyArray.length < 1) {
         context.suspend();
         return (
           <div>
@@ -116,13 +72,36 @@ var AudioOut = React.createClass({
           </div>
         );
       }
+
+      var returnValue = new Array();
+      console.log('frequencyArray.length: '+frequencyArray.length);
+
+      for(
+        var i = 0;
+        ((i < frequencyArray.length) && (i < gainArray.length));
+        i ++
+      ) {
+        returnValue.push(
+          <div key={i}>
+            <AudioOutTone key = {i}
+              frequency = {Number(frequencyArray[i])}
+              amplitude = {Number(gainArray[i])}
+              context = {context}
+              analyser = {analyser}/>
+            <p>Frequency {i} playing. </p>
+          </div>
+        );
+      } // for loop
+
+      return returnValue;
+
     }       // renderAudioOut function
 
     // visual aspect of the component
     return(
       <div>
         Rendered AudioOut
-        {renderAudioOut(this.props, this.props.context)}
+        {renderAudioOut(this.props)}
       </div>
     );  // return value
   }     // render function

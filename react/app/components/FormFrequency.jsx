@@ -44,37 +44,75 @@ var FormFrequency = React.createClass({
     // prevent a full page reload
     e.preventDefault();
 
+    var frequency1 = this.refs.frequency1.value;
+    var frequency2 = this.refs.frequency2.value;
+    var gain1 = this.refs.gain1.value;
+    var gain2 = this.refs.gain2.value;
 
-    // set up frequencyObj to send back to calling component
-    var frequencyObject = {
-      frequency1: this.refs.frequency1.value,
-      gain1: this.refs.gain1.value,
-      frequency2: this.refs.frequency2.value,
-      gain2: this.refs.gain2.value
-    };    // frequencyObject
+    var frequencyArray = new Array();
+    var gainArray = new Array();
 
-    if(
-      (
-        (frequencyObject.frequency1 > 0) &&
-        (frequencyObject.gain1 > 0)
-      ) ||
-      (
-        (frequencyObject.frequency2 > 0) &&
-        (frequencyObject.gain2 > 0)
-      )
-    ) {
-      // set playing state true
+    //
+    //
+    // // set up frequencyObj to send back to calling component
+    // var frequencyObject = {
+    //   frequency1: this.refs.frequency1.value,
+    //   gain1: this.refs.gain1.value,
+    //   frequency2: this.refs.frequency2.value,
+    //   gain2: this.refs.gain2.value
+    // };    // frequencyObject
+
+    if(this.testFrequencyAndGain(frequency1, gain1)) {
+      frequencyArray.push(Number(frequency1));
+      gainArray.push(Number(gain1));
+    }
+
+    if(this.testFrequencyAndGain(frequency2, gain2)) {
+      frequencyArray.push(Number(frequency2));
+      gainArray.push(Number(gain2));
+    }
+
+    if(frequencyArray.length > 0) {
       this.setState({
         playing: true
       });
 
-      // send frequencyObject back to calling component
-      this.props.playFrequency(frequencyObject);
+      return this.props.playFrequency(frequencyArray, gainArray);
     } else {
-      alert('Please enter a valid frequency');
+      return this.stopUserFrequency();
     }
 
+
+
+    // if(
+    //   (
+    //     (frequencyObject.frequency1 > 0) &&
+    //     (frequencyObject.gain1 > 0)
+    //   ) ||
+    //   (
+    //     (frequencyObject.frequency2 > 0) &&
+    //     (frequencyObject.gain2 > 0)
+    //   )
+    // ) {
+    //   // set playing state true
+    //   this.setState({
+    //     playing: true
+    //   });
+    //
+    //   // send frequencyObject back to calling component
+    //   this.props.playFrequency(frequencyObject);
+    // } else {
+    //   alert('Please enter a valid frequency');
+    // }
+
   },      // playUserFrequency function
+
+  testFrequencyAndGain: function(frequency, gain) {
+    return (
+      (frequency > 0) &&
+      (gain > 0)
+    );
+  },
 
   /*
   stopUserFrequency function
@@ -97,12 +135,7 @@ var FormFrequency = React.createClass({
     });
 
     // send blank frequencyObject back to calling component
-    this.props.playFrequency({
-      frequency1: 0,
-      gain1: 0,
-      frequency2: 0,
-      gain2: 0
-    });
+    this.props.playFrequency([], []);
   },        // stopUserFrequency function
 
   /*

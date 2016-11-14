@@ -54,10 +54,7 @@ var FormKeyboard = React.createClass({
     if((button < 0)  || (button >= frequencyArray.size)) {
       button = 0;
     }
-    return this.props.playFrequency({
-      frequency1: frequencyArray[button],
-      gain1: 10
-    });
+    return this.props.playFrequency([frequencyArray[button]], [0.1]);
   },
 
   /*
@@ -66,10 +63,7 @@ var FormKeyboard = React.createClass({
   taken as a call from a button release - stops playing
   */
   handleButtonUp: function() {
-    return this.props.playFrequency({
-      frequency1: 0,
-      gain1: 0
-    });
+    return this.props.playFrequency([], []);
   },
 
   /*

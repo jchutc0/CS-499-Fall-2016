@@ -45,9 +45,7 @@ var FormWhiteNoise = React.createClass({
     // var whiteNoiseGain = (this.refs.whiteNoiseGain.value % 100) / 100.0;
     var whiteNoiseGain = this.refs.whiteNoiseGain.value;
 
-    this.props.playWhiteNoise({
-      whiteNoise: whiteNoiseGain
-    });       // playWhiteNoise call
+    this.props.playWhiteNoise([], [], whiteNoiseGain);
   },          // playWhiteNoise function
 
   /*
@@ -67,12 +65,7 @@ var FormWhiteNoise = React.createClass({
     });     // setState
 
     // send empty frequency to playWhiteNoise prop
-    this.props.playWhiteNoise({
-      frequency1: 0,
-      gain1: 0,
-      frequency2: 0,
-      gain2: 0
-    });     // playWhiteNoise call
+    this.props.playWhiteNoise([], []);
   },        // stopWhiteNoise function
 
   /*

@@ -38,7 +38,10 @@ var Main = React.createClass({
     return {
       userMessage: 'Default user message',
       context: context,
-      analyser: analyser
+      analyser: analyser,
+      audioOutFrequencyArray: [],
+      audioOutGainArray: [],
+      audioOutWhiteNoise: undefined
     };        // state object
   },          // getInitialState function
 
@@ -49,18 +52,16 @@ var Main = React.createClass({
   Saves gathered frequency information to state for passing to AudioOut and
   NotesToUser
   */
-  handlePlayFrequency: function(frequencyObj) {
+  handlePlayFrequency: function(
+    audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise
+  ) {
     this.setState({
-      userMessage: 'handlePlayFrequency -- ' +
-      'frequency1: ' + frequencyObj.frequency1 + '; ' +
-      'frequency2: ' + frequencyObj.frequency2,
-      audioOutObject: {
-        frequency1: frequencyObj.frequency1,
-        gain1: frequencyObj.gain1,
-        frequency2: frequencyObj.frequency2,
-        gain2: frequencyObj.gain2,
-        whiteNoise: frequencyObj.whiteNoise
-      },      // audioOutObject
+      userMessage: 'handlePlayFrequency -- ',
+      // audioOutFrequencyArray: [400, 350],
+      // audioOutGainArray: [.1, .1],
+      audioOutFrequencyArray: audioOutFrequencyArray,
+      audioOutGainArray: audioOutGainArray,
+      audioOutWhiteNoise: audioOutWhiteNoise
     });       // state object
   },          // handlePlayFrequency function
 
@@ -91,7 +92,10 @@ var Main = React.createClass({
         <div className="row">
           <div className="columns small-12">
             <NotesToUser message={this.state.userMessage}/>
-            <AudioOut frequencyObj={this.state.audioOutObject}
+            <AudioOut
+              frequencyArray={this.state.audioOutFrequencyArray}
+              gainArray={this.state.audioOutGainArray}
+              whiteNoise={this.state.audioOutWhiteNoise}
               context={this.state.context}
               analyser={this.state.analyser}/>
           </div>

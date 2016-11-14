@@ -114,7 +114,7 @@ var FormNumberPad = React.createClass({
   */
   playTelephony: function(buttonID) {
     // gain value to send
-    var gain = 10;
+    var gain = .01;
     var frequency1, frequency2;
 
     switch(buttonID)
@@ -185,12 +185,9 @@ var FormNumberPad = React.createClass({
       break;
     }     // switch statement
 
-    return this.props.playFrequency({
-      frequency1  : frequency1,
-      gain1       : gain,
-      frequency2  : frequency2,
-      gain2       : gain
-    });   // playFrequency call
+    return this.props.playFrequency(
+      [frequency1, frequency2], [gain, gain]
+    );   // playFrequency call
   },      // playTelephony function
 
   /*
@@ -201,12 +198,7 @@ var FormNumberPad = React.createClass({
   Sends empty sound back to playFrequency prop to stop current sound if any
 	*/
   stopSound: function() {
-    return this.props.playFrequency({
-      frequency1: 0,
-      gain1: 0,
-      frequency2: 0,
-      gain2: 0
-    });     // this.props.playFrequency call
+    return this.props.playFrequency([], []);
   },        // stopSound function
 
   /*
