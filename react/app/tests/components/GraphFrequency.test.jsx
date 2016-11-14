@@ -10,4 +10,11 @@ describe('GraphFrequency', () => {
   it('should exist', () => {
     expect(GraphFrequency).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test generateVerticalCoords with known data values
+  - test generateHorizontalCoords with known data values
+  */
+
 });

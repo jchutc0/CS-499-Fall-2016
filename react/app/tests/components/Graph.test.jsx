@@ -10,4 +10,10 @@ describe('Graph', () => {
   it('should exist', () => {
     expect(Graph).toExist();
   });
+
+  /*
+  TODO Tests:
+  No tests right now, soon testing keypress pause/resume
+  */
+
 });

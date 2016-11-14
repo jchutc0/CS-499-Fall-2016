@@ -10,4 +10,12 @@ describe('GraphWave', () => {
   it('should exist', () => {
     expect(GraphWave).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test generateVerticalCoords with known data values
+  - test generateHorizontalCoords with known data values
+
+  */
+
 });

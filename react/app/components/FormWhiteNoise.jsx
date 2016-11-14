@@ -109,7 +109,7 @@ var FormWhiteNoise = React.createClass({
             <div className="columns small-12 medium-6">
               <label htmlFor='whiteNoiseGain' >Gain:</label>
               <input type='number' ref='whiteNoiseGain' name='whiteNoiseGain'
-                id='whiteNoiseGain' maxLength="5" />
+                id='whiteNoiseGain' maxLength="5" defaultValue="10"/>
             </div>
           </div>
         </fieldset>

@@ -10,4 +10,11 @@ describe('FormMicrophone', () => {
   it('should exist', () => {
     expect(FormMicrophone).toExist();
   });
+
+  /*
+  TODO Tests:
+  Mostly hardware interface tests :(
+
+  */
+
 });

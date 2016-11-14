@@ -27,9 +27,20 @@ describe('FormFrequency', () => {
         frequency1: '440',
         gain1: '10',
         frequency2: '',
-        gain2: ''
+        gain2: '10'
       });
   });
+
+  /*
+  TODO Tests:
+  - check playFrequency on edge cases
+  - check playFrequency on invalid freq, invalid gain
+  - check clearForm with data
+  - check clearForm with no data
+  - test renderPlayFrequencyButton()
+
+  */
+
 
   // describe('render', () => {
   //   it('should render pause when started', () => {

@@ -168,7 +168,7 @@ var FormFrequency = React.createClass({
         </div>
       );      // return
     }         // else case (this.state.playing is not true)
-    },          // renderPlayFrequencyButton function
+  },          // renderPlayFrequencyButton function
 
   /*
   render function
@@ -190,7 +190,7 @@ var FormFrequency = React.createClass({
               <div className="columns small-12 medium-6">
                 <label htmlFor='gain1' >Gain:</label>
                 <input type='number' ref='gain1' name='gain1'
-                  id='gain1' maxLength="5" />
+                  id='gain1' maxLength="5" defaultValue="10" />
               </div>
             </div>
           </fieldset>
@@ -205,7 +205,7 @@ var FormFrequency = React.createClass({
                 <div className="columns small-12 medium-6">
                   <label htmlFor='gain2' >Gain:</label>
                   <input type='number' ref='gain2' name='gain2' id='gain2'
-                    maxLength="5" />
+                    maxLength="5" defaultValue="10"/>
                 </div>
             </div>
           </fieldset>

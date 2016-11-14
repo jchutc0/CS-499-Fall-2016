@@ -10,4 +10,14 @@ describe('Form', () => {
   it('should exist', () => {
     expect(Form).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test setCurrentForm(formNumber)
+  - test handlePlayFrequency(frequencyObj)
+    - test gainFix on gain values
+  - test render to make sure correct form in rendered
+
+  */
+
 });

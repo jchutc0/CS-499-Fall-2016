@@ -10,4 +10,11 @@ describe('FormNav', () => {
   it('should exist', () => {
     expect(FormNav).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test handleDropdown sending the right data along
+
+  */
+
 });

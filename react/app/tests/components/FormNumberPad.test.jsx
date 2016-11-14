@@ -10,4 +10,18 @@ describe('FormNumberPad', () => {
   it('should exist', () => {
     expect(FormNumberPad).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test handleKeypress(key) with valid, invalid keys
+  - test handleKeyRelease(key) with valid, invalid keys
+  - test playTelephony(buttonID) with valid, invalid buttons
+  - make sure stopSound gets called on key release
+  - make sure playTelephony gets called on keypress
+  - make sure playTelephony gets called on button presses
+  - make sure stopSound gets called on button releases
+
+
+  */
+
 });

@@ -10,4 +10,14 @@ describe('AudioOutWhiteNoise', () => {
   it('should exist', () => {
     expect(AudioOutWhiteNoise).toExist();
   });
+
+  /*
+  TODO Tests:
+  - test generateWhiteNoise(e) -- make sure it generates something
+    uses e.outputBuffer.getChannelData(0)
+
+
+
+  */
+
 });
