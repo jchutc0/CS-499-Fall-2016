@@ -11,26 +11,44 @@ describe('FormFrequency', () => {
     expect(FormFrequency).toExist();
   });
 
-  it('should call playFrequency()', () => {
+  describe('playFrequency calls', () => {
     var spy = expect.createSpy();
     var formFrequency = TestUtils.renderIntoDocument(<FormFrequency
       playFrequency={spy}/>);
-      // var $el = $(ReactDOM.findDOMNode(formFrequency));
 
-      formFrequency.refs.frequency1.value = 440;
-      formFrequency.refs.gain1.value = 10;
-      // TestUtils.Simulate.submit($el.find('frequency-form')[0]);
-      TestUtils.Simulate.click(formFrequency.refs.startSound);
+    it('should call playFrequency() with 440/10', () => {
+        formFrequency.refs.frequency1.value = '440';
+        formFrequency.refs.gain1.value = '10';
+        formFrequency.refs.frequency2.value = '';
+        formFrequency.refs.gain2.value = '';
+        TestUtils.Simulate.click(formFrequency.refs.startSound);
 
-      expect(spy).toHaveBeenCalled();
-      expect(spy).toHaveBeenCalledWith({
-        frequency1: '440',
-        gain1: '10',
-        frequency2: '',
-        gain2: '10'
-      });
-  });
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith({
+          frequency1: '440',
+          gain1: '10',
+          frequency2: '',
+          gain2: ''
+        });
+      });   // it should call playFrequency() with 440/10
+      // it('should call playFrequency() with 1/0.1', () => {
+      //   formFrequency.refs.frequency1.value = '1';
+      //   formFrequency.refs.gain1.value = '0.1';
+      //   formFrequency.refs.frequency2.value = '';
+      //   formFrequency.refs.gain2.value = '';
+      //   TestUtils.Simulate.click(formFrequency.refs.startSound);
+      //
+      //   expect(spy).toHaveBeenCalled();
+      //   expect(spy).toHaveBeenCalledWith({
+      //     frequency1: '1',
+      //     gain1: '0.1',
+      //     frequency2: '',
+      //     gain2: ''
+      //   });
+      // });   // it should call playFrequency() with 1/0.1
 
+
+    });
   /*
   TODO Tests:
   - check playFrequency on edge cases
