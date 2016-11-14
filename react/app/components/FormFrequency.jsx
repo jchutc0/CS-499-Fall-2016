@@ -144,11 +144,11 @@ var FormFrequency = React.createClass({
       return (
         <div className='row'>
           <div className='columns small-12 medium-6'>
-            <button className='expanded button' id='stopSound'
+            <button className='expanded button' ref='stopSound'
               onClick={this.stopUserFrequency}>Stop Frequency</button>
           </div>
           <div className='columns small-12 medium-6'>
-            <button className='expanded button' id='startSound'
+            <button className='expanded button' ref='startSound'
               onClick={this.playUserFrequency}>Update Frequency</button>
           </div>
         </div>
@@ -162,7 +162,7 @@ var FormFrequency = React.createClass({
               onClick={this.playUserFrequency}>Play Frequency</button>
           </div>
           <div className='columns small-12 medium-6'>
-            <button className='expanded button' id='clearForm'
+            <button className='expanded button' ref='clearForm'
               onClick={this.clearForm}>Clear Form</button><br/>
           </div>
         </div>
