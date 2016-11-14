@@ -84,7 +84,7 @@ var GraphFrequency = React.createClass({
       );
     }     // array iteration for loop
 
-    this.drawFrequencyDivision(440, drawContext);
+    this.drawFrequencyDivision(drawContext);
 
   },      // componentDidMount function
 
@@ -136,50 +136,39 @@ var GraphFrequency = React.createClass({
     return returnArray;
   },      // generateVerticalCoords function
 
-  drawFrequencyDivision: function(frequency, context) {
-    // console.log('drawFrequencyDivision '+ samples);
-    var maxFreq = 20000;
-    var minFreq = 20;
+  /*
+  drawFrequencyDivision function
+  */
+  drawFrequencyDivision: function(context) {
+
     var samples = this.props.frequencyBinCount;
 
-    // console.log('binSize: '+ this.props.binSize);
-
-    // check for valid number of samples to avoid divide by 0
-    if((samples <= 0) || (samples === undefined) || (isNaN(samples))) {
+    // check for valid number of samples to avoid divide by 0 or log error
+    if((samples <= 1) || (samples === undefined) || (isNaN(samples))) {
       return;
     }
 
-    // determine which division corresponds to the frequency
-    // var division440 = samples / (maxFreq-minFreq) * (440-minFreq);
-    // var division880 = samples / (maxFreq-minFreq) * (880-minFreq);
-    var division440 = 440 / this.props.binSize;
-    var division880 = 880 / this.props.binSize;
+    /*
+    To find a base bar of 400 Hz:
+      1) Find the number of total divisions we represent in the graph (the
+        maxLog)
+      2) Find the number of pixels between each division (the
+        locationDifference)
+      3) Find the location of the lowest power of 2 the graph can represent
+        (locationLowest) using the same formula from generateHorizontalCoords
+      4) Start at locationLowest and draw bars at each locationDifference
+        location until the end of the graph
+    */
 
-    // determine the corresponding graph location
     var maxLog = Math.log2(samples);
-    var location440 = (
-      Math.log2(division440) / maxLog * this.width
-    );
-    var location880 = (
-      Math.log2(division880) / maxLog * this.width
+    var locationDifference = this.width / maxLog;
+    var locationLowest = (
+      Math.log2(3.4375 / this.props.binSize) / maxLog * this.width
     );
 
-    var locationDifference = location880 - location440;
-
-    for(
-      var location = location440;
-      location > minFreq;
-      location -= locationDifference
-    ) {
-      context.strokeStyle = '#999999';
-      context.beginPath();
-      context.moveTo(location,0);
-      context.lineTo(location,this.height);
-      context.stroke();
-    }
-    for(
-      var location = location880;
-      location < maxFreq;
+    for (
+      var location = locationLowest;
+      location < this.width;
       location += locationDifference
     ) {
       context.strokeStyle = '#999999';
@@ -187,9 +176,8 @@ var GraphFrequency = React.createClass({
       context.moveTo(location,0);
       context.lineTo(location,this.height);
       context.stroke();
-    }
-
-  },
+    }   // for drawing loop
+  },    // drawFrequencyDivision funcion
 
   /*
   render function
