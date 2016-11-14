@@ -21,49 +21,39 @@ describe('Main', () => {
     // test to see if handlePlayFrequency returns an object with the correct
     //   tone values
     it('should return correct tone values', () => {
-      // object to pass to function
-      var testObject = {
-        frequency1: 440,
-        gain1: 0.1,
-        frequency2: 350,
-        gain2: 0.1
-      };  // testObject
-
-      // expected return value from function
-      var expectedResult = {
-        ...testObject,
-        whiteNoise: undefined
-      };
+      // arrays to pass to function
+      var testFreqs = [440, 350];
+      var testGains = [0.1, 0.1];
+      var testWhiteNoise = undefined;
 
       // run the function
-      main.handlePlayFrequency(testObject);
+      main.handlePlayFrequency(testFreqs, testGains, testWhiteNoise);
 
-      expect(main.state.audioOutObject).toBeA('object');
-      expect(main.state.audioOutObject).toEqual(expectedResult);
+      expect(main.state.audioOutFrequencyArray).toBeA('array');
+      expect(main.state.audioOutFrequencyArray).toEqual(testFreqs);
+      expect(main.state.audioOutGainArray).toBeA('array');
+      expect(main.state.audioOutGainArray).toEqual(testGains);
+      expect(main.state.audioOutWhiteNoise).toEqual(testWhiteNoise);
+
+
     }); // tone values testing
 
     // test to see if handlePlayFrequency returns an object with the correct
     //   tone values
     it('should return correct white noise values', () => {
-      // object to pass to function
-      var testObject = {
-        whiteNoise: 0.1
-      };  // testObject
-
-      // expected return value from function
-      var expectedResult = {
-        ...testObject,
-        frequency1: undefined,
-        frequency2: undefined,
-        gain1: undefined,
-        gain2: undefined,
-      };
+      // data to pass to function
+      var testFreqs = [];
+      var testGains = [];
+      var testWhiteNoise = 0.1;
 
       // run the function
-      main.handlePlayFrequency(testObject);
+      main.handlePlayFrequency(testFreqs, testGains, testWhiteNoise);
 
-      expect(main.state.audioOutObject).toBeA('object');
-      expect(main.state.audioOutObject).toEqual(expectedResult);
+      expect(main.state.audioOutFrequencyArray).toBeA('array');
+      expect(main.state.audioOutFrequencyArray).toEqual(testFreqs);
+      expect(main.state.audioOutGainArray).toBeA('array');
+      expect(main.state.audioOutGainArray).toEqual(testGains);
+      expect(main.state.audioOutWhiteNoise).toEqual(testWhiteNoise);
     }); // white noise testing
 
   });   // handlePlayFrequency describe block
