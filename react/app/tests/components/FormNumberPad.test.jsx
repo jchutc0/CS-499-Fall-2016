@@ -4,10 +4,10 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var Main = require('Main');
+var FormNumberPad = require('FormNumberPad');
 
-describe('Main-Blank', () => {
+describe('FormNumberPad', () => {
   it('should exist', () => {
-    expect(Main).toExist();
+    expect(FormNumberPad).toExist();
   });
 });
