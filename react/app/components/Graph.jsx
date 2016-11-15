@@ -20,14 +20,63 @@ var Graph = React.createClass({
     context     : React.PropTypes.object.isRequired
   },  // propTypes
 
+  /*
+  componentWillMount function
+
+  This function is invoked as the component mounts
+
+  Sets up the listeners to handle spacebar presses
+  */
+  componentWillMount: function() {
+    window.addEventListener('keypress', this.handleKeypress);
+  },      // componentWillMount
+
+  /*
+  componentWillUnmount function
+
+  This function is invoked as the component unmounts
+
+  Removes the key press listeners
+  */
+  componentWillUnmount: function() {
+    window.removeEventListener('keypress', this.handleKeypress);
+  },      // componentWillUnmount
+
+  /*
+  handleKeypress function
+
+  Invoked from the keypress listener
+
+  Decodes the key press for a spacebar press and sends it to the toggleTimer
+  function
+  */
+  handleKeypress: function(key) {
+    if(key.keyCode === 32) {
+      console.log('press');
+      this.toggleTimer();
+    }
+  },          // handleKeypress
+
   getInitialState: function() {
 
+    // var dataArray = new Uint8Array(bufferLength);
+    // analyser.getByteTimeDomainData(dataArray);
+    this.startTimer();
+
+
+    return ({
+      waveArray: {},
+      freqArray: {},
+      playing: true
+    });
+  },
+
+  startTimer: function() {
+    console.log('Timer started.');
     var analyser = this.props.analyser;
 
     analyser.fftSize = 16384;
     var bufferLength = analyser.fftSize;
-    // var dataArray = new Uint8Array(bufferLength);
-    // analyser.getByteTimeDomainData(dataArray);
 
     this.timer = setInterval(() => {
       var waveArray = new Uint8Array(analyser.fftSize);
@@ -49,11 +98,22 @@ var Graph = React.createClass({
         });
       }
     }, 25);
+  },
 
-    return ({
-      waveArray: {},
-      freqArray: {}
-    });
+  toggleTimer: function() {
+    if(this.timer === undefined) {
+      this.setState({
+        playing: true
+      });
+      this.startTimer();
+    } else {
+      console.log('Stopping timer.');
+      this.setState({
+        playing: false
+      });
+      clearInterval(this.timer);
+      this.timer = undefined;
+    }
   },
 
   // handleGraphUpdate: function(waveArray) {
