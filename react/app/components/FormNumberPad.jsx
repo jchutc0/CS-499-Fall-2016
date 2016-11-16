@@ -114,7 +114,7 @@ var FormNumberPad = React.createClass({
   */
   playTelephony: function(buttonID) {
     // gain value to send
-    var gain = .01;
+    var gain = 4;
     var frequency1, frequency2;
 
     switch(buttonID)

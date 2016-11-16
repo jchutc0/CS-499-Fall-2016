@@ -62,6 +62,26 @@ var FormFrequency = React.createClass({
     //   gain2: this.refs.gain2.value
     // };    // frequencyObject
 
+    if(gain1 < 0) {
+      gain1 = 0;
+      this.refs.gain1.value = '0';
+    }
+
+    if(gain1 > 10) {
+      gain1 = 10;
+      this.refs.gain1.value = '10';
+    }
+
+    if(gain2 < 0) {
+      gain2 = 0;
+      this.refs.gain2.value = '0';
+    }
+
+    if(gain2 > 10) {
+      gain2 = 10;
+      this.refs.gain2.value = '10';
+    }
+
     if(this.testFrequencyAndGain(frequency1, gain1)) {
       frequencyArray.push(Number(frequency1));
       gainArray.push(Number(gain1));
@@ -158,9 +178,9 @@ var FormFrequency = React.createClass({
 
     // set all refs to an empty string
     this.refs.frequency1.value = '';
-    this.refs.gain1.value = '';
+    this.refs.gain1.value = '10';
     this.refs.frequency2.value = '';
-    this.refs.gain2.value = '';
+    this.refs.gain2.value = '10';
   },      // clearForm function
 
   /*

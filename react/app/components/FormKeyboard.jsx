@@ -54,7 +54,7 @@ var FormKeyboard = React.createClass({
     if((button < 0)  || (button >= frequencyArray.size)) {
       button = 0;
     }
-    return this.props.playFrequency([frequencyArray[button]], [0.1]);
+    return this.props.playFrequency([frequencyArray[button]], [8]);
   },
 
   /*
