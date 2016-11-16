@@ -9,6 +9,7 @@ var React = require('react');
 
 // Require the ErrorModal
 var ErrorModal = require('ErrorModal');
+var FormNumberPadButton = require('FormNumberPadButton');
 
 // create the FormErrorTest class
 var FormErrorTest = React.createClass({
@@ -18,6 +19,10 @@ var FormErrorTest = React.createClass({
       error: errorMessage
     });     // setState
   },        // setError
+
+  playFrequency: function(label, playing) {
+    console.log('playFrequency: '+ label + ' : ' + playing);
+  },
 
   /*
   render function
@@ -29,6 +34,10 @@ var FormErrorTest = React.createClass({
       <div>
         Rendered FormErrorTest
         <ErrorModal clearError={this.setError}/>
+        <FormNumberPadButton playFrequency={this.playFrequency}
+          buttonLabel={"a"} isPlaying={true} />
+        <FormNumberPadButton playFrequency={this.playFrequency}
+          buttonLabel={"b"} isPlaying={false} />
       </div>
     );    // return value
   }       // render function

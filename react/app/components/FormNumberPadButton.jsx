@@ -200,61 +200,7 @@ var FormNumberPadButton = React.createClass({
   // stopSound: function() {
   //   return this.props.playFrequency([], []);
   // },        // stopSound function
-  //
-  // /*
-  // render function
-  //
-  // renders the component to the web browser -- the default entry point
-  // */
-  // render: function() {
-  //   return (
-  //     <div>
-  //       <fieldset>
-  //         <legend>Telephony</legend>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(0)}}
-  //           onMouseUp={() => {this.stopSound()} }>1</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(1)}}
-  //           onMouseUp={() => {this.stopSound()} }>2</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(2)}}
-  //           onMouseUp={() => {this.stopSound()} }>3</button>
-  //         <br/>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(3)}}
-  //           onMouseUp={() => {this.stopSound()} }>4</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(4)}}
-  //           onMouseUp={() => {this.stopSound()} }>5</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(5)}}
-  //           onMouseUp={() => {this.stopSound()} }>6</button>
-  //         <br/>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(6)}}
-  //           onMouseUp={() => {this.stopSound()} }>7</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(7)}}
-  //           onMouseUp={() => {this.stopSound()} }>8</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(8)}}
-  //           onMouseUp={() => {this.stopSound()} }>9</button>
-  //         <br/>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(9)}}
-  //           onMouseUp={() => {this.stopSound()} }>*</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(10)}}
-  //           onMouseUp={() => {this.stopSound()} }>0</button>
-  //         <button className="hollow button"
-  //           onMouseDown={() => {this.playTelephony(11)}}
-  //           onMouseUp={() => {this.stopSound()} }>#</button>
-  //         <br/>
-  //       </fieldset>
-  //     </div>
-  //   );        // return value
-  // }           // render function
+
 
   // require passed properties:
   //   - the playFrequency function to send a play/stop tone to the parent
@@ -277,26 +223,59 @@ var FormNumberPadButton = React.createClass({
     });     // return value
   },        // getInitialState function
 
+  // /*
+  // componentWillReceiveProps function
+  //
+  // This function is called before the component starts rendering to make it
+  // possible to set state variables based on the upcoming components without
+  // causing an infinite loop.
+  //
+  // If there is change in the isPlaying prop, updates the state
+  //
+  // Takes: nextProps - an object of props that are coming into the component
+  // for its upcoming render
+  // */
+  // componentWillReceiveProps: function(nextProps) {
+  //   if(this.state.isPlaying !== nextProps.isPlaying) {
+  //     this.setState({
+  //       isPlaying: nextProps.isPlaying
+  //     });     // setState
+  //   }         // if change in state
+  // },          // componentWillReceiveProps function
+
   /*
-  componentWillReceiveProps function
+  handleMouseDown function
 
-  This function is called before the component starts rendering to make it
-  possible to set state variables based on the upcoming components without
-  causing an infinite loop.
+  Handles the onMouseDown event
 
-  If there is change in the isPlaying prop, updates the state and calls the
-  playFrequency function to play or stop the sound
-
-  Takes: nextProps - an object of props that are coming into the component
-  for its upcoming render
+  If the tone is not playing, calls playFrequency from props with the frequency
+  label and true to play
   */
-  componentWillReceiveProps: function(nextProps) {
-    if(this.state.isPlaying !== nextProps.isPlaying) {
-      this.setState({
-        isPlaying: nextProps.isPlaying
-      });     // setState
-    }         // if change in state
-  },          // componentWillReceiveProps function
+  handleMouseDown: function(e) {
+    // prevent page from reloading
+    e.preventDefault();
+
+    if(!this.props.isPlaying) {
+      this.props.playFrequency(this.props.buttonLabel, true);
+    }
+  },    // handleMouseDown
+
+  /*
+  handleMouseUp function
+
+  Handles the onMouseUp event
+
+  If the tone is playing, calls playFrequency from props with the frequency
+  label and false to stop
+  */
+  handleMouseUp: function(e) {
+    // prevent page from reloading
+    e.preventDefault();
+
+    if(this.props.isPlaying) {
+      this.props.playFrequency(this.props.buttonLabel, false);
+    }
+  },    // handleMouseUp
 
   /*
   render function
@@ -304,11 +283,18 @@ var FormNumberPadButton = React.createClass({
   renders the component to the web browser -- the default entry point
   */
   render: function() {
-    return (
-      <button className="hollow button"
-        onMouseDown={() => {this.playTelephony(11)}}
-        onMouseUp={() => {this.stopSound()} }>#</button>
+    var renderButtonClass = () => {
+      if(this.props.isPlaying) {
+        return "button";
+      }
+      return "hollow button";
+    };
 
+    return (
+      <button className={renderButtonClass()}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+        onMouseOut={this.handleMouseUp}>{this.props.buttonLabel}</button>
     );        // return for render function
   }           // render function
 });           // FormNumberPadButton class
