@@ -31,7 +31,7 @@ Modules to work on:
 - [ ] maybe add scrolling <div> at the bottom for keyboard window
 - [ ] implement Shepherd's Paradox
 - [ ] create global testValidFrequency(freq, gain) function to return t/f
-- [ ] change frequency object to frequency, gain arrays
+- [x] change frequency object to frequency, gain arrays
 
 
 React Component Lifecycle
