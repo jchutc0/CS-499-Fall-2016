@@ -49,15 +49,17 @@ var AudioOut = React.createClass({
     generator
     */
     var renderAudioOut = (props) => {
-      var {frequencyArray, gainArray, whiteNoise, analyser, context} = props;
-      if(frequencyArray.length !== gainArray.length) {
+      var {
+        frequencyArray, gainArray, whiteNoise, analyser, context, paused
+      } = props;
+      if((frequencyArray.length !== gainArray.length) || (paused === true)) {
         return;
       }
 
       if (whiteNoise !== undefined) {
         return (
           <div>
-            <AudioOutWhiteNoise amplitude = {Number(whiteNoise)}
+            <AudioOutWhiteNoise amplitude = {Number(whiteNoise) / 10.0}
               context = {context}
               analyser = {analyser}/>
           </div>
@@ -74,7 +76,7 @@ var AudioOut = React.createClass({
       }
 
       var returnValue = new Array();
-      console.log('frequencyArray.length: '+frequencyArray.length);
+      // console.log('frequencyArray.length: '+frequencyArray.length);
 
       for(
         var i = 0;
@@ -85,7 +87,7 @@ var AudioOut = React.createClass({
           <div key={i}>
             <AudioOutTone key = {i}
               frequency = {Number(frequencyArray[i])}
-              amplitude = {Number(gainArray[i])}
+              amplitude = {Number(gainArray[i]) / 10.0}
               context = {context}
               analyser = {analyser}/>
             <p>Frequency {i} playing. </p>

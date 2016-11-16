@@ -76,6 +76,7 @@ var Graph = React.createClass({
     var analyser = this.props.analyser;
 
     analyser.fftSize = 16384;
+    analyser.smoothingTimeConstant = 0.1;
     var bufferLength = analyser.fftSize;
 
     this.timer = setInterval(() => {
