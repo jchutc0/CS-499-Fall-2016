@@ -21,46 +21,23 @@ var Graph = React.createClass({
   },  // propTypes
 
   /*
-  componentWillMount function
+  playing function
 
-  This function is invoked as the component mounts
+  Invoked when new props are being passed
 
-  Sets up the listeners to handle spacebar presses
+  If the playing prop has changed from before, toggle the timer
   */
-  componentWillMount: function() {
-    window.addEventListener('keypress', this.handleKeypress);
-  },      // componentWillMount
-
-  /*
-  componentWillUnmount function
-
-  This function is invoked as the component unmounts
-
-  Removes the key press listeners
-  */
-  componentWillUnmount: function() {
-    window.removeEventListener('keypress', this.handleKeypress);
-  },      // componentWillUnmount
-
-  /*
-  handleKeypress function
-
-  Invoked from the keypress listener
-
-  Decodes the key press for a spacebar press and sends it to the toggleTimer
-  function
-  */
-  handleKeypress: function(key) {
-    if(key.keyCode === 32) {
-      console.log('press');
+  componentWillReceiveProps: function(nextProps) {
+    if(this.state.playing !== nextProps.playing) {
+      this.setState({
+        playing: nextProps.playing
+      });
       this.toggleTimer();
     }
   },          // handleKeypress
 
   getInitialState: function() {
 
-    // var dataArray = new Uint8Array(bufferLength);
-    // analyser.getByteTimeDomainData(dataArray);
     this.startTimer();
 
 
@@ -72,7 +49,6 @@ var Graph = React.createClass({
   },
 
   startTimer: function() {
-    console.log('Timer started.');
     var analyser = this.props.analyser;
 
     analyser.fftSize = 16384;
@@ -108,7 +84,6 @@ var Graph = React.createClass({
       });
       this.startTimer();
     } else {
-      console.log('Stopping timer.');
       this.setState({
         playing: false
       });
@@ -116,15 +91,6 @@ var Graph = React.createClass({
       this.timer = undefined;
     }
   },
-
-  // handleGraphUpdate: function(waveArray) {
-  //   if(this.props.context.state === 'suspended') {
-  //     waveArray = {};
-  //   }
-  //   this.setState({
-  //     waveArray: waveArray
-  //   });
-  // },
 
   /*
   generateWaveform

@@ -21,6 +21,45 @@ var AudioOut = require('AudioOut');
 var Main = React.createClass({
 
   /*
+  componentWillMount function
+
+  This function is invoked as the component mounts
+
+  Sets up the listeners to handle spacebar presses
+  */
+  componentWillMount: function() {
+    window.addEventListener('keypress', this.handleKeypress);
+  },      // componentWillMount
+
+  /*
+  componentWillUnmount function
+
+  This function is invoked as the component unmounts
+
+  Removes the key press listeners
+  */
+  componentWillUnmount: function() {
+    window.removeEventListener('keypress', this.handleKeypress);
+  },      // componentWillUnmount
+
+  /*
+  handleKeypress function
+
+  Invoked from the keypress listener
+
+  Decodes the key press for a spacebar press and sets the paused state
+  */
+  handleKeypress: function(key) {
+    if(key.keyCode === 32) {
+      // console.log('press');
+      this.setState({
+        paused: !(this.state.paused)
+      });
+    }
+  },          // handleKeypress
+
+
+  /*
   getInitialState function
 
   Sets default state values
@@ -41,7 +80,8 @@ var Main = React.createClass({
       analyser: analyser,
       audioOutFrequencyArray: [],
       audioOutGainArray: [],
-      audioOutWhiteNoise: undefined
+      audioOutWhiteNoise: undefined,
+      paused: false
     };        // state object
   },          // getInitialState function
 
@@ -79,7 +119,8 @@ var Main = React.createClass({
             <div className="columns small-12 large-6">
               <div>
                 <Graph context={this.state.context}
-                  analyser={this.state.analyser}/>
+                  analyser={this.state.analyser}
+                  playing={!this.state.paused}/>
               </div>
             </div>
             <div className="columns small-12 large-6">
@@ -97,7 +138,8 @@ var Main = React.createClass({
               gainArray={this.state.audioOutGainArray}
               whiteNoise={this.state.audioOutWhiteNoise}
               context={this.state.context}
-              analyser={this.state.analyser}/>
+              analyser={this.state.analyser}
+              paused={this.state.paused}/>
           </div>
         </div>
       </div>
