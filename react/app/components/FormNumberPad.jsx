@@ -8,6 +8,10 @@ to play sound encoded from either the keypad press or keyboard input
 // Require the React framework
 var React = require('react');
 
+// Require the number pad button class
+var FormNumberPadButton = require('FormNumberPadButton');
+
+
 // Create the FormNav class
 var FormNumberPad = React.createClass({
 
@@ -15,6 +19,65 @@ var FormNumberPad = React.createClass({
   propTypes: {
     playFrequency: React.PropTypes.func.isRequired
   },      // propTypes
+
+  //// Component constants ////
+  // The gain (volume) for the dialpad -- needs to be 0-10
+  gain: 4,
+
+  // An object of key events and their corresponding number pad entries
+  keyObject: {
+    48: '0',
+    49: '1',
+    50: '2',
+    51: '3',
+    52: '4',
+    53: '5',
+    54: '6',
+    55: '7',
+    56: '8',
+    57: '9'
+  },
+
+  // An object of number pad entries and their corresponding frequencies
+  frequencyObject: {
+    '1': [1209, 697],
+    '2': [1336, 697],
+    '3': [1477, 697],
+    '4': [1209, 770],
+    '5': [1336, 770],
+    '6': [1477, 770],
+    '7': [1209, 852],
+    '8': [1336, 852],
+    '9': [1477, 852],
+    '*': [1209, 941],
+    '0': [1336, 941],
+    '#': [1477, 941]
+  },
+
+  /*
+  getInitialState function
+
+  Sets the initial state
+  */
+  getInitialState: function() {
+    return ({
+      isPlaying: {
+        '1': false,
+        '2': false,
+        '3': false,
+        '4': false,
+        '5': false,
+        '6': false,
+        '7': false,
+        '8': false,
+        '9': false,
+        '*': false,
+        '0': false,
+        '#': false
+      }
+    });     // return value
+  },        // getInitialState function
+
 
   /*
   componentWillMount function
@@ -49,61 +112,22 @@ var FormNumberPad = React.createClass({
   function
   */
   handleKeypress: function(key) {
-    switch (key.keyCode) {
-      case (49):
-      // 1 key
-      this.playTelephony(0);
-      break;
-      case (50):
-      // 2 key
-      this.playTelephony(1);
-      break;
-      case (51):
-      // 3 key
-      this.playTelephony(2);
-      break;
-      case (52):
-      // 4 key
-      this.playTelephony(3);
-      break;
-      case (53):
-      // 5 key
-      this.playTelephony(4);
-      break;
-      case (54):
-      // 6 key
-      this.playTelephony(5);
-      break;
-      case (55):
-      // 7 key
-      this.playTelephony(6);
-      break;
-      case (56):
-      // 8 key
-      this.playTelephony(7);
-      break;
-      case (57):
-      // 9 key
-      this.playTelephony(8);
-      break;
-      case (48):
-      // 0 key
-      this.playTelephony(10);
-      break;
-    };        // switch statement
+    if(this.keyObject[key.keyCode] !== undefined) {
+      this.playTelephony(this.keyObject[key.keyCode], true);
+    }
   },          // handleKeypress
 
   /*
-	handleKeyRelease function
+  handleKeyRelease function
 
   Invoked from the keypress listener
 
   Sends empty frequency (stop sound) to the playFrequency prop
-	*/
+  */
   handleKeyRelease: function(key) {
-    if((key.keyCode > 47) && key.keyCode < 58) {
-      return this.stopSound();
-    }     // if keyup is a numeric key
+    if(this.keyObject[key.keyCode] !== undefined) {
+      this.playTelephony(this.keyObject[key.keyCode], false);
+    }
   },      // handleKeyRelease function
 
   /*
@@ -112,91 +136,39 @@ var FormNumberPad = React.createClass({
   Takes a buttonID and sends a corresponding DTMF frequency pair to the
   playFrequency prop
   */
-  playTelephony: function(buttonID) {
+  playTelephony: function(buttonID, playing) {
     // gain value to send
-    var gain = 4;
-    var frequency1, frequency2;
+    var gain = this.gain;
 
-    switch(buttonID)
-    {
-      case 0:
-      //1 Key
-      frequency1 = 1209;
-      frequency2 = 697;
-      break;
-      case 1:
-      //2 Key
-      frequency1 = 1336;
-      frequency2 = 697;
-      break;
-      case 2:
-      //3 Key
-      frequency1 = 1477;
-      frequency2 = 697;
-      break;
-      case 3:
-      //4 Key
-      frequency1 = 1209;
-      frequency2 = 770;
-      break;
-      case 4:
-      //5 Key
-      frequency1 = 1336;
-      frequency2 = 770;
-      break;
-      case 5:
-      //6 Key
-      frequency1 = 1477;
-      frequency2 = 770;
-      break;
-      case 6:
-      //7 Key
-      frequency1 = 1209;
-      frequency2 = 852;
-      break;
-      case 7:
-      //8 Key
-      frequency1 = 1336;
-      frequency2 = 852;
-      break;
-      case 8:
-      //9 Key
-      frequency1 = 1477;
-      frequency2 = 852;
-      break;
-      case 9:
-      //* Key
-      frequency1 = 1209;
-      frequency2 = 941;
-      break;
-      case 10:
-      //0 Key
-      frequency1 = 1336;
-      frequency2 = 941;
-      break;
-      case 11:
-      //# Key
-      frequency1 = 1477;
-      frequency2 = 941;
-      break;
-      default:
-      frequency1 = 0;
-      frequency2 = 0;
-      break;
-    }     // switch statement
-
-    return this.props.playFrequency(
-      [frequency1, frequency2], [gain, gain]
-    );   // playFrequency call
+    if(this.frequencyObject[buttonID] !== undefined) {
+      var isPlaying = {
+        ...this.state.isPlaying,
+        [buttonID]: playing
+      };
+      this.setState({
+        isPlaying: isPlaying
+      });
+      if(playing) {
+        return this.props.playFrequency(
+          this.frequencyObject[buttonID],
+          [gain, gain]
+        );   // playFrequency call
+      } else {
+        return this.props.playFrequency([], []);
+      }
+    }      // if valid frequency
+    else {
+      return this.props.playFrequency([], []);
+    }     // if invalid frequency
   },      // playTelephony function
 
   /*
-	stopSound function
+  stopSound function
 
   Invoked from key release and mouse up on the keypad
 
   Sends empty sound back to playFrequency prop to stop current sound if any
-	*/
+  */
   stopSound: function() {
     return this.props.playFrequency([], []);
   },        // stopSound function
@@ -207,49 +179,32 @@ var FormNumberPad = React.createClass({
   renders the component to the web browser -- the default entry point
   */
   render: function() {
+    var renderButton = (label) => {
+      return (
+        <FormNumberPadButton playFrequency={this.playTelephony}
+          buttonLabel={label}
+          isPlaying={this.state.isPlaying[label]} />
+      );
+    };
     return (
       <div>
         <fieldset>
           <legend>Telephony</legend>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(0)}}
-            onMouseUp={() => {this.stopSound()} }>1</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(1)}}
-            onMouseUp={() => {this.stopSound()} }>2</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(2)}}
-            onMouseUp={() => {this.stopSound()} }>3</button>
+          {renderButton('1')}
+          {renderButton('2')}
+          {renderButton('3')}
           <br/>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(3)}}
-            onMouseUp={() => {this.stopSound()} }>4</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(4)}}
-            onMouseUp={() => {this.stopSound()} }>5</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(5)}}
-            onMouseUp={() => {this.stopSound()} }>6</button>
+          {renderButton('4')}
+          {renderButton('5')}
+          {renderButton('6')}
           <br/>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(6)}}
-            onMouseUp={() => {this.stopSound()} }>7</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(7)}}
-            onMouseUp={() => {this.stopSound()} }>8</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(8)}}
-            onMouseUp={() => {this.stopSound()} }>9</button>
+          {renderButton('7')}
+          {renderButton('8')}
+          {renderButton('9')}
           <br/>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(9)}}
-            onMouseUp={() => {this.stopSound()} }>*</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(10)}}
-            onMouseUp={() => {this.stopSound()} }>0</button>
-          <button className="hollow button"
-            onMouseDown={() => {this.playTelephony(11)}}
-            onMouseUp={() => {this.stopSound()} }>#</button>
+          {renderButton('*')}
+          {renderButton('0')}
+          {renderButton('#')}
           <br/>
         </fieldset>
       </div>
