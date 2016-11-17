@@ -72,133 +72,53 @@ var FormKeyboard = React.createClass({
   renders the component to the web browser -- the default entry point
   */
   render: function() {
+    // renderButton renders one of the buttons
+    var renderButton = (value) => {
+      return (
+        <button className='keyboard-white'
+          onMouseDown={() => {this.handleButtonDown(value)}}
+          onMouseUp={this.handleButtonUp}></button>
+      );
+    };
+
     return (
       <div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(0)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(0)}</div>
+        <div className="keyboard-white">{renderButton(1)}
+          <div className="keyboard-black">{renderButton(2)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(2)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(1)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(3)}
+          <div className="keyboard-black">{renderButton(4)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(4)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(3)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(5)}
+          <div className="keyboard-black">{renderButton(6)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(6)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(5)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(7)}</div>
+        <div className="keyboard-white">{renderButton(8)}
+          <div className="keyboard-black">{renderButton(9)}</div>
         </div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(7)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(10)}
+          <div className="keyboard-black">{renderButton(11)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(9)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(8)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(12)}</div>
+        <div className="keyboard-white">{renderButton(13)}
+          <div className="keyboard-black">{renderButton(14)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(11)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(10)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(15)}
+          <div className="keyboard-black">{renderButton(16)}</div>
         </div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(12)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(17)}
+          <div className="keyboard-black">{renderButton(18)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(14)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(13)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(19)}</div>
+        <div className="keyboard-white">{renderButton(20)}
+          <div className="keyboard-black">{renderButton(21)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(16)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(15)}}
-            onMouseUp={this.handleButtonUp}></button>
+        <div className="keyboard-white">{renderButton(22)}
+          <div className="keyboard-black">{renderButton(23)}</div>
         </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(18)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(17)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(19)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(21)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(20)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
-        <div className="keyboard-white">
-          <div className="keyboard-black">
-            <button className='keyboard-white'
-              onMouseDown={() => {this.handleButtonDown(23)}}
-              onMouseUp={this.handleButtonUp}></button>
-          </div>
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(22)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
-        <div className="keyboard-white">
-          <button className='keyboard-white'
-            onMouseDown={() => {this.handleButtonDown(24)}}
-            onMouseUp={this.handleButtonUp}></button>
-        </div>
+        <div className="keyboard-white">{renderButton(24)}</div>
+
       </div>
     );    // return value
   }       // render function
