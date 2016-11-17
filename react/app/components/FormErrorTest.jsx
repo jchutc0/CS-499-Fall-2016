@@ -35,21 +35,6 @@ var FormErrorTest = React.createClass({
     });     // setState
   },        // setError
 
-  playFrequency: function(label, playing) {
-    console.log('playFrequency: '+ label + ' : ' + playing);
-    console.log('state: '+ this.state.isPlaying[label]);
-    if(this.state.isPlaying[label] !== undefined) {
-      var isPlaying = {
-        ...this.state.isPlaying,
-        [label]: playing
-      };
-      this.setState({
-        isPlaying: isPlaying
-      });
-      console.log('state: '+ this.state.isPlaying[label]);
-    }
-  },
-
   /*
   render function
 
@@ -59,12 +44,7 @@ var FormErrorTest = React.createClass({
     return (
       <div>
         Rendered FormErrorTest
-        <ErrorModal clearError={this.setError}/>
-        <FormNumberPadButton playFrequency={this.playFrequency}
-          buttonLabel={"a"}
-          isPlaying={this.state.isPlaying["a"]} />
-        <FormNumberPadButton playFrequency={this.playFrequency}
-          buttonLabel={"b"} isPlaying={this.state.isPlaying["b"]} />
+        <ErrorModal error={this.state.error} clearError={this.setError}/>
       </div>
     );    // return value
   }       // render function
