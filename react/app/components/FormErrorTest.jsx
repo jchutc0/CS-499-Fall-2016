@@ -14,14 +14,40 @@ var FormNumberPadButton = require('FormNumberPadButton');
 // create the FormErrorTest class
 var FormErrorTest = React.createClass({
 
+  /*
+  getInitialState function
+
+  Sets the initial state
+  */
+  getInitialState: function() {
+    return ({
+      isPlaying: {
+        a: true,
+        b: false
+      }
+    });     // return value
+  },        // getInitialState function
+
   setError: function(errorMessage) {
     this.setState({
       error: errorMessage
+
     });     // setState
   },        // setError
 
   playFrequency: function(label, playing) {
     console.log('playFrequency: '+ label + ' : ' + playing);
+    console.log('state: '+ this.state.isPlaying[label]);
+    if(this.state.isPlaying[label] !== undefined) {
+      var isPlaying = {
+        ...this.state.isPlaying,
+        [label]: playing
+      };
+      this.setState({
+        isPlaying: isPlaying
+      });
+      console.log('state: '+ this.state.isPlaying[label]);
+    }
   },
 
   /*
@@ -35,9 +61,10 @@ var FormErrorTest = React.createClass({
         Rendered FormErrorTest
         <ErrorModal clearError={this.setError}/>
         <FormNumberPadButton playFrequency={this.playFrequency}
-          buttonLabel={"a"} isPlaying={true} />
+          buttonLabel={"a"}
+          isPlaying={this.state.isPlaying["a"]} />
         <FormNumberPadButton playFrequency={this.playFrequency}
-          buttonLabel={"b"} isPlaying={false} />
+          buttonLabel={"b"} isPlaying={this.state.isPlaying["b"]} />
       </div>
     );    // return value
   }       // render function
