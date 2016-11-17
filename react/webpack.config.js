@@ -34,6 +34,7 @@ module.exports = {
 			FormNav:			 		'app/components/FormNav.jsx',
 			FormNumberPad: 		'app/components/FormNumberPad.jsx',
 			FormNumberPadButton: 		'app/components/FormNumberPadButton.jsx',
+			FormShephards: 		'app/components/FormShephards.jsx',
 			FormWavIn: 				'app/components/FormWavIn.jsx',
 			FormWhiteNoise:		'app/components/FormWhiteNoise.jsx',
 			Graph:		 				'app/components/Graph.jsx',

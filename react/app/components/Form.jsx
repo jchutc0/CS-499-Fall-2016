@@ -15,6 +15,7 @@ var FormKeyboard = require('FormKeyboard');
 var FormMicrophone = require('FormMicrophone');
 var FormNav = require('FormNav');
 var FormNumberPad = require('FormNumberPad');
+var FormShephards = require('FormShephards');
 var FormWavIn = require('FormWavIn');
 var FormWhiteNoise = require('FormWhiteNoise');
 
@@ -84,7 +85,8 @@ var Form = React.createClass({
 					analyser={analyser}/>,
 				<FormErrorTest/>,
 				<FormKeyboard playFrequency={handlePlayFrequency}/>,
-				<FormWavIn/>
+				<FormWavIn/>,
+				<FormShephards playFrequency={handlePlayFrequency}/>
 			];
 
 			if(

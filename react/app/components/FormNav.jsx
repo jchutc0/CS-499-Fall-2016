@@ -46,6 +46,7 @@ var FormNav = React.createClass({
 								<option>testing - error modal</option>
 								<option>Music Keybaord Input</option>
 								<option>TODO: Wav File Input</option>
+								<option>TODO: The Secret Twist</option>
 							</select>
 						</li>
 					</ul>
