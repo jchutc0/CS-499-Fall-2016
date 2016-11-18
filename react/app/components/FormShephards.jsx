@@ -35,15 +35,15 @@ var FormShephards = React.createClass({
   // maxGain, the max gain level we'll use
   maxGain: 0.5,
   minGain: 0.00001,
-  variance: 0.4,
-  meanFreq: 880,
+  variance: 1,
+  meanFreq: 440,
 
   // maxFrequency, the highest frequency level we'll use
   maxFrequency: 17000,
 
   getInitialState: function() {
     return {
-      playing: false,
+      playing: true,
       lowTone: 0
     };
   },
@@ -98,34 +98,34 @@ var FormShephards = React.createClass({
 
   var wave = document.getElementById('wave');
 
-function makePath(points){
-	var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  function makePath(points){
+  var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.setAttribute('d', 'M 0,50 ' + points.join(' ') + ' 100,50 z');
   path.setAttribute('transform', 'translate(0,0)');
   wave.appendChild(path);
-}
+  }
 
-function plotOnBell(x,scale){
+  function plotOnBell(x,scale){
   //This is the real workhorse of this algorithm. It returns values along a bell curve from 0 - 1 - 0 with an input of 0 - 1.
   scale = scale || false;
   var stdD = .125
   var mean = .5
   if(scale){
-    return  1 / (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2))));
+  return  1 / (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2))));
   }else{
-     return (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2)))) * plotOnBell(.5,true);
+  return (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2)))) * plotOnBell(.5,true);
   }
-}
+  }
 
-var step = .5;
-var limit = 100;
-var shapeAPoints = [];
-var shapeBPoints = [];
-var shapeCPoints = [];
-var shapeDPoints = [];
-var shapeEPoints = [];
+  var step = .5;
+  var limit = 100;
+  var shapeAPoints = [];
+  var shapeBPoints = [];
+  var shapeCPoints = [];
+  var shapeDPoints = [];
+  var shapeEPoints = [];
 
-for(i = step ; i < limit ; i += step){
+  for(i = step ; i < limit ; i += step){
 
   var plot = plotOnBell(i / limit);
 
@@ -135,14 +135,14 @@ for(i = step ; i < limit ; i += step){
   shapeDPoints.push([i, 50 - (20 * plot)]);
   shapeEPoints.push([i, 50 - (10 * plot)]);
 
-}
+  }
 
 
-makePath(shapeAPoints);
-makePath(shapeBPoints);
-makePath(shapeCPoints);
-makePath(shapeDPoints);
-makePath(shapeEPoints);
+  makePath(shapeAPoints);
+  makePath(shapeBPoints);
+  makePath(shapeCPoints);
+  makePath(shapeDPoints);
+  makePath(shapeEPoints);
 
 
   */
@@ -163,22 +163,36 @@ makePath(shapeEPoints);
 
   soundUp: function(e) {
     e.preventDefault();
+    console.log('Sound down: '+(this.state.lowTone + 1) % this.lowTones.length);
     this.setState({
       lowTone: (this.state.lowTone + 1) % this.lowTones.length
     });
-    if(this.state.playing) {
-      this.playShephards(this.state.lowTone);
-    }
+    // if(this.state.playing) {
+    //   this.playShephards(this.state.lowTone);
+    // }
   },
 
   soundDown: function(e) {
     e.preventDefault();
+    console.log('Sound up: '+(this.state.lowTone + this.lowTones.length - 1) % this.lowTones.length);
     this.setState({
       lowTone: (this.state.lowTone + this.lowTones.length - 1) % this.lowTones.length
     });
-    if(this.state.playing) {
-      this.playShephards(this.state.lowTone);
-    }
+    // if(this.state.playing) {
+    //   this.playShephards(this.state.lowTone);
+    // }
+  },
+
+  handleButtonDown: function(e) {
+    e.preventDefault();
+    console.log('button down');
+    this.playShephards(this.state.lowTone);
+  },
+
+  handleButtonUp: function(e) {
+    e.preventDefault();
+    console.log('button up');
+    this.props.playFrequency([], []);
   },
 
 
@@ -192,7 +206,8 @@ makePath(shapeEPoints);
       <div>
         <p>TODO: Implement the twist</p>
         <button type='button' className='expanded button' ref='stopSound'
-          onClick={this.toggleSound}>Toggle Sound</button>
+          onMouseDown={this.handleButtonDown}
+          onMouseUp={this.handleButtonUp}>Toggle Sound</button>
         <button type='button' className='expanded button' ref='stopSound'
           onClick={this.soundUp}>Sound Up</button>
         <button type='button' className='expanded button' ref='stopSound'
