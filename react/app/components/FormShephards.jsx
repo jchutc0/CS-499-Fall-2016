@@ -33,11 +33,13 @@ var FormShephards = React.createClass({
   ],
 
   // maxGain, the max gain level we'll use
-  maxGain: .5,
+  maxGain: 0.5,
   minGain: 0.00001,
+  variance: 0.4,
+  meanFreq: 880,
 
   // maxFrequency, the highest frequency level we'll use
-  maxFrequency: 15000,
+  maxFrequency: 17000,
 
   getInitialState: function() {
     return {
@@ -53,6 +55,9 @@ var FormShephards = React.createClass({
 
     var frequencyArray = [];
     var gainArray;
+    var variance = this.variance;
+    var mean = Math.log(this.meanFreq);
+    var distVariable = 1 / Math.sqrt(Math.PI * 2 * variance);
     for (
       var frequency = this.lowTones[lowTone];
       frequency < this.maxFrequency;
@@ -62,25 +67,28 @@ var FormShephards = React.createClass({
       // gainArray.push(this.maxGain);
     }
     gainArray = new Array(frequencyArray.length);
-    var rowE = new Array(frequencyArray.length);
-    var rowF = new Array(frequencyArray.length);
-    var rowG = new Array(frequencyArray.length);
-    var rowH = new Array(frequencyArray.length);
-    var lowLog = Math.log(frequencyArray[0]);
-    var highLog = Math.log(frequencyArray[frequencyArray.length-1]) - lowLog;
+    // var rowE = new Array(frequencyArray.length);
+    // var rowF = new Array(frequencyArray.length);
+    // var rowG = new Array(frequencyArray.length);
+    // var rowH = new Array(frequencyArray.length);
+    // var lowLog = Math.log(frequencyArray[0]);
+    // var highLog = Math.log(frequencyArray[frequencyArray.length-1]) - lowLog;
     for(var i = 0; i < frequencyArray.length; i++) {
       // gainArray[i] = Math.exp(-1 * Math.pow((2 * i / gainArray.length) - 1, 2)) / (Math.sqrt(Math.PI));
       // to break this up...
-      rowE[i] = Math.log(frequencyArray[i]);
-      rowF[i] = (2 * (rowE[i] - lowLog) / highLog) - 1;
-      rowG[i] = Math.exp(rowF[i] * rowF[i] * -1);
-      rowH[i] = rowG[i] / Math.sqrt(Math.PI) / 2;
-      gainArray[i] = rowG[i] * 10;
+      // rowE[i] = Math.log(frequencyArray[i]);
+      // rowF[i] = (2 * (rowE[i] - lowLog) / highLog) - 1;
+      // rowG[i] = Math.exp(rowF[i] * rowF[i] * -1);
+      // rowH[i] = rowG[i] / Math.sqrt(Math.PI) / 2;
+      // gainArray[i] = rowG[i] * 10;
+      // gainArray[i] = Math.exp(Math.pow((Math.log(frequencyArray[i]) - mean), 2) / (variance * -2)) * distVariable;
+      gainArray[i] = Math.exp(Math.pow((Math.log(frequencyArray[i]) - mean), 2) / (variance * -2));
     }
-    console.log('low log: '+lowLog);
-    console.log('high log: '+highLog);
-    console.log('rowH: '+rowH);
+    // console.log('low log: '+lowLog);
+    // console.log('high log: '+highLog);
+    // console.log('rowH: '+rowH);
     console.log('gain array: '+ gainArray);
+    console.log('low frequency: ' + frequencyArray[0]);
     this.props.playFrequency(frequencyArray, gainArray);
   },
 
