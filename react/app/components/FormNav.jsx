@@ -20,7 +20,8 @@ var FormNav = React.createClass({
 
 	Invoked by change in the dropdown box - reports change to setForm prop
 	*/
-	handleDropdown: function() {
+	handleDropdown: function(e) {
+		e.preventDefault();
 		return this.props.setForm(this.refs.selection.selectedIndex);
 	},			// handleDropdown
 
@@ -38,7 +39,7 @@ var FormNav = React.createClass({
 							Choose One:
 						</li>
 						<li>
-							<select onChange={() => {this.handleDropdown()}} ref='selection'>
+							<select onChange={this.handleDropdown} ref='selection'>
 								<option>Frequency Generator</option>
 								<option>Number Pad</option>
 								<option>White Noise Generator</option>
@@ -46,7 +47,7 @@ var FormNav = React.createClass({
 								<option>testing - error modal</option>
 								<option>Music Keybaord Input</option>
 								<option>TODO: Wav File Input</option>
-								<option>TODO: The Secret Twist</option>
+								<option>Shephard's Tone</option>
 							</select>
 						</li>
 					</ul>

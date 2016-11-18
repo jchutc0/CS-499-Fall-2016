@@ -18,23 +18,21 @@ var FormShephards = React.createClass({
   //// Class constants ////
   // low tones, the base tones to generate for the step up
   lowTones: [
-    16.35,
-    17.32,
-    18.35,
-    19.45,
-    20.60,
-    21.83,
-    23.12,
-    24.50,
-    25.96,
-    27.50,
-    29.14,
-    30.87
+    {frequency: 16.35, pitch: 'C'},
+    {frequency: 17.32, pitch: 'C#/Db'},
+    {frequency: 18.35, pitch: 'D'},
+    {frequency: 19.45, pitch: 'D#/Eb'},
+    {frequency: 20.60, pitch: 'E'},
+    {frequency: 21.83, pitch: 'F'},
+    {frequency: 23.12, pitch: 'F#/Gb'},
+    {frequency: 24.50, pitch: 'G'},
+    {frequency: 25.96, pitch: 'G#/Ab'},
+    {frequency: 27.50, pitch: 'A'},
+    {frequency: 29.14, pitch: 'A#/Bb'},
+    {frequency: 30.87, pitch: 'B'}
   ],
 
-  // maxGain, the max gain level we'll use
-  maxGain: 0.5,
-  minGain: 0.00001,
+  // variance and mean are used to determine the shape of the bell curve
   variance: 1,
   meanFreq: 440,
 
@@ -43,158 +41,53 @@ var FormShephards = React.createClass({
 
   getInitialState: function() {
     return {
-      playing: true,
       lowTone: 0
     };
   },
 
   playShephards: function(lowTone) {
-    if(!this.state.playing) {
-      return;
-    }
-
     var frequencyArray = [];
     var gainArray;
     var variance = this.variance;
     var mean = Math.log(this.meanFreq);
-    var distVariable = 1 / Math.sqrt(Math.PI * 2 * variance);
     for (
-      var frequency = this.lowTones[lowTone];
+      var frequency = this.lowTones[lowTone].frequency;
       frequency < this.maxFrequency;
       frequency = frequency * 2
     ) {
       frequencyArray.push(frequency);
-      // gainArray.push(this.maxGain);
     }
     gainArray = new Array(frequencyArray.length);
-    // var rowE = new Array(frequencyArray.length);
-    // var rowF = new Array(frequencyArray.length);
-    // var rowG = new Array(frequencyArray.length);
-    // var rowH = new Array(frequencyArray.length);
-    // var lowLog = Math.log(frequencyArray[0]);
-    // var highLog = Math.log(frequencyArray[frequencyArray.length-1]) - lowLog;
     for(var i = 0; i < frequencyArray.length; i++) {
-      // gainArray[i] = Math.exp(-1 * Math.pow((2 * i / gainArray.length) - 1, 2)) / (Math.sqrt(Math.PI));
-      // to break this up...
-      // rowE[i] = Math.log(frequencyArray[i]);
-      // rowF[i] = (2 * (rowE[i] - lowLog) / highLog) - 1;
-      // rowG[i] = Math.exp(rowF[i] * rowF[i] * -1);
-      // rowH[i] = rowG[i] / Math.sqrt(Math.PI) / 2;
-      // gainArray[i] = rowG[i] * 10;
-      // gainArray[i] = Math.exp(Math.pow((Math.log(frequencyArray[i]) - mean), 2) / (variance * -2)) * distVariable;
-      gainArray[i] = Math.exp(Math.pow((Math.log(frequencyArray[i]) - mean), 2) / (variance * -2));
+      gainArray[i] = (
+        Math.exp(Math.pow((Math.log(frequencyArray[i]) - mean), 2)
+       / (variance * -2)));
     }
-    // console.log('low log: '+lowLog);
-    // console.log('high log: '+highLog);
-    // console.log('rowH: '+rowH);
-    console.log('gain array: '+ gainArray);
-    console.log('low frequency: ' + frequencyArray[0]);
     this.props.playFrequency(frequencyArray, gainArray);
   },
 
-  /*
-
-  bell curve algorithm:https://codepen.io/zapplebee/pen/ByvmMo
-
-  var wave = document.getElementById('wave');
-
-  function makePath(points){
-  var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', 'M 0,50 ' + points.join(' ') + ' 100,50 z');
-  path.setAttribute('transform', 'translate(0,0)');
-  wave.appendChild(path);
-  }
-
-  function plotOnBell(x,scale){
-  //This is the real workhorse of this algorithm. It returns values along a bell curve from 0 - 1 - 0 with an input of 0 - 1.
-  scale = scale || false;
-  var stdD = .125
-  var mean = .5
-  if(scale){
-  return  1 / (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2))));
-  }else{
-  return (( 1/( stdD * Math.sqrt(2 * Math.PI) ) ) * Math.pow(Math.E , -1 * Math.pow(x - mean, 2) / (2 * Math.pow(stdD,2)))) * plotOnBell(.5,true);
-  }
-  }
-
-  var step = .5;
-  var limit = 100;
-  var shapeAPoints = [];
-  var shapeBPoints = [];
-  var shapeCPoints = [];
-  var shapeDPoints = [];
-  var shapeEPoints = [];
-
-  for(i = step ; i < limit ; i += step){
-
-  var plot = plotOnBell(i / limit);
-
-  shapeAPoints.push([i, 50 - (50 * plot)]);
-  shapeBPoints.push([i, 50 - (40 * plot)]);
-  shapeCPoints.push([i, 50 - (30 * plot)]);
-  shapeDPoints.push([i, 50 - (20 * plot)]);
-  shapeEPoints.push([i, 50 - (10 * plot)]);
-
-  }
-
-
-  makePath(shapeAPoints);
-  makePath(shapeBPoints);
-  makePath(shapeCPoints);
-  makePath(shapeDPoints);
-  makePath(shapeEPoints);
-
-
-  */
-
-  toggleSound: function(e) {
+  handleSoundUpDown: function(e) {
     e.preventDefault();
-    var newPlaying = !this.state.playing;
+    var newTone = (this.state.lowTone + 1) % this.lowTones.length;
     this.setState({
-      playing: newPlaying
+      lowTone: newTone
     });
-    if(newPlaying) {
-      this.playShephards(this.state.lowTone);
-    } else {
-      this.props.playFrequency([], []);
-    }
-    console.log('playing: '+this.state.playing);
+    this.playShephards(newTone);
   },
 
-  soundUp: function(e) {
+  handleSoundDownDown: function(e) {
     e.preventDefault();
-    console.log('Sound down: '+(this.state.lowTone + 1) % this.lowTones.length);
+    var newTone = (this.state.lowTone + this.lowTones.length - 1) % this.lowTones.length;
     this.setState({
-      lowTone: (this.state.lowTone + 1) % this.lowTones.length
+      lowTone: newTone
     });
-    // if(this.state.playing) {
-    //   this.playShephards(this.state.lowTone);
-    // }
+    this.playShephards(newTone);
   },
 
-  soundDown: function(e) {
+  handleSoundButtonUp: function(e) {
     e.preventDefault();
-    console.log('Sound up: '+(this.state.lowTone + this.lowTones.length - 1) % this.lowTones.length);
-    this.setState({
-      lowTone: (this.state.lowTone + this.lowTones.length - 1) % this.lowTones.length
-    });
-    // if(this.state.playing) {
-    //   this.playShephards(this.state.lowTone);
-    // }
-  },
-
-  handleButtonDown: function(e) {
-    e.preventDefault();
-    console.log('button down');
-    this.playShephards(this.state.lowTone);
-  },
-
-  handleButtonUp: function(e) {
-    e.preventDefault();
-    console.log('button up');
     this.props.playFrequency([], []);
   },
-
 
   /*
   render function
@@ -204,14 +97,13 @@ var FormShephards = React.createClass({
   render: function() {
     return (
       <div>
-        <p>TODO: Implement the twist</p>
         <button type='button' className='expanded button' ref='stopSound'
-          onMouseDown={this.handleButtonDown}
-          onMouseUp={this.handleButtonUp}>Toggle Sound</button>
+          onMouseDown={this.handleSoundUpDown}
+          onMouseUp={this.handleSoundButtonUp}>Sound Up</button>
         <button type='button' className='expanded button' ref='stopSound'
-          onClick={this.soundUp}>Sound Up</button>
-        <button type='button' className='expanded button' ref='stopSound'
-          onClick={this.soundDown}>Sound Down</button>
+          onMouseDown={this.handleSoundDownDown}
+          onMouseUp={this.handleSoundButtonUp}>Sound Down</button>
+        <p>Pitch played: {this.lowTones[this.state.lowTone].pitch}</p>
       </div>
     );        // return value
   }           // render function
