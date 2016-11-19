@@ -12,7 +12,8 @@ var React = require('react');
 var FormNav = React.createClass({
 	// require the setForm function as a passed property
 	propTypes: {
-		setForm: React.PropTypes.func.isRequired
+		setForm: React.PropTypes.func.isRequired,
+		formsArray: React.PropTypes.array.isRequired
 	},			// propTypes
 
 	/*
@@ -31,23 +32,26 @@ var FormNav = React.createClass({
 	renders the component to the web browser -- the default entry point
 	*/
 	render: function() {
+
+		var renderOptions = (formsArray) => {
+			var returnValue = new Array(formsArray.length);
+			for(var i = 0; i < formsArray.length; i++) {
+				returnValue[i] = (<option key={i}>{formsArray[i].label}</option>);
+			}
+			return returnValue;
+		};
+
+
 		return (
 			<div className="top-bar">
 				<div className="top-bar-left">
 					<ul className="menu">
 						<li>
-							Choose One:
+							Choose One: 
 						</li>
 						<li>
 							<select onChange={this.handleDropdown} ref='selection'>
-								<option>Frequency Generator</option>
-								<option>Number Pad</option>
-								<option>White Noise Generator</option>
-								<option>Microphone Input</option>
-								<option>testing - error modal</option>
-								<option>Music Keybaord Input</option>
-								<option>TODO: Wav File Input</option>
-								<option>Shephard's Tone</option>
+								{renderOptions(this.props.formsArray)}
 							</select>
 						</li>
 					</ul>

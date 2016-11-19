@@ -59,11 +59,52 @@ var Form = React.createClass({
 	},					// setCurrentForm function
 
 	/*
-  render function
+	render function
 
-  renders the component to the web browser -- the default entry point
-  */
+	renders the component to the web browser -- the default entry point
+	*/
 	render: function() {
+
+		var {
+			context,
+			analyser,
+			handlePlayFrequency
+		} = this.props;
+
+		var formsArray = [
+			{
+				module: (<FormFrequency playFrequency={handlePlayFrequency}/>),
+				label: 'Frequency Generator'
+			},
+			{
+				module: (<FormNumberPad playFrequency={handlePlayFrequency}/>),
+				label: 'Number Pad'
+			},
+			{
+				module: (<FormWhiteNoise playWhiteNoise={handlePlayFrequency}/>),
+				label: 'White Noise Generator'
+			},
+			{
+				module: (<FormMicrophone context={context} analyser={analyser}/>),
+				label: 'Microphone Input'
+			},
+			{
+				module: (<FormKeyboard playFrequency={handlePlayFrequency}/>),
+				label: 'Music Keybaord Input'
+			},
+			{
+				module: (<FormShephards playFrequency={handlePlayFrequency}/>),
+				label: "Shephard's Tone"
+			},
+			{
+				module: (<FormWavIn/>),
+				label: 'TODO: Wav File Input'
+			},
+			{
+				module: (<FormErrorTest/>),
+				label: 'testing - error modal'
+			}
+		];
 
 		/*
 		renderCurrentFrom function
@@ -71,44 +112,24 @@ var Form = React.createClass({
 		finds the current form to display from the form parameter and renders the
 		proper form
 		*/
-		function renderCurrentFrom(form, props, handlePlayFrequency) {
-			var {
-				context,
-				analyser
-			} = props;
-
-			var formsArray = [
-				<FormFrequency playFrequency={handlePlayFrequency}/>,
-				<FormNumberPad playFrequency={handlePlayFrequency}/>,
-				<FormWhiteNoise playWhiteNoise={handlePlayFrequency}/>,
-				<FormMicrophone context={context}
-					analyser={analyser}/>,
-				<FormErrorTest/>,
-				<FormKeyboard playFrequency={handlePlayFrequency}/>,
-				<FormWavIn/>,
-				<FormShephards playFrequency={handlePlayFrequency}/>
-			];
+		var renderCurrentFrom = (form) => {
 
 			if(
 				(Number.isInteger(form)) &&
 				(form >= 0) &&
 				(form <= formsArray.length)
 			) {
-				return formsArray[form];
+				return formsArray[form].module;
 			} else {
-				return formsArray[0];
+				return formsArray[0].module;
 			}
 		}						// renderCurrentFrom function
 
 		return (
 			<div>
-				<FormNav setForm={this.setCurrentForm}/>
+				<FormNav setForm={this.setCurrentForm} formsArray={formsArray}/>
 				<div>
-					{renderCurrentFrom(
-						this.state.formDisplayed,
-						this.props,
-						this.props.handlePlayFrequency
-					)}
+					{renderCurrentFrom(this.state.formDisplayed)}
 				</div>
 			</div>
 		);
