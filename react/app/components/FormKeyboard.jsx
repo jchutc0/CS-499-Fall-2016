@@ -18,6 +18,22 @@ var FormKeyboard = React.createClass({
     playFrequency: React.PropTypes.func.isRequired
   },		// propTypes
 
+  keycodes: {
+    'q' : 81,
+      '2' : 50,
+    'w' : 87,
+      '3' : 51,
+    'e' : 69,
+    'r' : 82,
+      '5' : 53,
+    't' : 84,
+      '6' : 54,
+    'y' : 89,
+      '7' : 55,
+    'u' : 85,
+    'i' : 73
+  },
+
   /*
   handleButtonDown function
 
@@ -78,19 +94,20 @@ var FormKeyboard = React.createClass({
   */
   render: function() {
     // renderButton renders one of the buttons
-    var renderButton = (value) => {
+    var renderButton = (value, key) => {
       return (
         <FormButton buttonID={value}
           downClass={"keyboard-pressed"}
           upClass={"keyboard-unpressed"}
           callback={this.handleButton}
+          keycode={key}
           />
       );
     };
 
     return (
       <div>
-        <div className="keyboard-white">{renderButton('0')}</div>
+        <div className="keyboard-white">{renderButton('0', this.keycodes['i'])}</div>
         <div className="keyboard-white">{renderButton('1')}
           <div className="keyboard-black">{renderButton('2')}</div>
         </div>
