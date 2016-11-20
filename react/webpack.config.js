@@ -30,6 +30,7 @@ module.exports = {
 			FormErrorTest:		'app/components/FormErrorTest.jsx',
 			FormFrequency: 		'app/components/FormFrequency.jsx',
 			FormKeyboard: 		'app/components/FormKeyboard.jsx',
+			FormKeyboardButton: 			'app/components/FormKeyboardButton.jsx',
 			FormMicrophone: 	'app/components/FormMicrophone.jsx',
 			FormNav:			 		'app/components/FormNav.jsx',
 			FormNumberPad: 		'app/components/FormNumberPad.jsx',

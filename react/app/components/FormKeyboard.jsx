@@ -75,7 +75,7 @@ var FormKeyboard = React.createClass({
     // renderButton renders one of the buttons
     var renderButton = (value) => {
       return (
-        <button className='keyboard-white'
+        <button className='keyboard-unpressed'
           onMouseDown={() => {this.handleButtonDown(value)}}
           onMouseUp={this.handleButtonUp}></button>
       );
