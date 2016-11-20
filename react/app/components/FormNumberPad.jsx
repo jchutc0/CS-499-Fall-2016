@@ -9,7 +9,8 @@ to play sound encoded from either the keypad press or keyboard input
 var React = require('react');
 
 // Require the number pad button class
-var FormNumberPadButton = require('FormNumberPadButton');
+// var FormNumberPadButton = require('FormNumberPadButton');
+var FormButton = require('FormButton');
 
 
 // Create the FormNav class
@@ -26,16 +27,16 @@ var FormNumberPad = React.createClass({
 
   // An object of key events and their corresponding number pad entries
   keyObject: {
-    48: '0',
-    49: '1',
-    50: '2',
-    51: '3',
-    52: '4',
-    53: '5',
-    54: '6',
-    55: '7',
-    56: '8',
-    57: '9'
+    '0' : 48,
+    '1' : 49,
+    '2' : 50,
+    '3' : 51,
+    '4' : 52,
+    '5' : 53,
+    '6' : 54,
+    '7' : 55,
+    '8' : 56,
+    '9' : 57
   },
 
   // An object of number pad entries and their corresponding frequencies
@@ -55,82 +56,6 @@ var FormNumberPad = React.createClass({
   },
 
   /*
-  getInitialState function
-
-  Sets the initial state
-  */
-  getInitialState: function() {
-    return ({
-      isPlaying: {
-        '1': false,
-        '2': false,
-        '3': false,
-        '4': false,
-        '5': false,
-        '6': false,
-        '7': false,
-        '8': false,
-        '9': false,
-        '*': false,
-        '0': false,
-        '#': false
-      }
-    });     // return value
-  },        // getInitialState function
-
-
-  /*
-  componentWillMount function
-
-  This function is invoked as the component mounts
-
-  Sets up the keyup and keydown listeners to handle key presses
-  */
-  componentWillMount: function() {
-    window.addEventListener('keydown', this.handleKeypress);
-    window.addEventListener('keyup', this.handleKeyRelease);
-  },      // componentWillMount
-
-  /*
-  componentWillUnmount function
-
-  This function is invoked as the component unmounts
-
-  Removes the key press listeners
-  */
-  componentWillUnmount: function() {
-    window.removeEventListener('keydown', this.handleKeypress);
-    window.removeEventListener('keyup', this.handleKeyRelease);
-  },      // componentWillUnmount
-
-  /*
-  handleKeypress function
-
-  Invoked from the keypress listener
-
-  Decodes the key press for a number press and sends it to the playTelephony
-  function
-  */
-  handleKeypress: function(key) {
-    if(this.keyObject[key.keyCode] !== undefined) {
-      this.playTelephony(this.keyObject[key.keyCode], true);
-    }
-  },          // handleKeypress
-
-  /*
-  handleKeyRelease function
-
-  Invoked from the keypress listener
-
-  Sends empty frequency (stop sound) to the playFrequency prop
-  */
-  handleKeyRelease: function(key) {
-    if(this.keyObject[key.keyCode] !== undefined) {
-      this.playTelephony(this.keyObject[key.keyCode], false);
-    }
-  },      // handleKeyRelease function
-
-  /*
   playTelephony function
 
   Takes a buttonID and sends a corresponding DTMF frequency pair to the
@@ -141,13 +66,6 @@ var FormNumberPad = React.createClass({
     var gain = this.gain;
 
     if(this.frequencyObject[buttonID] !== undefined) {
-      var isPlaying = {
-        ...this.state.isPlaying,
-        [buttonID]: playing
-      };
-      this.setState({
-        isPlaying: isPlaying
-      });
       if(playing) {
         return this.props.playFrequency(
           this.frequencyObject[buttonID],
@@ -163,17 +81,6 @@ var FormNumberPad = React.createClass({
   },      // playTelephony function
 
   /*
-  stopSound function
-
-  Invoked from key release and mouse up on the keypad
-
-  Sends empty sound back to playFrequency prop to stop current sound if any
-  */
-  stopSound: function() {
-    return this.props.playFrequency([], []);
-  },        // stopSound function
-
-  /*
   render function
 
   renders the component to the web browser -- the default entry point
@@ -181,9 +88,12 @@ var FormNumberPad = React.createClass({
   render: function() {
     var renderButton = (label) => {
       return (
-        <FormNumberPadButton playFrequency={this.playTelephony}
-          buttonLabel={label}
-          isPlaying={this.state.isPlaying[label]} />
+        <FormButton buttonID={label}
+          buttonLabel={label+'i'}
+          downClass={"button"}
+          upClass={"hollow button"}
+          callback={this.playTelephony}
+          keyCode={this.keyObject[label]} />
       );
     };
     return (
