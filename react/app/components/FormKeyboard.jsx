@@ -31,7 +31,19 @@ var FormKeyboard = React.createClass({
     'y' : 89,
       '7' : 55,
     'u' : 85,
-    'i' : 73
+    'i' : 73,
+    'z' : 90,
+      's' : 83,
+    'x' : 88,
+      'd' : 68,
+    'c' : 67,
+    'v' : 86,
+      'g' : 71,
+    'b' : 66,
+      'h' : 72,
+    'n' : 78,
+      'j' : 74,
+    'm' : 77
   },
 
   /*
@@ -100,7 +112,7 @@ var FormKeyboard = React.createClass({
           downClass={"keyboard-pressed"}
           upClass={"keyboard-unpressed"}
           callback={this.handleButton}
-          keycode={key}
+          keyCode={key}
           />
       );
     };
@@ -108,40 +120,40 @@ var FormKeyboard = React.createClass({
     return (
       <div>
         <div className="keyboard-white">{renderButton('0', this.keycodes['i'])}</div>
-        <div className="keyboard-white">{renderButton('1')}
-          <div className="keyboard-black">{renderButton('2')}</div>
+        <div className="keyboard-white">{renderButton('1', this.keycodes['u'])}
+          <div className="keyboard-black">{renderButton('2', this.keycodes['7'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('3')}
-          <div className="keyboard-black">{renderButton('4')}</div>
+        <div className="keyboard-white">{renderButton('3', this.keycodes['y'])}
+          <div className="keyboard-black">{renderButton('4', this.keycodes['6'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('5')}
-          <div className="keyboard-black">{renderButton('6')}</div>
+        <div className="keyboard-white">{renderButton('5', this.keycodes['t'])}
+          <div className="keyboard-black">{renderButton('6', this.keycodes['5'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('7')}</div>
-        <div className="keyboard-white">{renderButton('8')}
-          <div className="keyboard-black">{renderButton('9')}</div>
+        <div className="keyboard-white">{renderButton('7', this.keycodes['r'])}</div>
+        <div className="keyboard-white">{renderButton('8', this.keycodes['e'])}
+          <div className="keyboard-black">{renderButton('9', this.keycodes['3'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('10')}
-          <div className="keyboard-black">{renderButton('11')}</div>
+        <div className="keyboard-white">{renderButton('10', this.keycodes['w'])}
+          <div className="keyboard-black">{renderButton('11', this.keycodes['2'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('12')}</div>
-        <div className="keyboard-white">{renderButton('13')}
-          <div className="keyboard-black">{renderButton('14')}</div>
+        <div className="keyboard-white">{renderButton('12', this.keycodes['q'])}</div>
+        <div className="keyboard-white">{renderButton('13', this.keycodes['m'])}
+          <div className="keyboard-black">{renderButton('14', this.keycodes['j'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('15')}
-          <div className="keyboard-black">{renderButton('16')}</div>
+        <div className="keyboard-white">{renderButton('15', this.keycodes['n'])}
+          <div className="keyboard-black">{renderButton('16', this.keycodes['h'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('17')}
-          <div className="keyboard-black">{renderButton('18')}</div>
+        <div className="keyboard-white">{renderButton('17', this.keycodes['b'])}
+          <div className="keyboard-black">{renderButton('18', this.keycodes['g'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('19')}</div>
-        <div className="keyboard-white">{renderButton('20')}
-          <div className="keyboard-black">{renderButton('21')}</div>
+        <div className="keyboard-white">{renderButton('19', this.keycodes['v'])}</div>
+        <div className="keyboard-white">{renderButton('20', this.keycodes['c'])}
+          <div className="keyboard-black">{renderButton('21', this.keycodes['d'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('22')}
-          <div className="keyboard-black">{renderButton('23')}</div>
+        <div className="keyboard-white">{renderButton('22', this.keycodes['x'])}
+          <div className="keyboard-black">{renderButton('23', this.keycodes['s'])}</div>
         </div>
-        <div className="keyboard-white">{renderButton('24')}</div>
+        <div className="keyboard-white">{renderButton('24', this.keycodes['z'])}</div>
 
       </div>
     );    // return value
