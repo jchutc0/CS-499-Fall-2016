@@ -9,7 +9,6 @@ var React = require('react');
 
 // Require the ErrorModal
 var ErrorModal = require('ErrorModal');
-var FormNumberPadButton = require('FormNumberPadButton');
 
 // create the FormErrorTest class
 var FormErrorTest = React.createClass({

@@ -9,7 +9,6 @@ to play sound encoded from either the keypad press or keyboard input
 var React = require('react');
 
 // Require the number pad button class
-// var FormNumberPadButton = require('FormNumberPadButton');
 var FormButton = require('FormButton');
 
 
