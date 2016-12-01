@@ -66,11 +66,7 @@ var FormShephards = React.createClass({
   },
 
   playShephards: function(lowTone, arrayBase) {
-
-    var frequencyArray = this.generateFrequencyArray(
-      this.lowTones[lowTone].frequency, arrayBase
-    );
-
+    var frequencyArray = this.generateFrequencyArray(lowTone, arrayBase);
     var gainArray = this.generateGainArray(frequencyArray);
 
     this.props.playFrequency(frequencyArray, gainArray);
@@ -115,8 +111,9 @@ var FormShephards = React.createClass({
     });
   },
 
-  generateFrequencyArray: function(startTone, arrayBase) {
+  generateFrequencyArray: function(lowTone, arrayBase) {
     var arraySize = this.numberOfSamples;
+    var startTone = this.lowTones[lowTone].frequency
     var frequencyArray = new Array(arraySize);
     var frequency = startTone;
     for(var i = 0; i < arraySize; i++) {
