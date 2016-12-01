@@ -51,25 +51,25 @@ var FormShephards = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    if(nextState.isPlaying) {
-      if(
-        (nextState.lowTone != this.state.lowTone) ||
-        (nextState.arrayBase != this.state.arrayBase)
-      ) {
-        this.playShephards(nextState.lowTone, nextState.arrayBase);
-      }
-    } else {
-      if(this.state.isPlaying) {
-        this.props.playFrequency([], []);
-      }
+    var {lowTone, arrayBase, isPlaying} = nextState;
+
+    if(
+      (lowTone != this.state.lowTone) ||
+      (arrayBase != this.state.arrayBase) ||
+      (isPlaying != this.state.isPlaying)
+    ) {
+      this.playShephards(lowTone, arrayBase, isPlaying);
     }
   },
 
-  playShephards: function(lowTone, arrayBase) {
+  playShephards: function(lowTone, arrayBase, isPlaying) {
+    if(!isPlaying) {
+      return this.props.playFrequency([], []);
+    }
     var frequencyArray = this.generateFrequencyArray(lowTone, arrayBase);
     var gainArray = this.generateGainArray(frequencyArray);
 
-    this.props.playFrequency(frequencyArray, gainArray);
+    return this.props.playFrequency(frequencyArray, gainArray);
   },
 
   handleSoundUp: function(e) {
@@ -104,10 +104,9 @@ var FormShephards = React.createClass({
     });
   },
 
-  handleStopSound: function(e) {
+  handleToggleSound: function(e) {
     this.setState({
-      lowTone: 2,
-      isPlaying: false
+      isPlaying: !this.state.isPlaying
     });
   },
 
@@ -145,16 +144,22 @@ var FormShephards = React.createClass({
     renders the component to the web browser -- the default entry point
     */
     render: function() {
+      var renderToggleButton = () => {
+        if(this.state.isPlaying) {
+          return "Stop Sound";
+        } else {
+          return "Start Sound";
+        }
+      };
       return (
         <div>
           <button type='button' className='expanded button' ref='soundUp'
             onClick={this.handleSoundUp}>Sound Up</button>
           <button type='button' className='expanded button' ref='soundDown'
             onClick={this.handleSoundDown}>Sound Down</button>
-          <button type='button' className='expanded button' ref='stopSound'
-            onClick={this.handleStopSound}>Stop Sound</button>
+          <button type='button' className='expanded button' ref='toggleSound'
+            onClick={this.handleToggleSound}>{renderToggleButton()}</button>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
-          <p>isPlaying: {this.state.isPlaying}</p>
         </div>
       );        // return value
     }           // render function
