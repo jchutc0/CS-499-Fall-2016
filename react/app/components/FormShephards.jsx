@@ -42,71 +42,104 @@ var FormShephards = React.createClass({
   //   represent and still be heard by the human ear
   numberOfSamples: 10,
 
-  // // maxFrequency, the highest frequency level we'll use
-  // maxFrequency: 17000,
-
   getInitialState: function() {
     return {
       lowTone: 0,
-      arrayBase: 0
+      arrayBase: 0,
+      isPlaying: false
     };
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    if(nextState.isPlaying) {
+      if(
+        (nextState.lowTone != this.state.lowTone) ||
+        (nextState.arrayBase != this.state.arrayBase)
+      ) {
+        this.playShephards(nextState.lowTone, nextState.arrayBase);
+      }
+    } else {
+      if(this.state.isPlaying) {
+        this.props.playFrequency([], []);
+      }
+    }
   },
 
   playShephards: function(lowTone, arrayBase) {
 
-    var startTone = this.lowTones[lowTone].frequency;
+    var frequencyArray = this.generateFrequencyArray(
+      this.lowTones[lowTone].frequency, arrayBase
+    );
+
+    var gainArray = this.generateGainArray(frequencyArray);
+
+    this.props.playFrequency(frequencyArray, gainArray);
+  },
+
+  handleSoundUp: function(e) {
+    e.preventDefault();
+    var arraySize = this.lowTones.length;
+    var numberOfSamples = this.numberOfSamples;
+    var newTone = (this.state.lowTone + 1) % arraySize;
+    var newArrayBase = this.state.arrayBase;
+    if(newTone < this.state.lowTone) {
+      newArrayBase = (newArrayBase + numberOfSamples - 1) % numberOfSamples;
+    }
+    this.setState({
+      lowTone: newTone,
+      arrayBase: newArrayBase,
+      isPlaying: true
+    });
+  },
+
+  handleSoundDown: function(e) {
+    e.preventDefault();
+    var arraySize = this.lowTones.length;
+    var numberOfSamples = this.numberOfSamples;
+    var newTone = (this.state.lowTone + arraySize - 1) % arraySize;
+    var newArrayBase = this.state.arrayBase;
+    if(newTone > this.state.lowTone) {
+      newArrayBase = (newArrayBase + 1) % numberOfSamples;
+    }
+    this.setState({
+      lowTone: newTone,
+      arrayBase: newArrayBase,
+      isPlaying: true
+    });
+  },
+
+  handleStopSound: function(e) {
+    this.setState({
+      lowTone: 2,
+      isPlaying: false
+    });
+  },
+
+  generateFrequencyArray: function(startTone, arrayBase) {
     var arraySize = this.numberOfSamples;
     var frequencyArray = new Array(arraySize);
-    var gainArray = new Array(arraySize);
-
-    var variance = this.variance;
-    var mean = Math.log2(this.meanFreq);
     var frequency = startTone;
     for(var i = 0; i < arraySize; i++) {
       frequencyArray[(i+arrayBase+arraySize) % arraySize] = frequency;
       frequency = frequency * 2;
     }
+    return frequencyArray;
+  },
+
+  generateGainArray: function(frequencyArray) {
+    var arraySize = this.numberOfSamples;
+    var gainArray = new Array(arraySize);
+    var variance = this.variance;
+    var mean = Math.log2(this.meanFreq);
+
     for(var i = 0; i < arraySize; i++) {
       gainArray[i] = (
         Math.exp(Math.pow((Math.log2(frequencyArray[i]) - mean), 2)
         / (variance * -2)));
       }
-      this.props.playFrequency(frequencyArray, gainArray);
-    },
 
-    handleSoundUp: function(e) {
-      e.preventDefault();
-      var arraySize = this.lowTones.length;
-      var newTone = (this.state.lowTone + 1) % arraySize;
-      var newArrayBase = this.state.arrayBase;
-      if(newTone < this.state.lowTone) {
-        newArrayBase = (newArrayBase - 1) % arraySize;
-      }
-      this.setState({
-        lowTone: newTone,
-        arrayBase: newArrayBase
-      });
-      this.playShephards(newTone, newArrayBase);
-    },
+      return gainArray;
 
-    handleSoundDown: function(e) {
-      e.preventDefault();
-      var arraySize = this.lowTones.length;
-      var newTone = (this.state.lowTone + arraySize - 1) % arraySize;
-      var newArrayBase = this.state.arrayBase;
-      if(newTone > this.state.lowTone) {
-        newArrayBase = (newArrayBase + 1) % arraySize;
-      }
-      this.setState({
-        lowTone: newTone,
-        arrayBase: newArrayBase
-      });
-      this.playShephards(newTone, newArrayBase);
-    },
-
-    handleStopSound: function(e) {
-      e.preventDefault();
-      this.props.playFrequency([], []);
     },
 
     /*
@@ -124,6 +157,7 @@ var FormShephards = React.createClass({
           <button type='button' className='expanded button' ref='stopSound'
             onClick={this.handleStopSound}>Stop Sound</button>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
+          <p>isPlaying: {this.state.isPlaying}</p>
         </div>
       );        // return value
     }           // render function
