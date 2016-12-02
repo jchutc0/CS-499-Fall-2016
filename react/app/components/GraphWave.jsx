@@ -150,7 +150,6 @@ var GraphWave = React.createClass({
 
     return (
       <div>
-        <p>Rendered GraphWave</p>
         <canvas id="GraphWaveCanvas" width={this.width}
           height={this.height} ref='waveGraphCanvas' style={canvasStyle}>
         </canvas>

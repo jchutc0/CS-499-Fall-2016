@@ -30,7 +30,6 @@ var NotesToUser = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Rendered NotesToUser</p>
         <div>{this.props.message}</div>
       </div>
     );        // return value

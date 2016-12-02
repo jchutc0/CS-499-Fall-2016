@@ -144,7 +144,6 @@ var Graph = React.createClass({
 
     return (
       <div>
-        <p>Rendered Graph</p>
         <GraphWave data={this.state.waveArray}/>
         <GraphFrequency data={graphFreqArray}
           frequencyBinCount={this.props.analyser.frequencyBinCount}

@@ -157,10 +157,8 @@ var AudioOutTone = React.createClass({
   render: function() {
 
     // visual aspect of the component
-    return(
-      <div>
-        Rendered AudioOutTone
-      </div>
+    return (
+      <div></div>
     );  // return value
   }     // render function
 });     // AudioOutTone class

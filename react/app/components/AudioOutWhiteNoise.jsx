@@ -101,9 +101,7 @@ var AudioOutWhiteNoise = React.createClass({
   render: function() {
     // visual aspect of the component
     return(
-      <div>
-        Rendered AudioOutWhiteNoise
-      </div>
+      <div></div>
     );  // return value
   }     // render function
 });     // AudioOutWhiteNoise class

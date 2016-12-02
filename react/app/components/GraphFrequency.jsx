@@ -192,7 +192,6 @@ var GraphFrequency = React.createClass({
 
     return (
       <div>
-        <p>Rendered GraphFrequency</p>
           <canvas id="GraphFrequencyCanvas" width="400" height="200"
             ref='frequencyGraphCanvas' style={canvasStyle}>
           </canvas>

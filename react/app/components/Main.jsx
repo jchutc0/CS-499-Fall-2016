@@ -96,9 +96,7 @@ var Main = React.createClass({
     audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise
   ) {
     this.setState({
-      userMessage: 'handlePlayFrequency -- ',
-      // audioOutFrequencyArray: [400, 350],
-      // audioOutGainArray: [.1, .1],
+      userMessage: '',
       audioOutFrequencyArray: audioOutFrequencyArray,
       audioOutGainArray: audioOutGainArray,
       audioOutWhiteNoise: audioOutWhiteNoise
@@ -113,7 +111,11 @@ var Main = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Rendered Main</p>
+        <div className='row'>
+          <div className='columns-small-12 medium-10'>
+            <h1>Web-Based Audio Spectrum Analyzer</h1>
+          </div>
+        </div>
         <div className="row">
           <div className="columns small-12 medium-10 small-centered">
             <div className="columns small-12 large-6">
@@ -142,10 +144,20 @@ var Main = React.createClass({
               paused={this.state.paused}/>
           </div>
         </div>
+        <div className='row'>
+          <div className='columns-small-12 medium-10'>
+            <p className='text-right'>
+              <small>
+                Presented by
+                <a href="http://www.teamaudiophile.com/">Team Audiophile</a>
+              </small>
+            </p>
+          </div>
+        </div>
       </div>
-      );        // return value
-    }           // render function
-  });           // Main class
+    );        // return value
+  }           // render function
+});           // Main class
 
 // export Main for other modules to use
 module.exports = Main;

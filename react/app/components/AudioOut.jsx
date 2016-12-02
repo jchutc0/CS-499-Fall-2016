@@ -69,9 +69,7 @@ var AudioOut = React.createClass({
       if(frequencyArray.length < 1) {
         context.suspend();
         return (
-          <div>
-            No audio tones.
-          </div>
+          <div></div>
         );
       }
 
@@ -90,7 +88,6 @@ var AudioOut = React.createClass({
               amplitude = {Number(gainArray[i]) / 10.0}
               context = {context}
               analyser = {analyser}/>
-            <p>Frequency {i} playing. </p>
           </div>
         );
       } // for loop
@@ -102,7 +99,6 @@ var AudioOut = React.createClass({
     // visual aspect of the component
     return(
       <div>
-        Rendered AudioOut
         {renderAudioOut(this.props)}
       </div>
     );  // return value
