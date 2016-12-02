@@ -15,22 +15,18 @@ Modules to work on:
 - [x] More responsiveness? Threading?
 - [ ] Git rid of garbage text
 - [x] enable space to pause  ?: pause graph, or graph and all sounds?
-- [ ] Mouse drag for create sounds ?: just in freq mode? Does it matter?
-- [ ] Canvas animation (?)
-- [ ] Redo white noise as buffer (?)
+- [ ] Mouse drag for create sounds
 - [ ] error checking / modal?     -- Adam
 - [ ] Instructions to the user / NotesToUser or Main update
 - [ ] Form sending changeFormState (or something) to Main
 - [x] Bars for logarithmic scale on freq graph
 - [ ] TESTING
-- [ ] Other usage suggestions?
 - [x] BUG -- 440/10, 350/10 playing, change 350/10 to 350/0 and update -- all audio stops
-- [ ] BUG -- press and drag off button (in keyboard/dial pad mode) keeps playing
+- [x] BUG -- press and drag off button (in keyboard/dial pad mode) keeps playing
       onmouseout HTML would work but will send extra stop sound calls
       ondragleave HTML might be better?
 - [ ] maybe add scrolling <div> at the bottom for keyboard window
 - [x] implement Shepherd's Paradox
-- [ ] create global testValidFrequency(freq, gain) function to return t/f
 - [x] change frequency object to frequency, gain arrays
 
 
