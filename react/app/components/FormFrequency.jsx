@@ -197,9 +197,9 @@ var FormFrequency = React.createClass({
     this.stopUserFrequency(e);
 
     // set all refs to an empty string
-    this.refs.frequency1.value = '';
+    this.refs.frequency1.value = '440';
     this.refs.gain1.value = '10';
-    this.refs.frequency2.value = '';
+    this.refs.frequency2.value = '350';
     this.refs.gain2.value = '10';
   },      // clearForm function
 
@@ -236,7 +236,7 @@ var FormFrequency = React.createClass({
           </div>
           <div className='columns small-12 medium-6'>
             <button type='button' className='expanded button' ref='clearForm'
-              onClick={this.clearForm}>Clear Form</button><br/>
+              onClick={this.clearForm}>Clear Form</button>
           </div>
         </div>
       );      // return
