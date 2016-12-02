@@ -16,76 +16,28 @@ var FormWhiteNoise = React.createClass({
   },      // propTypes
 
   /*
-  getInitialState function
-
-  Set up initial playing state to false (not playing)
-  */
-  getInitialState: function() {
-    return {
-      playing: false
-    };
-  },
-
-  /*
   playWhiteNoise function
 
-  Invoked from a stop noise button press
+  Invoked when the volume slider changes values
 
-  updates playing state, sends frequencyObj to playWhiteNoise prop
+  Sends values to playWhiteNoise prop - either empty for stop (0 volume) or
+  gain value to play noise.
   */
   playWhiteNoise: function(e) {
     // prevent page from reloading
     e.preventDefault();
 
-    // set playing state
-    this.setState({
-      playing: true
-    });       // setState
-
     var whiteNoiseGain = this.refs.whiteNoiseGain.value;
+    var playWhiteNoise = this.props.playWhiteNoise;
 
-    this.props.playWhiteNoise([], [], whiteNoiseGain);
-  },          // playWhiteNoise function
-
-  /*
-  stopWhiteNoise function
-
-  Invoked from a stop noise button press
-
-  updates playing state, sends empty frequencyObj to playWhiteNoise prop
-  */
-  stopWhiteNoise: function(e) {
-    // prevent page from reloading
-    e.preventDefault();
-
-    // set playing state
-    this.setState({
-      playing: false
-    });     // setState
-
-    // send empty frequency to playWhiteNoise prop
-    this.props.playWhiteNoise([], []);
-  },        // stopWhiteNoise function
-
-  /*
-  renderPlayWhiteNoiseButton function
-
-  renders the button to play or stop white noise, depending on the playing
-  state
-  */
-  renderPlayWhiteNoiseButton: function() {
-    if(this.state.playing) {
-      return (
-        <button className='secondary button' id='stopSound'
-          onClick={this.stopWhiteNoise}>Stop White Noise</button>
-      );        // return value
+    // if we have 0 gain, send a stop all sounds command and exit
+    //   otherwise, send the gain to the white noise generator
+    if(whiteNoiseGain <= 0) {
+      return playWhiteNoise();
     } else {
-      return (
-        <button className='button' id='startSound'
-          onClick={this.playWhiteNoise}>Play White Noise</button>
-      );        // return value
-    }           // if..else state playing set
-  },            // renderPlayWhiteNoiseButton
+      return playWhiteNoise([], [], whiteNoiseGain);
+    }
+  },          // playWhiteNoise function
 
   /*
   render function
@@ -94,27 +46,14 @@ var FormWhiteNoise = React.createClass({
   */
   render: function() {
     return (
-      <div>
-        <fieldset className="frequency-fieldset">
-          <legend>White Noise</legend>
-          <div className="row">
-            <div className="columns small-12 medium-6">
-              <label htmlFor='whiteNoiseGain' >Gain:</label>
-              <input type='number' ref='whiteNoiseGain2' name='whiteNoiseGain2'
-                id='whiteNoiseGain2' maxLength="5" defaultValue="10"/>
-            </div>
-          </div>
+      <div className='whitenoise-form'>
+        <fieldset>
+          <legend>White Noise Volume</legend>
+          <input type='range' className='slider'
+            name='whiteNoiseGain' ref='whiteNoiseGain'
+            min='0' max='10' defaultValue='0'
+            onChange={this.playWhiteNoise}/>
         </fieldset>
-        <div className="row">
-          <div className="columns small-12 medium-6">
-            <input type='range' name='whiteNoiseGain' min='0' max='10' ref='whiteNoiseGain'/>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='columns small-12 medium-6'>
-            {this.renderPlayWhiteNoiseButton()}
-          </div>
-        </div>
       </div>
     );        // return value
   }           // render function

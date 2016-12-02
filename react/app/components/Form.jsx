@@ -102,9 +102,8 @@ var Form = React.createClass({
 							by using a bunch of random values instead of a regular wave.
 						</p>
 						<p>
-							To use it, put a number in the gain box between 0 (no sound) and
-							10 (loud static) and click the Play White Noise button. You can
-							shut it off by clicking the Stop White Noise button.
+							To use it, move the volume slider up. You can shut it off by
+							moving the slider back down to 0.
 						</p>
 					</div>
 				)
