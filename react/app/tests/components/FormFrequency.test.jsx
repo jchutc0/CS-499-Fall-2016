@@ -44,12 +44,17 @@ describe('FormFrequency', () => {
       formFrequency.refs.gain2.value = '';
       TestUtils.Simulate.click(formFrequency.refs.startSound);
 
+      expect(formFrequency.refs.frequency1.value).toEqual('20');
+      expect(formFrequency.refs.frequency2.value).toEqual('20');
+      expect(formFrequency.refs.gain1.value).toEqual('1');
+      expect(formFrequency.refs.gain2.value).toEqual('');
+
       expect(spy).toHaveBeenCalled();
-      expect(spy).toHaveBeenCalledWith([1], [1]);
+      expect(spy).toHaveBeenCalledWith([20], [1]);
     });   // it should call playFrequency() with 1/0.1
 
 
-    it('should call playFrequency() with blank arrays for 0/10', () => {
+    it('should call playFrequency() with low frequency for 0/10', () => {
       spy = expect.createSpy();
       formFrequency = TestUtils.renderIntoDocument(
         <FormFrequency playFrequency={spy}/>
@@ -61,8 +66,12 @@ describe('FormFrequency', () => {
       formFrequency.refs.gain2.value = '';
       TestUtils.Simulate.click(formFrequency.refs.startSound);
 
+      expect(formFrequency.refs.frequency1.value).toEqual('20');
+      expect(formFrequency.refs.frequency2.value).toEqual('20');
+      expect(formFrequency.refs.gain1.value).toEqual('10');
+      expect(formFrequency.refs.gain2.value).toEqual('');
       expect(spy).toHaveBeenCalled();
-      expect(spy).toHaveBeenCalledWith([], []);
+      expect(spy).toHaveBeenCalledWith([20], [10]);
 
     });   // it should call playFrequency() with blank arrays for 0/10
 
