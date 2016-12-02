@@ -75,13 +75,14 @@ var Main = React.createClass({
     // };
 
     return {
-      userMessage: 'Default user message',
+      userMessage: '',
       context: context,
       analyser: analyser,
       audioOutFrequencyArray: [],
       audioOutGainArray: [],
       audioOutWhiteNoise: undefined,
-      paused: false
+      paused: false,
+      currentForm: 0
     };        // state object
   },          // getInitialState function
 
@@ -96,12 +97,24 @@ var Main = React.createClass({
     audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise
   ) {
     this.setState({
-      userMessage: '',
       audioOutFrequencyArray: audioOutFrequencyArray,
       audioOutGainArray: audioOutGainArray,
       audioOutWhiteNoise: audioOutWhiteNoise
     });       // state object
   },          // handlePlayFrequency function
+
+  /*
+  handleFormChange function
+
+  Invoked from form classes
+  Sets the NotesToUser message and the currentForm in the state
+  */
+  handleFormChange: function(formNumber, messageToUser) {
+    this.setState({
+      currentForm: formNumber,
+      userMessage: messageToUser
+    });       // state object
+  },          // handleFormChange function
 
   /*
   render function
@@ -127,6 +140,7 @@ var Main = React.createClass({
             </div>
             <div className="columns small-12 large-6">
               <Form handlePlayFrequency={this.handlePlayFrequency}
+                changeForm={this.handleFormChange}
                 context={this.state.context}
                 analyser={this.state.analyser}/>
             </div>
