@@ -48,7 +48,7 @@ var GraphWave = React.createClass({
     var drawContext = canvas.getContext('2d');
 
     // clears the box
-    drawContext.fillStyle = '#FFFFFF';
+    drawContext.fillStyle = '#CCCCCC';
     drawContext.fillRect(0, 0, this.width, this.height);
 
     // draws the horizontal line through the center of the graph

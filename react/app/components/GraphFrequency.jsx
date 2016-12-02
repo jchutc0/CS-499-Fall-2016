@@ -60,7 +60,7 @@ var GraphFrequency = React.createClass({
     // console.log('data.length: '+data.length);
 
     // clears the box
-    drawContext.fillStyle = '#FFFFFF';
+    drawContext.fillStyle = '#CCCCCC';
     drawContext.fillRect(0, 0, this.width, this.height);
 
 
