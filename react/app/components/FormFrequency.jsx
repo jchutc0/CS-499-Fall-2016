@@ -82,6 +82,26 @@ var FormFrequency = React.createClass({
       this.refs.gain2.value = '10';
     }
 
+    if(frequency1 < 20){
+      frequency1 = 20;
+      this.refs.frequency1.value = '20';
+    }
+
+    if(frequency1 > 20000){
+      frequency1 = 20000;
+      this.refs.frequency1.value = '20000';
+    }
+
+    if(frequency2 < 20){
+      frequency2 = 20;
+      this.refs.frequency2.value = '20';
+    }
+
+    if(frequency2 > 20000){
+      frequency2 = 20000;
+      this.refs.frequency2.value = '20000';
+    }
+
     if(this.testFrequencyAndGain(frequency1, gain1)) {
       frequencyArray.push(Number(frequency1));
       gainArray.push(Number(gain1));
@@ -238,12 +258,12 @@ var FormFrequency = React.createClass({
               <div className="columns small-12 medium-6">
                 <label htmlFor='frequency1'>Frequency:</label>
                 <input type='number' ref='frequency1' name='frequency1'
-                  id='frequency1' maxLength="5" />
+                  id='frequency1' maxLength="5" defaultValue="440" min="20" max="20000"/>
               </div>
               <div className="columns small-12 medium-6">
                 <label htmlFor='gain1' >Gain:</label>
                 <input type='number' ref='gain1' name='gain1'
-                  id='gain1' maxLength="5" defaultValue="10" />
+                  id='gain1' maxLength="5" defaultValue="10" min="0" max="10"/>
               </div>
             </div>
           </fieldset>
@@ -253,12 +273,12 @@ var FormFrequency = React.createClass({
                 <div className="columns small-12 medium-6">
                   <label htmlFor='frequency2'>Frequency:</label>
                   <input type='number' ref='frequency2' name='frequency2'
-                    id='frequency2' maxLength="5" />
+                    id='frequency2' maxLength="5" defaultValue="350" min="20" max="20000"/>
                 </div>
                 <div className="columns small-12 medium-6">
                   <label htmlFor='gain2' >Gain:</label>
                   <input type='number' ref='gain2' name='gain2' id='gain2'
-                    maxLength="5" defaultValue="10"/>
+                    maxLength="5" defaultValue="10" min="0" max="10"/>
                 </div>
             </div>
           </fieldset>
