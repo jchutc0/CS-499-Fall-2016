@@ -16,10 +16,10 @@ var FormWhiteNoise = React.createClass({
   },      // propTypes
 
   /*
-	getInitialState function
+  getInitialState function
 
-	Set up initial playing state to false (not playing)
-	*/
+  Set up initial playing state to false (not playing)
+  */
   getInitialState: function() {
     return {
       playing: false
@@ -100,11 +100,16 @@ var FormWhiteNoise = React.createClass({
           <div className="row">
             <div className="columns small-12 medium-6">
               <label htmlFor='whiteNoiseGain' >Gain:</label>
-              <input type='number' ref='whiteNoiseGain' name='whiteNoiseGain'
-                id='whiteNoiseGain' maxLength="5" defaultValue="10"/>
+              <input type='number' ref='whiteNoiseGain2' name='whiteNoiseGain2'
+                id='whiteNoiseGain2' maxLength="5" defaultValue="10"/>
             </div>
           </div>
         </fieldset>
+        <div className="row">
+          <div className="columns small-12 medium-6">
+            <input type='range' name='whiteNoiseGain' min='0' max='10' ref='whiteNoiseGain'/>
+          </div>
+        </div>
         <div className='row'>
           <div className='columns small-12 medium-6'>
             {this.renderPlayWhiteNoiseButton()}

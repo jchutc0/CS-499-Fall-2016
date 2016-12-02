@@ -62,9 +62,6 @@ var Form = React.createClass({
 							want to hear one of the tones, just set the gain to 0.
 						</p>
 						<p>
-							<strong>
-								Hint:
-							</strong>
 							Human hearing goes from about 20Hz - 20,000Hz, so put a
 							frequency in there between those values. The gain can go from 0
 							(no sound) to 10 (loud).
@@ -137,10 +134,10 @@ var Form = React.createClass({
 			},
 			{
 				module: (<FormKeyboard playFrequency={handlePlayFrequency}/>),
-				label: 'Music Keybaord Input',
+				label: 'Music Keyboard Input',
 				note: (
 					<div>
-						<h2>Music Keybaord Input</h2>
+						<h2>Music Keyboard Input</h2>
 						<p>
 							This part of the program shows how frequencies and tones are
 							related to musical pitches.
