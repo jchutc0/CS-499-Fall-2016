@@ -88,7 +88,7 @@ var FormNumberPad = React.createClass({
     var renderButton = (label) => {
       return (
         <FormButton buttonID={label}
-          buttonLabel={label+'i'}
+          buttonLabel={label}
           downClass={"button"}
           upClass={"hollow button"}
           callback={this.playTelephony}
