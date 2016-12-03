@@ -11,65 +11,140 @@ var React = require('react');
 
 // create the FormFrequencyTone class
 var FormFrequencyTone = React.createClass({
-  // require the playFrequency function as a passed property
+  // require props to be passed
+  //  - updateTone: communicates with the FormFrequency class (a function)
+  //  - toneID: used to specify which tone generator this is, also the value
+  //    that goes in the legend at the top of the box (a text string)
+  //  - defaultTone: the default tone for the module - set to 440 in
+  //    getDefaultProps if not passed
   propTypes: {
     updateTone: React.PropTypes.func.isRequired,
     toneID: React.PropTypes.string.isRequired,
     defaultTone: React.PropTypes.number
   },      // propTypes object
 
+  //// Class constants ////
+  // the lowest and highest frequency the generator can handle
   minFrequency: 20,
   maxFrequency: 20000,
+
+  // the highest and lowest values for the frequency slider
   minFrequencySlider: Math.ceil(Math.log2(20)),
   maxFrequencySlider: Math.floor(Math.log2(20000)),
+
+  // the highest gain value the generator can handle
   maxGain: 10,
 
+  //// Class functions ////
+  /*
+  getDefaultProps function
+  Invoked on module creation
+
+  If defaultTone prop not passed, sets it to 440
+  */
   getDefaultProps: function() {
     return {
       defaultTone: 440
     };
-  },
+  },          // getDefaultProps function
 
+  /*
+  checkValidSubmit function
+  Called from handleFrequencySliderChange and handleGainChange functions
+
+  Checks the values for the sliders and text box
+  On an invalid entry, sets the gain to 0 and adjusts the frequency to the low
+  value (if too low) or the high value (if too high)
+  */
   checkValidSubmit: function() {
+    // pull frequency and gain from the refs
     var {frequency, gain} = this.refs;
+
+    // begin by assuming a valid entry
     var valid = true;
+
+    // if the max gain is too low or too high, not valid
+    //   (not valid sets the gain to 0 at the end, so no value changes needed)
     if(gain.value > this.maxGain) {
       valid = false;
     } else if(gain.value <= 0) {
       valid = false;
-    }
+    }     // if invalid gain
+
+    // if the frequency is too low or too high, change the frequecy to the
+    //  low or high value and set not valid
     if(frequency.value < this.minFrequency) {
       frequency.value = this.minFrequency;
       valid = false;
     } else if(frequency.value > this.maxFrequency) {
       frequency.value = this.maxFrequency;
       valid = false;
-    }
+    }   // if invalid frequency
+
+    // if not valid, set the gain slider to 0 to stop the generator
     if(!valid) {
       gain.value = 0;
-    }
-    return valid;
-  },
+    }   // if not valid
 
+    // return whether or not the form was valid (mostly for testing)
+    return valid;
+  },          // checkValidSubmit function
+
+  /*
+  handleFrequencySliderChange function
+  Invoked when the frequency slider value is changed
+
+  Checks to see if the slider matches the adjusted log of the text box (to make
+  the slider work on a logarithmic scale) and sets the box if not. Then checks
+  to make sure the values are valid (with checkValidSubmit) and sends the tone
+  to FormFrequency (with updateTone).
+  */
   handleFrequencySliderChange: function(e) {
+    // Get the adjusted logarithmic value of the frequency text box
     var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
+
+    // if the slider and the box don't match, set the box
     if(logOfFrequency != this.refs.frequencySlider.value) {
       this.refs.frequency.value = Math.pow(2, this.refs.frequencySlider.value);
-    }
-    var valid = this.checkValidSubmit();
-    this.props.updateTone(valid, this.props.toneID,
-      this.refs.frequency.value, this.refs.gain.value);
-  },      // handleFrequencySliderChange
+    }         // if the slider and the box don't match
 
+    // check the values to make sure we have a valid submission and turn off
+    //  the tone if not
+    this.checkValidSubmit();
+
+    // send the tone up to FormFrequency
+    this.props.updateTone(this.props.toneID,
+      this.refs.frequency.value, this.refs.gain.value);
+  },      // handleFrequencySliderChange function
+
+  /*
+  handleGainChange function
+  Invoked when the gain slider value is changed or when the user presses enter
+  in the text box
+
+  Checks to see if the slider matches the adjusted log of the text box (to make
+  the slider work on a logarithmic scale) and sets the box if not. Then checks
+  to make sure the values are valid (with checkValidSubmit) and sends the tone
+  to FormFrequency (with updateTone).
+  */
   handleGainChange: function(e) {
+    // preventDefault so we don't reload the page when the user presses enter
     e.preventDefault();
+
+    // Get the adjusted logarithmic value of the frequency text box
     var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
 
+    // sets the frequency slider to match the text box
     this.refs.frequencySlider.value = logOfFrequency;
-    var valid = this.checkValidSubmit();
-    this.props.updateTone(valid, this.props.toneID,
+
+    // check the values to make sure we have a valid submission and turn off
+    //  the tone if not
+    this.checkValidSubmit();
+
+    // send the tone up to FormFrequency
+    this.props.updateTone(this.props.toneID,
       this.refs.frequency.value, this.refs.gain.value);
-  },      // handleGainChange
+  },      // handleGainChange function
 
   /*
   render function
