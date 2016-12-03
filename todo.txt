@@ -23,6 +23,7 @@ Modules to work on:
 - [x] maybe add scrolling <div> at the bottom for keyboard window
 - [x] implement Shepherd's Paradox
 - [x] change frequency object to frequency, gain arrays
+- [x] Try to find away to keep microphone from playing/feeding back
 - [ ] allow for multi-tonal keyboard output
 - [ ] .wav file, extract stream in, read
 - [ ] Labels for graphs?
@@ -32,7 +33,6 @@ Modules to work on:
       for piano form to allow middle C to be q and , at the same time
 - [ ] Maybe rescale gain for 0 - 100 since sliders don't care
 - [ ] Maybe add a volume / gain slider to keypad and piano forms
-- [ ] Try to find away to keep microphone from playing/feeding back
 - [ ] Shephard option: allow up, down arrows to change base tone
 - [ ] Remove testing, unused components from project before turnin
 
