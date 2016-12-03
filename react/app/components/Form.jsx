@@ -147,18 +147,8 @@ var Form = React.createClass({
 						</p>
 						<p>
 							You can also play the keyboard with the letter keys on your
-							keyboard.
-						</p>
-						<p>
-							The lower white keys can be played the bottom row of keys, from
-							Z to M (that plays C up to B). The higher white keys can be
-							played with the top row of letters, from Q to I (that plays the
-							middle C up to the high C).
-						</p>
-						<p>
-							Flats and sharps are the keys in the next row up from the white
-							keys and between them, so if Z is C and X is D, C#/Db would be
-							just above and between them, so it is S.
+							computer keyboard. Just press the letter or number written on
+							the piano key.
 						</p>
 						<p>
 							Notice how the wave for low C (the bottom key) is half as

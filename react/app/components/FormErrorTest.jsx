@@ -9,6 +9,7 @@ var React = require('react');
 
 // Require the ErrorModal
 var ErrorModal = require('ErrorModal');
+var FormFrequencyTone = require('FormFrequencyTone');
 
 // create the FormErrorTest class
 var FormErrorTest = React.createClass({
@@ -27,6 +28,10 @@ var FormErrorTest = React.createClass({
     });     // return value
   },        // getInitialState function
 
+  poop: function() {
+    console.log('got here.');
+  },
+
   setError: function(errorMessage) {
     this.setState({
       error: errorMessage
@@ -44,6 +49,7 @@ var FormErrorTest = React.createClass({
       <div>
         Rendered FormErrorTest
         <ErrorModal error={this.state.error} clearError={this.setError}/>
+        <FormFrequencyTone toneID='Blag' updateTone={this.poop}/>
       </div>
     );    // return value
   }       // render function

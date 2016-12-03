@@ -13,235 +13,63 @@ var React = require('react');
 var FormFrequencyTone = React.createClass({
   // require the playFrequency function as a passed property
   propTypes: {
-    playFrequency: React.PropTypes.func.isRequired
+    updateTone: React.PropTypes.func.isRequired,
+    toneID: React.PropTypes.string.isRequired,
+    defaultTone: React.PropTypes.number
   },      // propTypes object
 
+  minFrequency: 20,
+  maxFrequency: 20000,
+  minFrequencySlider: Math.ceil(Math.log2(20)),
+  maxFrequencySlider: Math.floor(Math.log2(20000)),
+  maxGain: 10,
 
-  /*
-  getInitialState function
-
-  Sets the initial playing state to false
-  */
-  getInitialState: function() {
+  getDefaultProps: function() {
     return {
-      playing: false
-    };      // return value
-  },        // getInitialState function
-
-  /*
-  playUserFrequency function
-
-  Takes the values from the form and sends them back to the calling class
-  through the required playFrequency prop and updates the playing state
-
-  Takes: e event handler (this function is meant to be called from a button
-  press)
-
-  Requires: this.props.playFrequency passed (required for the class),
-  form values (refs) for frequency1, gain1, frequency2, gain2
-  */
-  playUserFrequency: function(e) {
-    // prevent a full page reload
-    e.preventDefault();
-
-    var frequency1 = this.refs.frequency1.value;
-    var frequency2 = this.refs.frequency2.value;
-    var gain1 = this.refs.gain1.value;
-    var gain2 = this.refs.gain2.value;
-
-    var frequencyArray = new Array();
-    var gainArray = new Array();
-
-    //
-    //
-    // // set up frequencyObj to send back to calling component
-    // var frequencyObject = {
-    //   frequency1: this.refs.frequency1.value,
-    //   gain1: this.refs.gain1.value,
-    //   frequency2: this.refs.frequency2.value,
-    //   gain2: this.refs.gain2.value
-    // };    // frequencyObject
-
-    if(gain1 < 0) {
-      gain1 = 0;
-      this.refs.gain1.value = '0';
-    }
-
-    if(gain1 > 10) {
-      gain1 = 10;
-      this.refs.gain1.value = '10';
-    }
-
-    if(gain2 < 0) {
-      gain2 = 0;
-      this.refs.gain2.value = '0';
-    }
-
-    if(gain2 > 10) {
-      gain2 = 10;
-      this.refs.gain2.value = '10';
-    }
-
-    if(frequency1 < 20){
-      frequency1 = 20;
-      this.refs.frequency1.value = '20';
-    }
-
-    if(frequency1 > 20000){
-      frequency1 = 20000;
-      this.refs.frequency1.value = '20000';
-    }
-
-    if(frequency2 < 20){
-      frequency2 = 20;
-      this.refs.frequency2.value = '20';
-    }
-
-    if(frequency2 > 20000){
-      frequency2 = 20000;
-      this.refs.frequency2.value = '20000';
-    }
-
-    if(this.testFrequencyAndGain(frequency1, gain1)) {
-      frequencyArray.push(Number(frequency1));
-      gainArray.push(Number(gain1));
-    }
-
-    if(this.testFrequencyAndGain(frequency2, gain2)) {
-      frequencyArray.push(Number(frequency2));
-      gainArray.push(Number(gain2));
-    }
-
-    if(frequencyArray.length > 0) {
-      this.setState({
-        playing: true
-      });
-
-      return this.props.playFrequency(frequencyArray, gainArray);
-    } else {
-      return this.stopUserFrequency(e);
-    }
-
-
-
-    // if(
-    //   (
-    //     (frequencyObject.frequency1 > 0) &&
-    //     (frequencyObject.gain1 > 0)
-    //   ) ||
-    //   (
-    //     (frequencyObject.frequency2 > 0) &&
-    //     (frequencyObject.gain2 > 0)
-    //   )
-    // ) {
-    //   // set playing state true
-    //   this.setState({
-    //     playing: true
-    //   });
-    //
-    //   // send frequencyObject back to calling component
-    //   this.props.playFrequency(frequencyObject);
-    // } else {
-    //   alert('Please enter a valid frequency');
-    // }
-
-  },      // playUserFrequency function
-
-  testFrequencyAndGain: function(frequency, gain) {
-    return (
-      (frequency > 0) &&
-      (gain > 0)
-    );
+      defaultTone: 440
+    };
   },
 
-  /*
-  stopUserFrequency function
+  checkValidSubmit: function() {
+    var {frequency, gain} = this.refs;
+    var valid = true;
+    if(gain.value > this.maxGain) {
+      valid = false;
+    } else if(gain.value <= 0) {
+      valid = false;
+    }
+    if(frequency.value < this.minFrequency) {
+      frequency.value = this.minFrequency;
+      valid = false;
+    } else if(frequency.value > this.maxFrequency) {
+      frequency.value = this.maxFrequency;
+      valid = false;
+    }
+    if(!valid) {
+      gain.value = 0;
+    }
+    return valid;
+  },
 
-  Calls the required playFrequency prop with 0 values for both tones to stop
-  the tone generation. Sets the playing state to false.
+  handleFrequencySliderChange: function(e) {
+    var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
+    if(logOfFrequency != this.refs.frequencySlider.value) {
+      this.refs.frequency.value = Math.pow(2, this.refs.frequencySlider.value);
+    }
+    var valid = this.checkValidSubmit();
+    this.props.updateTone(valid,
+      this.refs.frequency.value, this.refs.gain.value);
+  },      // handleFrequencySliderChange
 
-  Takes: e event handler (this function is meant to be called from a button
-  press)
-
-  Requires: this.props.playFrequency passed (required for the class)
-  */
-  stopUserFrequency: function(e) {
-    // prevent a full page reload
+  handleGainChange: function(e) {
     e.preventDefault();
+    var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
 
-    // set playing state false
-    this.setState({
-      playing: false
-    });
-
-    // send blank frequencyObject back to calling component
-    this.props.playFrequency([], []);
-  },        // stopUserFrequency function
-
-  /*
-  clearForm function
-
-  Clears the frequency and gain values from the form so the user doesn't have
-  to
-
-  Takes: e event handler (this function is meant to be called from a button
-  press)
-
-  Requires: form values (refs) for frequency1, gain1, frequency2, gain2
-  */
-  clearForm: function(e) {
-    // prevent a full page reload
-    e.preventDefault();
-
-    // if a tone is currently playing, stop it
-    this.stopUserFrequency(e);
-
-    // set all refs to an empty string
-    this.refs.frequency1.value = '440';
-    this.refs.gain1.value = '10';
-    this.refs.frequency2.value = '350';
-    this.refs.gain2.value = '10';
-  },      // clearForm function
-
-  /*
-  renderPlayFrequencyButton function
-
-  Renders the button for the user to play or stop the frequency. If no tone
-  is playing, the button should display 'Play Frequency' and if a tone is
-  playing, the button should display 'Stop Frequency'
-  */
-  renderPlayFrequencyButton: function() {
-    // check if this.state.playing is set
-    if(this.state.playing) {
-      // return stop button
-      return (
-        <div className='row'>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='stopSound'
-              onClick={this.stopUserFrequency}>Stop Frequency</button>
-          </div>
-          <div className='columns small-12 medium-6'>
-            <button  type='button'className='expanded button' ref='startSound'
-              onClick={this.playUserFrequency}>Update Frequency</button>
-          </div>
-        </div>
-      );
-    } else {
-      // return play button
-      return (
-        <div className='row'>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='startSound'
-              onClick={this.playUserFrequency}>Play Frequency</button>
-          </div>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='clearForm'
-              onClick={this.clearForm}>Clear Form</button>
-          </div>
-        </div>
-      );      // return
-    }         // else case (this.state.playing is not true)
-  },          // renderPlayFrequencyButton function
+    this.refs.frequencySlider.value = logOfFrequency;
+    var valid = this.checkValidSubmit();
+    this.props.updateTone(valid,
+      this.refs.frequency.value, this.refs.gain.value);
+  },      // handleGainChange
 
   /*
   render function
@@ -250,39 +78,34 @@ var FormFrequencyTone = React.createClass({
   */
   render: function() {
     return (
-      <div>
-        <form ref='frequency-form'>
-          <fieldset className="frequency-fieldset">
-            <legend>Tone 1</legend>
-            <div className="row">
-              <div className="columns small-12 medium-6">
-                <label htmlFor='frequency1'>Frequency:</label>
-                <input type='number' ref='frequency1' name='frequency1'
-                  id='frequency1' maxLength="5" defaultValue="440" min="20" max="20000"/>
-              </div>
-              <div className="columns small-12 medium-6">
-                <label htmlFor='gain1' >Gain:</label>
-                <input type='number' ref='gain1' name='gain1'
-                  id='gain1' maxLength="5" defaultValue="10" min="0" max="10"/>
-              </div>
+      <div className='frequency-form'>
+        <form onSubmit={this.handleGainChange}>
+          <fieldset>
+            <legend>{this.props.toneID}</legend>
+            <div>
+              <input type='number' ref='frequency' name='frequency'
+                id='frequency' maxLength="5"
+                defaultValue={this.props.defaultTone}
+                min={this.minFrequency}
+                max={this.maxFrequency}/>
+            </div>
+            <div>
+              <label htmlFor='frequencySlider'>Frequency:</label>
+              <input type='range' className='slider'
+                name='frequencySlider' ref='frequencySlider'
+                min={this.minFrequencySlider} max={this.maxFrequencySlider}
+                defaultValue={this.props.defaultTone}
+                onChange={this.handleFrequencySliderChange}/>
+            </div>
+            <div>
+              <label htmlFor='gain' >Volume:</label>
+                <input type='range' className='slider'
+                  name='gain' ref='gain'
+                  min='0' max='10'
+                  defaultValue='0'
+                  onChange={this.handleGainChange}/>
             </div>
           </fieldset>
-          <fieldset className="frequency-fieldset">
-            <legend>Tone 2</legend>
-              <div className="row">
-                <div className="columns small-12 medium-6">
-                  <label htmlFor='frequency2'>Frequency:</label>
-                  <input type='number' ref='frequency2' name='frequency2'
-                    id='frequency2' maxLength="5" defaultValue="350" min="20" max="20000"/>
-                </div>
-                <div className="columns small-12 medium-6">
-                  <label htmlFor='gain2' >Gain:</label>
-                  <input type='number' ref='gain2' name='gain2' id='gain2'
-                    maxLength="5" defaultValue="10" min="0" max="10"/>
-                </div>
-            </div>
-          </fieldset>
-          {this.renderPlayFrequencyButton()}
         </form>
       </div>
     );      // return value

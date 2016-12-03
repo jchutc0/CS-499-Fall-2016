@@ -16,6 +16,8 @@ var Graph = require('Graph');
 var Form = require('Form');
 var NotesToUser = require('NotesToUser');
 var AudioOut = require('AudioOut');
+var FormKeyboard = require('FormKeyboard');
+
 
 // Create the Main class
 var Main = React.createClass({

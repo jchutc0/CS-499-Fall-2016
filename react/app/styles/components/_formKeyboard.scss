@@ -1,24 +1,37 @@
-div.keyboard-white {
-  position: relative;
-  width: 400px;
-  height: 30px;
-  border: 1px solid black;
-}
-div.keyboard-black {
-  position: absolute;
-  top: 15px;
-  left: 0px;
-  width: 200px;
-  height: 30px;
-  border: 1px solid white;
-  background-color: black;
-}
-button.keyboard-unpressed {
-  width: 100%;
-  height: 100%;
-}
-button.keyboard-pressed {
-  background-color: #888888; /* Grey */
-  width: 100%;
-  height: 100%;
+div.keyboard-form {
+  height: 200px;
+  width: 452px;
+  overflow-x: scroll;
+
+  div.whiteKey {
+    float: left;
+    width: 30px;
+    height: 100%;
+    border: 1px solid black;
+  }
+
+  div.blackKey {
+    position: relative;
+    top: -200px;
+    left: 15px;
+    width: 30px;
+    height: 50%;
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+  }
+
+  button.unpressed {
+    background-color: transparent;
+    padding-top: 50%;
+    width: 100%;
+    height: 100%;
+  }
+
+  button.pressed {
+    background-color: #888888; /* Grey */
+    padding-top: 75%;
+    width: 100%;
+    height: 100%;
+  }
 }

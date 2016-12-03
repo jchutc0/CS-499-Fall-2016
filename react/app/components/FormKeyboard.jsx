@@ -109,52 +109,52 @@ var FormKeyboard = React.createClass({
     var renderButton = (value, key) => {
       return (
         <FormButton buttonID={value}
-          downClass={"keyboard-pressed"}
-          upClass={"keyboard-unpressed"}
+          downClass={'pressed'}
+          upClass={'unpressed'}
           callback={this.handleButton}
           keyCode={this.keycodes[key]}
-          />
+          buttonLabel={key}/>
       );
     };
 
     return (
-      <div>
-        <div className="keyboard-white">{renderButton('0', 'i')}</div>
-        <div className="keyboard-white">{renderButton('1', 'u')}
-          <div className="keyboard-black">{renderButton('2', '7')}</div>
+      <div className='keyboard-form'>
+        <div className='whiteKey'>{renderButton('24', 'z')}
+          <div className='blackKey'>{renderButton('23', 's')}</div>
         </div>
-        <div className="keyboard-white">{renderButton('3', 'y')}
-          <div className="keyboard-black">{renderButton('4', '6')}</div>
+        <div className='whiteKey'>{renderButton('22', 'x')}
+          <div className='blackKey'>{renderButton('21', 'd')}</div>
         </div>
-        <div className="keyboard-white">{renderButton('5', 't')}
-          <div className="keyboard-black">{renderButton('6', '5')}</div>
+        <div className='whiteKey'>{renderButton('20', 'c')}</div>
+        <div className='whiteKey'>{renderButton('19', 'v')}
+          <div className='blackKey'>{renderButton('18', 'g')}</div>
         </div>
-        <div className="keyboard-white">{renderButton('7', 'r')}</div>
-        <div className="keyboard-white">{renderButton('8', 'e')}
-          <div className="keyboard-black">{renderButton('9', '3')}</div>
+        <div className='whiteKey'>{renderButton('17', 'b')}
+          <div className='blackKey'>{renderButton('16', 'h')}</div>
         </div>
-        <div className="keyboard-white">{renderButton('10', 'w')}
-          <div className="keyboard-black">{renderButton('11', '2')}</div>
+        <div className='whiteKey'>{renderButton('15', 'n')}
+          <div className='blackKey'>{renderButton('14', 'j')}</div>
         </div>
-        <div className="keyboard-white">{renderButton('12', 'q')}</div>
-        <div className="keyboard-white">{renderButton('13', 'm')}
-          <div className="keyboard-black">{renderButton('14', 'j')}</div>
-        </div>
-        <div className="keyboard-white">{renderButton('15', 'n')}
-          <div className="keyboard-black">{renderButton('16', 'h')}</div>
-        </div>
-        <div className="keyboard-white">{renderButton('17', 'b')}
-          <div className="keyboard-black">{renderButton('18', 'g')}</div>
-        </div>
-        <div className="keyboard-white">{renderButton('19', 'v')}</div>
-        <div className="keyboard-white">{renderButton('20', 'c')}
-          <div className="keyboard-black">{renderButton('21', 'd')}</div>
-        </div>
-        <div className="keyboard-white">{renderButton('22', 'x')}
-          <div className="keyboard-black">{renderButton('23', 's')}</div>
-        </div>
-        <div className="keyboard-white">{renderButton('24', 'z')}</div>
+        <div className='whiteKey'>{renderButton('13', 'm')}</div>
 
+        <div className='whiteKey'>{renderButton('12', 'q')}
+          <div className='blackKey'>{renderButton('11', '2')}</div>
+        </div>
+        <div className='whiteKey'>{renderButton('10', 'w')}
+          <div className='blackKey'>{renderButton('9', '3')}</div>
+        </div>
+        <div className='whiteKey'>{renderButton('8', 'e')}</div>
+        <div className='whiteKey'>{renderButton('7', 'r')}
+          <div className='blackKey'>{renderButton('6', '5')}</div>
+        </div>
+        <div className='whiteKey'>{renderButton('5', 't')}
+          <div className='blackKey'>{renderButton('4', '6')}</div>
+        </div>
+        <div className='whiteKey'>{renderButton('3', 'y')}
+          <div className='blackKey'>{renderButton('2', '7')}</div>
+        </div>
+        <div className='whiteKey'>{renderButton('1', 'u')}</div>
+        <div className='whiteKey'>{renderButton('0', 'i')}</div>
       </div>
     );    // return value
   }       // render function

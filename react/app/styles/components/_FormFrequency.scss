@@ -1,9 +1,17 @@
-fieldset.frequency-fieldset {
-  display: block;
-  margin-bottom: 0.35em;
-  padding-top: 0.35em;
-  padding-bottom: 0.625em;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  border: 2px groove;
+div.frequency-form {
+  fieldset {
+    display: block;
+    width: 200px;
+    margin-bottom: 0.35em;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px groove;
+  }
+
+  input.slider {
+    width: 150px;
+    margin: 0px;
+  }
 }

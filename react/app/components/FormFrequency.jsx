@@ -9,13 +9,15 @@ playFrequency function
 // Require the React framework
 var React = require('react');
 
+// Require other modules
+var FormFrequencyTone = require('FormFrequencyTone');
+
 // create the FormFrequency class
 var FormFrequency = React.createClass({
   // require the playFrequency function as a passed property
   propTypes: {
     playFrequency: React.PropTypes.func.isRequired
   },      // propTypes object
-
 
   /*
   getInitialState function
@@ -243,6 +245,14 @@ var FormFrequency = React.createClass({
     }         // else case (this.state.playing is not true)
   },          // renderPlayFrequencyButton function
 
+  handleFormFrequencyTone: function(playing, frequency, gain) {
+    if(playing) {
+      this.props.playFrequency([frequency], [gain]);
+    } else {
+      this.props.playFrequency();
+    }
+  },
+
   /*
   render function
 
@@ -250,9 +260,9 @@ var FormFrequency = React.createClass({
   */
   render: function() {
     return (
-      <div>
-        <form ref='frequency-form'>
-          <fieldset className="frequency-fieldset">
+      <div className='frequency-form'>
+        <form>
+          <fieldset>
             <legend>Tone 1</legend>
             <div className="row">
               <div className="columns small-12 medium-6">
@@ -284,6 +294,18 @@ var FormFrequency = React.createClass({
           </fieldset>
           {this.renderPlayFrequencyButton()}
         </form>
+        <div className='row'>
+          <div className="columns small-12 medium-6">
+            <FormFrequencyTone toneID='Tone 3'
+              updateTone={this.handleFormFrequencyTone}
+              defaultTone={440}/>
+          </div>
+          <div className="columns small-12 medium-6">
+            <FormFrequencyTone toneID='Tone 4'
+              updateTone={this.handleFormFrequencyTone}
+              defaultTone={350}/>
+          </div>
+        </div>
       </div>
     );      // return value
   }         // render function
