@@ -4,23 +4,18 @@ Modules to work on:
 - [x] Graph master class that renders above two graphs
 - [x] FFT implementation — Emily? What do we need? What will we get?
 - [x] (Music) Keyboard implementation — probably easier, using same handleFrequency calls as keypad
-- [ ] .wav file, extract stream in, read
 - [x] Update Main to make decisions to graph on input, output
 - [x] Move AudioContext to main, need it for mic read
 - [x] Update FormMain, webpack to add other forms (quick)
 - [x] Update FormMain to return stream direction to Main
 - [x] Microphone class to take in stream — might be easier to get graphs working first
 - [x] Fix gain scale in freq form, move from white noise form to forms
-- [ ] Labels for graphs?
 - [x] More responsiveness? Threading?
 - [x] Git rid of garbage text
 - [x] enable space to pause  ?: pause graph, or graph and all sounds?
-- [ ] Mouse drag for create sounds
-- [ ] error checking / modal?     -- Adam
 - [x] Instructions to the user / NotesToUser or Main update
 - [x] Form sending changeFormState (or something) to Main
 - [x] Bars for logarithmic scale on freq graph
-- [ ] TESTING
 - [x] BUG -- 440/10, 350/10 playing, change 350/10 to 350/0 and update -- all audio stops
 - [x] BUG -- press and drag off button (in keyboard/dial pad mode) keeps playing
       onmouseout HTML would work but will send extra stop sound calls
@@ -29,9 +24,17 @@ Modules to work on:
 - [x] implement Shepherd's Paradox
 - [x] change frequency object to frequency, gain arrays
 - [ ] allow for multi-tonal keyboard output
-
-
-
+- [ ] .wav file, extract stream in, read
+- [ ] Labels for graphs?
+- [ ] Mouse drag for create sounds
+- [ ] TESTING
+- [ ] In button class, add second keypress option to allow multiple keypresses
+      for piano form to allow middle C to be q and , at the same time
+- [ ] Maybe rescale gain for 0 - 100 since sliders don't care
+- [ ] Maybe add a volume / gain slider to keypad and piano forms
+- [ ] Try to find away to keep microphone from playing/feeding back
+- [ ] Shephard option: allow up, down arrows to change base tone
+- [ ] Remove testing, unused components from project before turnin
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
