@@ -13,21 +13,22 @@ Modules to work on:
 - [x] Fix gain scale in freq form, move from white noise form to forms
 - [ ] Labels for graphs?
 - [x] More responsiveness? Threading?
-- [ ] Git rid of garbage text
+- [x] Git rid of garbage text
 - [x] enable space to pause  ?: pause graph, or graph and all sounds?
 - [ ] Mouse drag for create sounds
 - [ ] error checking / modal?     -- Adam
-- [ ] Instructions to the user / NotesToUser or Main update
-- [ ] Form sending changeFormState (or something) to Main
+- [x] Instructions to the user / NotesToUser or Main update
+- [x] Form sending changeFormState (or something) to Main
 - [x] Bars for logarithmic scale on freq graph
 - [ ] TESTING
 - [x] BUG -- 440/10, 350/10 playing, change 350/10 to 350/0 and update -- all audio stops
 - [x] BUG -- press and drag off button (in keyboard/dial pad mode) keeps playing
       onmouseout HTML would work but will send extra stop sound calls
       ondragleave HTML might be better?
-- [ ] maybe add scrolling <div> at the bottom for keyboard window
+- [x] maybe add scrolling <div> at the bottom for keyboard window
 - [x] implement Shepherd's Paradox
 - [x] change frequency object to frequency, gain arrays
+- [ ] allow for multi-tonal keyboard output
 
 
 React Component Lifecycle

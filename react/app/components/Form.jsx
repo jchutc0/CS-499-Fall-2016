@@ -57,14 +57,15 @@ var Form = React.createClass({
 						<p>
 							On the right side of the screen, the dropdown at the top changes
 							the program mode to allow you to do more. Below that, you can
-							type in one or two frequencies and gain values and click the
-							Play Frequency button to hear the tones for them. If you don't
-							want to hear one of the tones, just set the gain to 0.
+							play frequencies. Either use the frequency slider to pick a tone
+							you want to hear or type the number in the box and press enter.
+							Use the volume slider to make the tone louder or softer. If you
+							don't want to hear a tone anymore, just turn the volume down.
 						</p>
 						<p>
-							Human hearing goes from about 20Hz - 20,000Hz, so put a
-							frequency in there between those values. The gain can go from 0
-							(no sound) to 10 (loud).
+							Human hearing goes from about 20Hz - 20,000Hz, so if you're
+							ussing the text box, put a frequency in there between those
+							values.
 						</p>
 						<p>
 							Anywhere in this program, you can pause the sound and the graph
@@ -142,8 +143,8 @@ var Form = React.createClass({
 							related to musical pitches.
 						</p>
 						<p>
-							To play the keyboard, click on one of the keys. You can see the
-							waveform and the frequency it produces.
+							To play the piano keyboard, click on one of the keys. You can
+							see the waveform and the frequency it produces.
 						</p>
 						<p>
 							You can also play the keyboard with the letter keys on your
@@ -151,9 +152,9 @@ var Form = React.createClass({
 							the piano key.
 						</p>
 						<p>
-							Notice how the wave for low C (the bottom key) is half as
+							Notice how the wave for low C (the left key) is half as
 							tightly packed in as for the middle C (the middle key), which is
-							itself only half as tightly packed as the high C (the top key).
+							itself only half as tightly packed as the high C (the right key).
 						</p>
 					</div>
 				)
