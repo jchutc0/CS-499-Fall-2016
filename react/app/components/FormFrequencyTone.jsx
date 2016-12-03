@@ -57,7 +57,7 @@ var FormFrequencyTone = React.createClass({
       this.refs.frequency.value = Math.pow(2, this.refs.frequencySlider.value);
     }
     var valid = this.checkValidSubmit();
-    this.props.updateTone(valid,
+    this.props.updateTone(valid, this.props.toneID,
       this.refs.frequency.value, this.refs.gain.value);
   },      // handleFrequencySliderChange
 
@@ -67,7 +67,7 @@ var FormFrequencyTone = React.createClass({
 
     this.refs.frequencySlider.value = logOfFrequency;
     var valid = this.checkValidSubmit();
-    this.props.updateTone(valid,
+    this.props.updateTone(valid, this.props.toneID,
       this.refs.frequency.value, this.refs.gain.value);
   },      // handleGainChange
 
@@ -94,7 +94,7 @@ var FormFrequencyTone = React.createClass({
               <input type='range' className='slider'
                 name='frequencySlider' ref='frequencySlider'
                 min={this.minFrequencySlider} max={this.maxFrequencySlider}
-                defaultValue={this.props.defaultTone}
+                defaultValue={Math.floor(Math.log2(this.props.defaultTone))}
                 onChange={this.handleFrequencySliderChange}/>
             </div>
             <div>

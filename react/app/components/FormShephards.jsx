@@ -152,13 +152,13 @@ var FormShephards = React.createClass({
         }
       };
       return (
-        <div>
-          <button type='button' className='expanded button' ref='soundUp'
-            onClick={this.handleSoundUp}>Sound Up</button>
-          <button type='button' className='expanded button' ref='soundDown'
+        <div className='shephards-form'>
+          <button type='button' className='button' ref='soundDown'
             onClick={this.handleSoundDown}>Sound Down</button>
-          <button type='button' className='expanded button' ref='toggleSound'
+          <button type='button' className='button' ref='toggleSound'
             onClick={this.handleToggleSound}>{renderToggleButton()}</button>
+            <button type='button' className='button' ref='soundUp'
+              onClick={this.handleSoundUp}>Sound Up</button>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
         </div>
       );        // return value

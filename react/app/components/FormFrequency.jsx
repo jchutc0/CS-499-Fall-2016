@@ -19,6 +19,11 @@ var FormFrequency = React.createClass({
     playFrequency: React.PropTypes.func.isRequired
   },      // propTypes object
 
+  toneIDs: {
+    'Tone 1': 0,
+    'Tone 2': 1
+  },
+
   /*
   getInitialState function
 
@@ -26,7 +31,9 @@ var FormFrequency = React.createClass({
   */
   getInitialState: function() {
     return {
-      playing: false
+      playing: false,
+      frequencyArray: [],
+      gainArray: []
     };      // return value
   },        // getInitialState function
 
@@ -205,51 +212,36 @@ var FormFrequency = React.createClass({
     this.refs.gain2.value = '10';
   },      // clearForm function
 
-  /*
-  renderPlayFrequencyButton function
 
-  Renders the button for the user to play or stop the frequency. If no tone
-  is playing, the button should display 'Play Frequency' and if a tone is
-  playing, the button should display 'Stop Frequency'
-  */
-  renderPlayFrequencyButton: function() {
-    // check if this.state.playing is set
-    if(this.state.playing) {
-      // return stop button
-      return (
-        <div className='row'>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='stopSound'
-              onClick={this.stopUserFrequency}>Stop Frequency</button>
-          </div>
-          <div className='columns small-12 medium-6'>
-            <button  type='button'className='expanded button' ref='startSound'
-              onClick={this.playUserFrequency}>Update Frequency</button>
-          </div>
-        </div>
-      );
-    } else {
-      // return play button
-      return (
-        <div className='row'>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='startSound'
-              onClick={this.playUserFrequency}>Play Frequency</button>
-          </div>
-          <div className='columns small-12 medium-6'>
-            <button type='button' className='expanded button' ref='clearForm'
-              onClick={this.clearForm}>Clear Form</button>
-          </div>
-        </div>
-      );      // return
-    }         // else case (this.state.playing is not true)
-  },          // renderPlayFrequencyButton function
+  handleFormFrequencyTone: function(playing, toneID, frequency, gain) {
+    var toneElement = this.toneIDs[toneID];
 
-  handleFormFrequencyTone: function(playing, frequency, gain) {
+    if(toneElement === undefined) {
+      return;
+    }
+
+    var {frequencyArray, gainArray} = this.state;
     if(playing) {
-      this.props.playFrequency([frequency], [gain]);
+      frequencyArray[toneElement] = frequency;
+      gainArray[toneElement] = gain;
     } else {
+      frequencyArray[toneElement] = 0;
+      gainArray[toneElement] = 0;
+    }
+    this.setState({
+      frequencyArray: frequencyArray,
+      gainArray: gainArray
+    });
+    var crap = [];
+    var gainString = gainArray.toString();
+    if(
+      (gainString === '0,0') ||
+      (gainString === '0') ||
+      (gainString === '')
+    ) {
       this.props.playFrequency();
+    } else {
+      this.props.playFrequency(frequencyArray, gainArray);
     }
   },
 
@@ -261,47 +253,14 @@ var FormFrequency = React.createClass({
   render: function() {
     return (
       <div className='frequency-form'>
-        <form>
-          <fieldset>
-            <legend>Tone 1</legend>
-            <div className="row">
-              <div className="columns small-12 medium-6">
-                <label htmlFor='frequency1'>Frequency:</label>
-                <input type='number' ref='frequency1' name='frequency1'
-                  id='frequency1' maxLength="5" defaultValue="440" min="20" max="20000"/>
-              </div>
-              <div className="columns small-12 medium-6">
-                <label htmlFor='gain1' >Gain:</label>
-                <input type='number' ref='gain1' name='gain1'
-                  id='gain1' maxLength="5" defaultValue="10" min="0" max="10"/>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset className="frequency-fieldset">
-            <legend>Tone 2</legend>
-              <div className="row">
-                <div className="columns small-12 medium-6">
-                  <label htmlFor='frequency2'>Frequency:</label>
-                  <input type='number' ref='frequency2' name='frequency2'
-                    id='frequency2' maxLength="5" defaultValue="350" min="20" max="20000"/>
-                </div>
-                <div className="columns small-12 medium-6">
-                  <label htmlFor='gain2' >Gain:</label>
-                  <input type='number' ref='gain2' name='gain2' id='gain2'
-                    maxLength="5" defaultValue="10" min="0" max="10"/>
-                </div>
-            </div>
-          </fieldset>
-          {this.renderPlayFrequencyButton()}
-        </form>
         <div className='row'>
           <div className="columns small-12 medium-6">
-            <FormFrequencyTone toneID='Tone 3'
+            <FormFrequencyTone toneID='Tone 1'
               updateTone={this.handleFormFrequencyTone}
               defaultTone={440}/>
           </div>
           <div className="columns small-12 medium-6">
-            <FormFrequencyTone toneID='Tone 4'
+            <FormFrequencyTone toneID='Tone 2'
               updateTone={this.handleFormFrequencyTone}
               defaultTone={350}/>
           </div>
