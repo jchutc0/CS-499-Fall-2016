@@ -25,15 +25,22 @@ var FormFrequencyTone = React.createClass({
 
   //// Class constants ////
   // the lowest and highest frequency the generator can handle
+  //  NB: when changing these, also change the values in the frequency slider
+  //  min and max calculations below
   minFrequency: 20,
   maxFrequency: 20000,
 
   // the highest and lowest values for the frequency slider
-  minFrequencySlider: Math.ceil(Math.log2(20)),
-  maxFrequencySlider: Math.floor(Math.log2(20000)),
+  minFrequencySlider: Math.ceil(8 * Math.log2(20)),
+  maxFrequencySlider: Math.floor(8 * Math.log2(20000)),
 
   // the highest gain value the generator can handle
   maxGain: 10,
+
+  // the value to multiply the log values by to get more slider ranges
+  //  NB: when changing this, also change the value in the frequency slider
+  //  min and max calculations above
+  logScale: 8,
 
   //// Class functions ////
   /*
@@ -47,6 +54,21 @@ var FormFrequencyTone = React.createClass({
       defaultTone: 440
     };
   },          // getDefaultProps function
+
+  /*
+  adjustedLog function
+  Called by various functions to generate the adjusted log of a number
+
+  It calculates the base-2 logarithm of a value, multiplies it by a constant,
+  and rounds it down.
+
+  The constant is involved so the slider has more precision. With no constant,
+  20 - 20k makes 5 - 14, or 9 divisions. With a constant of 8, it makes 35 -
+  114, or 79 divisions
+  */
+  adjustedLog: function(value) {
+    return Math.floor(this.logScale * Math.log2(value));
+  },          // adjustedLog function
 
   /*
   checkValidSubmit function
@@ -101,13 +123,15 @@ var FormFrequencyTone = React.createClass({
   */
   handleFrequencySliderChange: function(e) {
     // Get the adjusted logarithmic value of the frequency text box
-    var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
+    var logOfFrequency = this.adjustedLog(this.refs.frequency.value);
 
     // if the slider and the box don't match, set the box
     if(logOfFrequency != this.refs.frequencySlider.value) {
-      this.refs.frequency.value = Math.pow(2, this.refs.frequencySlider.value);
+      this.refs.frequency.value = Math.floor(Math.pow(
+        2, this.refs.frequencySlider.value / this.logScale
+      ));
     }         // if the slider and the box don't match
-
+    
     // check the values to make sure we have a valid submission and turn off
     //  the tone if not
     this.checkValidSubmit();
@@ -115,77 +139,77 @@ var FormFrequencyTone = React.createClass({
     // send the tone up to FormFrequency
     this.props.updateTone(this.props.toneID,
       this.refs.frequency.value, this.refs.gain.value);
-  },      // handleFrequencySliderChange function
+    },      // handleFrequencySliderChange function
 
-  /*
-  handleGainChange function
-  Invoked when the gain slider value is changed or when the user presses enter
-  in the text box
+    /*
+    handleGainChange function
+    Invoked when the gain slider value is changed or when the user presses enter
+    in the text box
 
-  Checks to see if the slider matches the adjusted log of the text box (to make
-  the slider work on a logarithmic scale) and sets the box if not. Then checks
-  to make sure the values are valid (with checkValidSubmit) and sends the tone
-  to FormFrequency (with updateTone).
-  */
-  handleGainChange: function(e) {
-    // preventDefault so we don't reload the page when the user presses enter
-    e.preventDefault();
+    Checks to see if the slider matches the adjusted log of the text box (to make
+    the slider work on a logarithmic scale) and sets the box if not. Then checks
+    to make sure the values are valid (with checkValidSubmit) and sends the tone
+    to FormFrequency (with updateTone).
+    */
+    handleGainChange: function(e) {
+      // preventDefault so we don't reload the page when the user presses enter
+      e.preventDefault();
 
-    // Get the adjusted logarithmic value of the frequency text box
-    var logOfFrequency = Math.floor(Math.log2(this.refs.frequency.value));
+      // Get the adjusted logarithmic value of the frequency text box
+      var logOfFrequency = this.adjustedLog(this.refs.frequency.value);
 
-    // sets the frequency slider to match the text box
-    this.refs.frequencySlider.value = logOfFrequency;
+      // sets the frequency slider to match the text box
+      this.refs.frequencySlider.value = logOfFrequency;
 
-    // check the values to make sure we have a valid submission and turn off
-    //  the tone if not
-    this.checkValidSubmit();
+      // check the values to make sure we have a valid submission and turn off
+      //  the tone if not
+      this.checkValidSubmit();
 
-    // send the tone up to FormFrequency
-    this.props.updateTone(this.props.toneID,
-      this.refs.frequency.value, this.refs.gain.value);
-  },      // handleGainChange function
+      // send the tone up to FormFrequency
+      this.props.updateTone(this.props.toneID,
+        this.refs.frequency.value, this.refs.gain.value);
+      },      // handleGainChange function
 
-  /*
-  render function
+      /*
+      render function
 
-  renders the component to the web browser -- the default entry point
-  */
-  render: function() {
-    return (
-      <div className='frequency-form'>
-        <form onSubmit={this.handleGainChange}>
-          <fieldset>
-            <legend>{this.props.toneID}</legend>
-            <div>
-              <input type='number' ref='frequency' name='frequency'
-                id='frequency' maxLength="5"
-                defaultValue={this.props.defaultTone}
-                min={this.minFrequency}
-                max={this.maxFrequency}/>
-            </div>
-            <div>
-              <label htmlFor='frequencySlider'>Frequency:</label>
-              <input type='range' className='slider'
-                name='frequencySlider' ref='frequencySlider'
-                min={this.minFrequencySlider} max={this.maxFrequencySlider}
-                defaultValue={Math.floor(Math.log2(this.props.defaultTone))}
-                onChange={this.handleFrequencySliderChange}/>
-            </div>
-            <div>
-              <label htmlFor='gain' >Volume:</label>
-                <input type='range' className='slider'
-                  name='gain' ref='gain'
-                  min='0' max='10'
-                  defaultValue='0'
-                  onChange={this.handleGainChange}/>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    );      // return value
-  }         // render function
-});         // FormFrequencyTone class
+      renders the component to the web browser -- the default entry point
+      */
+      render: function() {
+        return (
+          <div className='frequency-form'>
+            <form onSubmit={this.handleGainChange}>
+              <fieldset>
+                <legend>{this.props.toneID}</legend>
+                <div>
+                  <input type='number' ref='frequency' name='frequency'
+                    id='frequency' maxLength="5"
+                    defaultValue={this.props.defaultTone}
+                    min={this.minFrequency}
+                    max={this.maxFrequency}/>
+                </div>
+                <div>
+                  <label htmlFor='frequencySlider'>Frequency:</label>
+                  <input type='range' className='slider'
+                    name='frequencySlider' ref='frequencySlider'
+                    min={this.minFrequencySlider} max={this.maxFrequencySlider}
+                    defaultValue={this.adjustedLog(this.props.defaultTone)}
+                    onChange={this.handleFrequencySliderChange}/>
+                </div>
+                <div>
+                  <label htmlFor='gain' >Volume:</label>
+                  <input type='range' className='slider'
+                    name='gain' ref='gain'
+                    min='0' max='10'
+                    defaultValue='0'
+                    onChange={this.handleGainChange}/>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        );      // return value
+      }         // render function
+    });         // FormFrequencyTone class
 
-// export FormFrequencyTone for other modules to use
-module.exports = FormFrequencyTone;
+    // export FormFrequencyTone for other modules to use
+    module.exports = FormFrequencyTone;
