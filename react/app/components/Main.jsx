@@ -137,7 +137,8 @@ var Main = React.createClass({
               <div>
                 <Graph context={this.state.context}
                   analyser={this.state.analyser}
-                  playing={!this.state.paused}/>
+                  playing={!this.state.paused}
+                  handlePlayFrequency={this.handlePlayFrequency}/>
               </div>
             </div>
             <div className="columns small-12 large-6">

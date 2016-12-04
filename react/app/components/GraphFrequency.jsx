@@ -15,9 +15,104 @@ var GraphFrequency = React.createClass({
 
   // component takes a required array of numbers
   propTypes: {
+    handlePlayFrequency: React.PropTypes.func.isRequired,
     data   : React.PropTypes.object.isRequired,
     frequencyBinCount : React.PropTypes.number.isRequired
+
   },    // propTypes
+
+
+  ///// Mouse Listener Functionality ////////////////////////////////////////
+
+  toneGain: 4,
+
+  mouseDownListener: function(e) {
+    e.preventDefault();
+
+    // get the mouse position
+    //  this takes into account possible resizing
+    var canvas = this.refs.frequencyGraphCanvas;
+    var freqX = this.calculateMouseFrequency(e.clientX);
+    // console.log('DOWN - freq: '+freqX);
+    this.props.handlePlayFrequency([freqX], [this.toneGain]);
+
+    // add a listener for move to get "drag"
+    canvas.addEventListener(
+      'mousemove', this.mouseMoveListener, false
+    );
+
+    // remove the down listener (until mouse released)
+    canvas.removeEventListener(
+      'mousedown', this.mouseDownListener, false
+    );
+
+    // add a mouseup listener (so we know when released)
+    window.addEventListener(
+      'mouseup', this.mouseUpListener, false
+    );
+  },
+
+  mouseUpListener: function(e) {
+    e.preventDefault();
+    console.log('UP');
+    this.props.handlePlayFrequency();
+    var canvas = this.refs.frequencyGraphCanvas;
+
+    // put mousedown listener back
+    canvas.addEventListener(
+      'mousedown', this.mouseDownListener, false
+    );
+    // mouse is up - remove up listener
+    window.removeEventListener(
+      'mouseup', this.mouseUpListener, false
+    );
+
+    // drag is over - stop listening to move
+    canvas.removeEventListener(
+      'mousemove', this.mouseMoveListener, false
+    );
+  },
+
+  mouseMoveListener: function(e) {
+    var freqX = this.calculateMouseFrequency(e.clientX);
+    // console.log('MOVE - freq: '+freqX);
+    this.props.handlePlayFrequency([freqX], [this.toneGain]);
+  },
+
+  calculateMousePositionX: function(coord) {
+    var canvas = this.refs.frequencyGraphCanvas;
+    var bound = canvas.getBoundingClientRect();
+    var min = 0;
+    var max = canvas.width;
+    var returnVal = (coord - bound.left) * (canvas.width / bound.width);
+
+    returnVal = (returnVal < min) ? min : (returnVal > max) ? max : returnVal;
+    return returnVal;
+  },
+
+  calculateMouseFrequency: function(coord) {
+    var samples = this.props.frequencyBinCount;
+
+    // check for valid number of samples to avoid divide by 0 or log error
+    if((samples <= 1) || (samples === undefined) || (isNaN(samples))) {
+      return;
+    }
+
+    var canvas = this.refs.frequencyGraphCanvas;
+    var bound = canvas.getBoundingClientRect();
+    var min = 0;
+    var max = canvas.width;
+    var pos = (coord - bound.left) * (canvas.width / bound.width);
+    var maxLog = Math.log2(samples);
+
+    pos = (pos < min) ? min : (pos > max) ? max : pos;
+
+    return (
+      this.props.binSize * Math.pow(2, pos / max * maxLog)
+    );
+  },
+
+  ///////////////////////////////////////////////////////////////////////////
 
   /*
   componentDidMount function
@@ -26,8 +121,17 @@ var GraphFrequency = React.createClass({
   Draws the graph
   */
   componentDidMount: function() {
+    this.refs.frequencyGraphCanvas.addEventListener(
+      'mousedown', this.mouseDownListener, false
+    );
     this.drawGraph();
   },      // componentDidMount function
+
+  componentWillUnmount: function() {
+    this.refs.frequencyGraphCanvas.removeEventListener(
+      'mousedown', this.mouseDownListener, false
+    );
+  },
 
   /*
   componentDidUpdate function
@@ -62,18 +166,6 @@ var GraphFrequency = React.createClass({
     // clears the box
     drawContext.fillStyle = '#CCCCCC';
     drawContext.fillRect(0, 0, this.width, this.height);
-
-
-    // //------draws the vertical lines through the graph at 440 Hz---------
-    // drawContext.beginPath();
-    // //drawContext.strokeStyle = '#FF0000';
-    // drawContext.moveTo(170,0);
-    // drawContext.lineTo(170,200);
-    // drawContext.stroke();
-
-    //drawContext.beginPath();
-    //drawContext.strokeStyle = '#0000FF';
-    //---------------------------------------------------------
 
     for(var i = 0; i < data.length; i++) {
       drawContext.fillStyle = gradient;
@@ -149,15 +241,15 @@ var GraphFrequency = React.createClass({
     }
 
     /*
-    To find a base bar of 400 Hz:
-      1) Find the number of total divisions we represent in the graph (the
-        maxLog)
-      2) Find the number of pixels between each division (the
-        locationDifference)
-      3) Find the location of the lowest power of 2 the graph can represent
-        (locationLowest) using the same formula from generateHorizontalCoords
-      4) Start at locationLowest and draw bars at each locationDifference
-        location until the end of the graph
+    To find a base bar of 440 Hz:
+    1) Find the number of total divisions we represent in the graph (the
+    maxLog)
+    2) Find the number of pixels between each division (the
+    locationDifference)
+    3) Find the location of the lowest power of 2 the graph can represent
+    (locationLowest) using the same formula from generateHorizontalCoords
+    4) Start at locationLowest and draw bars at each locationDifference
+    location until the end of the graph
     */
 
     var maxLog = Math.log2(samples);
@@ -192,9 +284,9 @@ var GraphFrequency = React.createClass({
 
     return (
       <div>
-          <canvas id="GraphFrequencyCanvas" width="400" height="200"
-            ref='frequencyGraphCanvas' style={canvasStyle}>
-          </canvas>
+        <canvas id="GraphFrequencyCanvas" width="400" height="200"
+          ref='frequencyGraphCanvas' style={canvasStyle}>
+        </canvas>
       </div>
     );        // return value
   }           // render function
