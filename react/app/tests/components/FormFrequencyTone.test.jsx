@@ -36,6 +36,15 @@ describe('FormFrequencyTone', () => {
       expect(formFrequencyTone.refs.frequency.value).toEqual(20);
     });       // should fix frequency under min
 
+    it('should return 0 gain as invalid', () => {
+      formFrequencyTone.refs.frequency.value = 440;
+      formFrequencyTone.refs.gain.value = 0;
+      var result = formFrequencyTone.checkValidSubmit();
+      expect(result).toBe(false);
+      expect(formFrequencyTone.refs.gain.value).toEqual(0);
+      expect(formFrequencyTone.refs.frequency.value).toEqual(440);
+    });       // should fix frequency under min
+
     it('should validate good frequency', () => {
       formFrequencyTone.refs.frequency.value = 440;
       formFrequencyTone.refs.gain.value = 5;

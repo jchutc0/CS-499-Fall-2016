@@ -131,7 +131,7 @@ var FormFrequencyTone = React.createClass({
         2, this.refs.frequencySlider.value / this.logScale
       ));
     }         // if the slider and the box don't match
-    
+
     // check the values to make sure we have a valid submission and turn off
     //  the tone if not
     this.checkValidSubmit();
