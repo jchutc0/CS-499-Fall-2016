@@ -15,9 +15,20 @@ var AudioOutWhiteNoise = require('AudioOutWhiteNoise');
 // create the AudioOut class
 var AudioOut = React.createClass({
 
-  // Require the context object as a prop
+  // Define the expected properties
   propTypes: {
-    context     : React.PropTypes.object.isRequired
+    // The analyser produces the data for the graphs from the output (required)
+    analyser        : React.PropTypes.object.isRequired,
+    // The context is the audio context that allows sounds to play (required)
+    context         : React.PropTypes.object.isRequired,
+    // The frequencyArray is an array of frequencies to play
+    frequencyArray  : React.PropTypes.array,
+    // The gainArray is an array of gain values for the frequencies
+    gainArray       : React.PropTypes.array,
+    // paused is changed when the the graphs and audio are paused in Main
+    paused          : React.PropTypes.bool,
+    // whiteNoise is the max gain value for the white noise generator
+    whiteNoise      : React.PropTypes.number
   },  // propTypes
 
   /*
@@ -30,6 +41,7 @@ var AudioOut = React.createClass({
     return {
       frequencyArray: [],
       gainArray: [],
+      paused: false,
       whiteNoise: undefined
     };    // return value
   },      // getDefaultProps function
