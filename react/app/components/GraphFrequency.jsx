@@ -13,6 +13,8 @@ var GraphFrequency = React.createClass({
   width: 400,
   height: 200,
 
+  barHeight: 10,
+
   // component takes a required array of numbers
   propTypes: {
     handlePlayFrequency: React.PropTypes.func.isRequired,
@@ -282,7 +284,7 @@ var GraphFrequency = React.createClass({
     ) {
       context.strokeStyle = '#999999';
       context.beginPath();
-      context.moveTo(location,0);
+      context.moveTo(location,this.height - this.barHeight);
       context.lineTo(location,this.height);
       context.stroke();
     }   // for drawing loop
