@@ -25,14 +25,14 @@ Modules to work on:
 - [x] change frequency object to frequency, gain arrays
 - [x] Try to find away to keep microphone from playing/feeding back
 - [x] Mouse drag for create sounds
-- [ ] allow for multi-tonal keyboard output
+- [x] allow for multi-tonal keyboard output
+- [x] Maybe add a volume / gain slider to keypad and piano forms
 - [ ] .wav file, extract stream in, read
 - [ ] Labels for graphs?
 - [ ] TESTING
 - [ ] In button class, add second keypress option to allow multiple keypresses
       for piano form to allow middle C to be q and , at the same time
 - [ ] Maybe rescale gain for 0 - 100 or 20 since sliders don't care
-- [ ] Maybe add a volume / gain slider to keypad and piano forms
 - [ ] Shephard option: allow up, down arrows to change base tone
 - [ ] mouse drag tones take over audio context - maybe a form reset option?
 - [ ] Remove testing, unused components from project before turnin
