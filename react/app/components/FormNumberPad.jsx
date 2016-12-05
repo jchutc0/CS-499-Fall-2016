@@ -54,6 +54,12 @@ var FormNumberPad = React.createClass({
     '#': [1477, 941]
   },
 
+  getInitialState: function() {
+    return {
+      gain: 5
+    };
+  },
+
   /*
   playTelephony function
 
@@ -68,16 +74,23 @@ var FormNumberPad = React.createClass({
       if(playing) {
         return this.props.playFrequency(
           this.frequencyObject[buttonID],
-          [gain, gain]
+          [this.state.gain, this.state.gain]
         );   // playFrequency call
       } else {
-        return this.props.playFrequency([], []);
+        return this.props.playFrequency();
       }
     }      // if valid frequency
     else {
-      return this.props.playFrequency([], []);
+      return this.props.playFrequency();
     }     // if invalid frequency
   },      // playTelephony function
+
+  handleGainSliderChange: function(e) {
+    e.preventDefault();
+    this.setState({
+      gain: this.refs.gainSlider.value
+    });
+  },
 
   /*
   render function
@@ -96,26 +109,36 @@ var FormNumberPad = React.createClass({
       );
     };
     return (
-      <div>
-        <fieldset>
-          <legend>Telephony</legend>
-          {renderButton('1')}
-          {renderButton('2')}
-          {renderButton('3')}
-          <br/>
-          {renderButton('4')}
-          {renderButton('5')}
-          {renderButton('6')}
-          <br/>
-          {renderButton('7')}
-          {renderButton('8')}
-          {renderButton('9')}
-          <br/>
-          {renderButton('*')}
-          {renderButton('0')}
-          {renderButton('#')}
-          <br/>
-        </fieldset>
+      <div className='numberPadForm'>
+        <div>
+          <fieldset>
+            <legend>Telephony</legend>
+            {renderButton('1')}
+            {renderButton('2')}
+            {renderButton('3')}
+            <br/>
+            {renderButton('4')}
+            {renderButton('5')}
+            {renderButton('6')}
+            <br/>
+            {renderButton('7')}
+            {renderButton('8')}
+            {renderButton('9')}
+            <br/>
+            {renderButton('*')}
+            {renderButton('0')}
+            {renderButton('#')}
+            <br/>
+          </fieldset>
+        </div>
+        <div>
+          <label htmlFor='gainSlider'>Volume:</label>
+          <input type='range' className='slider'
+            name='gainSlider' ref='gainSlider'
+            min='0' max='10'
+            defaultValue='5'
+            onChange={this.handleGainSliderChange}/>
+        </div>
       </div>
     );        // return value
   }           // render function

@@ -1,3 +1,10 @@
-button.numberPad {
-  margin: 5px;
+div.numberPadForm {
+  button.numberPad {
+    margin: 5px;
+  }
+  
+  input.slider {
+    width: 300px;
+    margin: 0px;
+  }
 }
