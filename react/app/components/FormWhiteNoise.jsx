@@ -27,7 +27,7 @@ var FormWhiteNoise = React.createClass({
     // prevent page from reloading
     e.preventDefault();
 
-    var whiteNoiseGain = this.refs.whiteNoiseGain.value;
+    var whiteNoiseGain = parseInt(this.refs.whiteNoiseGain.value);
     var playWhiteNoise = this.props.playWhiteNoise;
 
     // if we have 0 gain, send a stop all sounds command and exit
