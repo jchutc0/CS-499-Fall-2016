@@ -1,37 +1,45 @@
-div.keyboard-form {
-  height: 200px;
-  width: 452px;
-  overflow-x: scroll;
+div.formKeybord {
+  div.keyboard-form {
+    height: 200px;
+    width: 452px;
+    overflow-x: scroll;
 
-  div.whiteKey {
-    float: left;
-    width: 30px;
-    height: 100%;
-    border: 1px solid black;
+    div.whiteKey {
+      float: left;
+      width: 30px;
+      height: 100%;
+      border: 1px solid black;
+    }
+
+    div.blackKey {
+      position: relative;
+      top: -200px;
+      left: 15px;
+      width: 30px;
+      height: 50%;
+      border: 1px solid white;
+      color: white;
+      background-color: black;
+    }
+
+    button.unpressed {
+      background-color: transparent;
+      padding-top: 50%;
+      width: 100%;
+      height: 100%;
+    }
+
+    button.pressed {
+      background-color: #888888; /* Grey */
+      padding-top: 75%;
+      width: 100%;
+      height: 100%;
+    }
   }
 
-  div.blackKey {
-    position: relative;
-    top: -200px;
-    left: 15px;
-    width: 30px;
-    height: 50%;
-    border: 1px solid white;
-    color: white;
-    background-color: black;
+  input.slider {
+    width: 300px;
+    margin: 0px;
   }
 
-  button.unpressed {
-    background-color: transparent;
-    padding-top: 50%;
-    width: 100%;
-    height: 100%;
-  }
-
-  button.pressed {
-    background-color: #888888; /* Grey */
-    padding-top: 75%;
-    width: 100%;
-    height: 100%;
-  }
 }

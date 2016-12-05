@@ -78,7 +78,8 @@ var FormKeyboard = React.createClass({
 
   getInitialState: function() {
     return {
-      playing: {}
+      playing: {},
+      gain: 5
     };
   },
 
@@ -106,7 +107,7 @@ var FormKeyboard = React.createClass({
         var gainArray = new Array(arraySize);
         for(var i = 0; i < arraySize; i++) {
           frequencyArray[i] = this.frequencyArray[playingKeys[i]];
-          gainArray[i] = 8;
+          gainArray[i] = this.state.gain;
         }
         return this.props.playFrequency(frequencyArray, gainArray);
       }
@@ -122,19 +123,17 @@ var FormKeyboard = React.createClass({
       var gainArray = new Array(arraySize);
       for(var i = 0; i < arraySize; i++) {
         frequencyArray[i] = this.frequencyArray[playingKeys[i]];
-        gainArray[i] = 8;
+        gainArray[i] = this.state.gain;
       }
       return this.props.playFrequency(frequencyArray, gainArray);
     }
   },
 
-  /*
-  handleButtonUp function
-
-  taken as a call from a button release - stops playing
-  */
-  handleButtonUp: function() {
-    return this.props.playFrequency([], []);
+  handleGainSliderChange: function(e) {
+    e.preventDefault();
+    this.setState({
+      gain: this.refs.gainSlider.value
+    });
   },
 
   /*
@@ -156,7 +155,7 @@ var FormKeyboard = React.createClass({
     };
 
     return (
-      <div>
+      <div className='formKeybord'>
         <div className='keyboard-form'>
           <div className='whiteKey'>{renderButton('24', 'z')}
             <div className='blackKey'>{renderButton('23', 's')}</div>
@@ -194,6 +193,14 @@ var FormKeyboard = React.createClass({
           </div>
           <div className='whiteKey'>{renderButton('1', 'u')}</div>
           <div className='whiteKey'>{renderButton('0', 'i')}</div>
+        </div>
+        <div>
+          <label htmlFor='gainSlider'>Volume:</label>
+          <input type='range' className='slider'
+            name='gainSlider' ref='gainSlider'
+            min='0' max='10'
+            defaultValue='5'
+            onChange={this.handleGainSliderChange}/>
         </div>
       </div>
     );    // return value
