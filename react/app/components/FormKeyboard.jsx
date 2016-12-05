@@ -46,47 +46,85 @@ var FormKeyboard = React.createClass({
     'm' : 77
   },
 
+  frequencyArray: {
+    '0' : 523.25,   // C
+    '1' : 493.88,   // B
+    '2' : 466.16,   // Bb
+    '3' : 440.00,   // A
+    '4' : 415.30,   // Ab
+    '5' : 392.00,   // G
+    '6' : 369.99,   // F#
+    '7' : 349.23,   // F
+    '8' : 329.63,   // E
+    '9' : 311.13,   // Eb
+    '10' : 293.66,   // D
+    '11' : 277.18,   // C#
+    '12' : 261.63,   // C
+    '13' : 246.94,   // B
+    '14' : 233.08,   // Bb
+    '15' : 220.00,   // A
+    '16' : 207.65,   // Ab
+    '17' : 196.00,   // G
+    '18' : 185.00,   // F#
+    '19' : 174.61,   // F
+    '20' : 164.81,   // E
+    '21' : 155.56,   // Eb
+    '22' : 146.83,   // D
+    '23' : 138.59,   // C#
+    '24' : 130.81    // C
+  },
+
+  maxTones: 4,
+
+  getInitialState: function() {
+    return {
+      playing: {}
+    };
+  },
+
   /*
   handleButtonDown function
 
   taken as a call from a button press - plays a defined frequency
   */
   handleButton: function(buttonID, isPlaying) {
-    var frequencyArray = {
-      '0' : 523.25,   // C
-      '1' : 493.88,   // B
-      '2' : 466.16,   // Bb
-      '3' : 440.00,   // A
-      '4' : 415.30,   // Ab
-      '5' : 392.00,   // G
-      '6' : 369.99,   // F#
-      '7' : 349.23,   // F
-      '8' : 329.63,   // E
-      '9' : 311.13,   // Eb
-      '10' : 293.66,   // D
-      '11' : 277.18,   // C#
-      '12' : 261.63,   // C
-      '13' : 246.94,   // B
-      '14' : 233.08,   // Bb
-      '15' : 220.00,   // A
-      '16' : 207.65,   // Ab
-      '17' : 196.00,   // G
-      '18' : 185.00,   // F#
-      '19' : 174.61,   // F
-      '20' : 164.81,   // E
-      '21' : 155.56,   // Eb
-      '22' : 146.83,   // D
-      '23' : 138.59,   // C#
-      '24' : 130.81    // C
-    };
+    var {playing} = this.state;
 
     if(isPlaying) {
-      if (frequencyArray[buttonID] !== undefined) {
-        return this.props.playFrequency([frequencyArray[buttonID]], [8]);
+      if (this.frequencyArray[buttonID] !== undefined) {
+        playing[buttonID] = true;
+        // if(playingKeys.length > this.maxTones) {
+        //   delete(playing[playingKeys[0]]);
+        //   playingKeys = Object.keys(playing);
+        // }
+        this.setState({
+          playing: playing
+        });
+        var playingKeys = Object.keys(playing);
+        var arraySize = playingKeys.length;
+        var frequencyArray = new Array(arraySize);
+        var gainArray = new Array(arraySize);
+        for(var i = 0; i < arraySize; i++) {
+          frequencyArray[i] = this.frequencyArray[playingKeys[i]];
+          gainArray[i] = 8;
+        }
+        return this.props.playFrequency(frequencyArray, gainArray);
       }
     }
     else {
-      return this.props.playFrequency([], []);
+      delete(playing[buttonID]);
+      this.setState({
+        playing: playing
+      });
+      var playingKeys = Object.keys(playing);
+      var arraySize = playingKeys.length;
+      var frequencyArray = new Array(arraySize);
+      var gainArray = new Array(arraySize);
+      for(var i = 0; i < arraySize; i++) {
+        frequencyArray[i] = this.frequencyArray[playingKeys[i]];
+        gainArray[i] = 8;
+      }
+      return this.props.playFrequency(frequencyArray, gainArray);
     }
   },
 
@@ -118,43 +156,45 @@ var FormKeyboard = React.createClass({
     };
 
     return (
-      <div className='keyboard-form'>
-        <div className='whiteKey'>{renderButton('24', 'z')}
-          <div className='blackKey'>{renderButton('23', 's')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('22', 'x')}
-          <div className='blackKey'>{renderButton('21', 'd')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('20', 'c')}</div>
-        <div className='whiteKey'>{renderButton('19', 'v')}
-          <div className='blackKey'>{renderButton('18', 'g')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('17', 'b')}
-          <div className='blackKey'>{renderButton('16', 'h')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('15', 'n')}
-          <div className='blackKey'>{renderButton('14', 'j')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('13', 'm')}</div>
+      <div>
+        <div className='keyboard-form'>
+          <div className='whiteKey'>{renderButton('24', 'z')}
+            <div className='blackKey'>{renderButton('23', 's')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('22', 'x')}
+            <div className='blackKey'>{renderButton('21', 'd')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('20', 'c')}</div>
+          <div className='whiteKey'>{renderButton('19', 'v')}
+            <div className='blackKey'>{renderButton('18', 'g')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('17', 'b')}
+            <div className='blackKey'>{renderButton('16', 'h')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('15', 'n')}
+            <div className='blackKey'>{renderButton('14', 'j')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('13', 'm')}</div>
 
-        <div className='whiteKey'>{renderButton('12', 'q')}
-          <div className='blackKey'>{renderButton('11', '2')}</div>
+          <div className='whiteKey'>{renderButton('12', 'q')}
+            <div className='blackKey'>{renderButton('11', '2')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('10', 'w')}
+            <div className='blackKey'>{renderButton('9', '3')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('8', 'e')}</div>
+          <div className='whiteKey'>{renderButton('7', 'r')}
+            <div className='blackKey'>{renderButton('6', '5')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('5', 't')}
+            <div className='blackKey'>{renderButton('4', '6')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('3', 'y')}
+            <div className='blackKey'>{renderButton('2', '7')}</div>
+          </div>
+          <div className='whiteKey'>{renderButton('1', 'u')}</div>
+          <div className='whiteKey'>{renderButton('0', 'i')}</div>
         </div>
-        <div className='whiteKey'>{renderButton('10', 'w')}
-          <div className='blackKey'>{renderButton('9', '3')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('8', 'e')}</div>
-        <div className='whiteKey'>{renderButton('7', 'r')}
-          <div className='blackKey'>{renderButton('6', '5')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('5', 't')}
-          <div className='blackKey'>{renderButton('4', '6')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('3', 'y')}
-          <div className='blackKey'>{renderButton('2', '7')}</div>
-        </div>
-        <div className='whiteKey'>{renderButton('1', 'u')}</div>
-        <div className='whiteKey'>{renderButton('0', 'i')}</div>
       </div>
     );    // return value
   }       // render function
