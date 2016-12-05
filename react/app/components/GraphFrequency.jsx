@@ -33,8 +33,10 @@ var GraphFrequency = React.createClass({
     //  this takes into account possible resizing
     var canvas = this.refs.frequencyGraphCanvas;
     var freqX = this.calculateMouseFrequency(e.clientX);
+    var gainY = this.calculateMouseGain(e.clientY);
+    console.log('gainY: '+gainY);
     // console.log('DOWN - freq: '+freqX);
-    this.props.handlePlayFrequency([freqX], [this.toneGain]);
+    this.props.handlePlayFrequency([freqX], [gainY]);
 
     // add a listener for move to get "drag"
     canvas.addEventListener(
@@ -75,8 +77,9 @@ var GraphFrequency = React.createClass({
 
   mouseMoveListener: function(e) {
     var freqX = this.calculateMouseFrequency(e.clientX);
+    var gainY = this.calculateMouseGain(e.clientY);
     // console.log('MOVE - freq: '+freqX);
-    this.props.handlePlayFrequency([freqX], [this.toneGain]);
+    this.props.handlePlayFrequency([freqX], [gainY]);
   },
 
   calculateMousePositionX: function(coord) {
@@ -109,7 +112,21 @@ var GraphFrequency = React.createClass({
 
     return (
       this.props.binSize * Math.pow(2, pos / max * maxLog)
-    );
+    )
+  },
+
+    calculateMouseGain: function(coord) {
+      var canvas = this.refs.frequencyGraphCanvas;
+      var bound = canvas.getBoundingClientRect();
+      var min = 0;
+      var max = 10; // maxGain
+      var pos = max - ((coord - bound.top) * max / (bound.height));
+
+
+      pos = (pos < min) ? min : (pos > max) ? max : pos;
+
+      return ( pos );
+
   },
 
   ///////////////////////////////////////////////////////////////////////////
