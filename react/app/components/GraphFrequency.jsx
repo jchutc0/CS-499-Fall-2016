@@ -13,7 +13,7 @@ var GraphFrequency = React.createClass({
   width: 400,
   height: 200,
 
-  barHeight: 10,
+  barHeight: 5,
 
   // component takes a required array of numbers
   propTypes: {
@@ -271,10 +271,11 @@ var GraphFrequency = React.createClass({
     location until the end of the graph
     */
 
+    var frequency = 3.4375;
     var maxLog = Math.log2(samples);
     var locationDifference = this.width / maxLog;
     var locationLowest = (
-      Math.log2(3.4375 / this.props.binSize) / maxLog * this.width
+      Math.log2(frequency / this.props.binSize) / maxLog * this.width
     );
 
     for (
@@ -282,11 +283,23 @@ var GraphFrequency = React.createClass({
       location < this.width;
       location += locationDifference
     ) {
+      // console.log('frequency: '+frequency);
+      var printedFreq = Math.round(frequency);
       context.strokeStyle = '#999999';
       context.beginPath();
-      context.moveTo(location,this.height - this.barHeight);
-      context.lineTo(location,this.height);
+      context.moveTo(location, this.height - this.barHeight);
+      context.lineTo(location, this.height);
       context.stroke();
+      context.beginPath();
+      context.moveTo(location, this.barHeight);
+      context.lineTo(location, 0);
+      context.stroke();
+      context.fillStyle = '#666666';
+      context.font = '10px Arial';
+      context.textAlign = 'center';
+      context.fillText(printedFreq, location, this.barHeight + 11);
+      context.fillText(printedFreq, location, this.height - this.barHeight - 3);
+      frequency = frequency * 2;
     }   // for drawing loop
   },    // drawFrequencyDivision funcion
 
