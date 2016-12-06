@@ -37,7 +37,7 @@ var AudioOutTone = React.createClass({
     gain.connect(analyser);
     analyser.connect(context.destination);
     gain.gain.value = 0;
-    oscillator.start(0.025);
+    oscillator.start(0);
 
     // Start sound playing if valid inputs
     this.playSound({
