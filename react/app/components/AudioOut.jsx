@@ -79,21 +79,16 @@ var AudioOut = React.createClass({
       }
 
       if(frequencyArray.length < 1) {
-        context.suspend();
+        // context.suspend();
         return (
           <div></div>
         );
       }
 
       var returnValue = new Array();
-      // console.log('frequencyArray.length: '+frequencyArray.length);
 
-      for(
-        var i = 0;
-        ((i < frequencyArray.length) && (i < gainArray.length));
-        i ++
-      ) {
-        if(gainArray[i] > 0) {
+      for(var i = 0; (i < frequencyArray.length); i ++) {
+        if((gainArray[i] > 0) && (frequencyArray[i] > 0)) {
           returnValue.push(
             <div key={i}>
               <AudioOutTone key = {i}
