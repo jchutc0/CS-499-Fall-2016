@@ -14,12 +14,26 @@ var GraphWave = React.createClass({
   width: 400,
   height: 200,
   // declare the usable percentage of the graph (to make it pretty)
-  usable: 75,
+  usable: 100,
 
   // declare a graph scaling factor to allow adjusting the FFT size without
   //   making the graph unusable
   // this should be >0 and <=1 to be useful
   scale: 0.02,
+
+  // constants for the graph labels
+  graphLabels: {
+    barHeight: 5,
+    highValue: 0.025,
+    precision: 3,
+    numberOfDivisions: 5,
+    barStyle: '#999999',
+    labelStyle: '#666666',
+    labelFont: '10px Arial',
+    topTextOffset: 11,
+    bottomTextOffset: 3,
+
+  },
 
   // component takes a required array of numbers
   propTypes: {
@@ -76,6 +90,7 @@ var GraphWave = React.createClass({
     }     // array iteration for loop
 
     drawContext.stroke();
+    this.drawGraphLabels(drawContext);
   },      // drawGraph function
 
   /*
@@ -135,6 +150,64 @@ var GraphWave = React.createClass({
 
     return returnArray;
   },      // generateVerticalCoords function
+
+  drawGraphLabels: function(context) {
+
+    var {
+      barHeight,
+      highValue,
+      precision,
+      numberOfDivisions,
+      barStyle,
+      labelStyle,
+      labelFont,
+      topTextOffset,
+      bottomTextOffset
+    } = this.graphLabels;
+
+    var xDifference = this.width / numberOfDivisions;
+    var valueDifference = highValue / numberOfDivisions;
+    var precisionFacor = Math.pow(10, precision);
+
+    var value = valueDifference;
+    var xCoord = xDifference;
+    for (var i = 1; i < numberOfDivisions; i++) {
+      var roundedValue = (
+        Math.round(value * precisionFacor) / precisionFacor
+      );
+      // draw the bars
+      context.strokeStyle = barStyle;
+      context.beginPath();
+      context.moveTo(xCoord, this.height - barHeight);
+      context.lineTo(xCoord, this.height);
+      context.stroke();
+      context.beginPath();
+      context.moveTo(xCoord, barHeight);
+      context.lineTo(xCoord, 0);
+      context.stroke();
+
+      // put in the text
+      context.fillStyle = labelStyle;
+      context.font = labelFont;
+      context.textAlign = 'center';
+      context.fillText(roundedValue, xCoord, barHeight + topTextOffset);
+      context.fillText(
+        roundedValue, xCoord, this.height - barHeight - bottomTextOffset
+      );
+
+      // on to the next point
+      value += valueDifference;
+      xCoord += xDifference;
+    }
+  },
+
+
+
+    //   context.fillText(printedFreq, location, barHeight + topTextOffset);
+    //   context.fillText(
+    //     printedFreq, location, this.height - barHeight - bottomTextOffset
+    //   );
+    // }   // for drawing loop
 
 
   /*
