@@ -13,26 +13,23 @@ var GraphWave = React.createClass({
   // declare width and height constants for easy changes
   width: 400,
   height: 200,
-  // declare the usable percentage of the graph (to make it pretty)
-  usable: 100,
 
-  // declare a graph scaling factor to allow adjusting the FFT size without
-  //   making the graph unusable
-  // this should be >0 and <=1 to be useful
-  scale: 0.02,
+  // number of samples is the number of samples between 0 and the max scale
+  //   value -- this is Math.floor(samples_per_second * max seconds)
+  //   here, floor(44.1kHz * (1/40)s) = 1102
+  numberOfSamples: 1102,
 
   // constants for the graph labels
   graphLabels: {
-    barHeight: 5,
-    highValue: 0.025,
-    precision: 3,
-    numberOfDivisions: 5,
-    barStyle: '#999999',
-    labelStyle: '#666666',
-    labelFont: '10px Arial',
-    topTextOffset: 11,
-    bottomTextOffset: 3,
-
+    barHeight: 5,       // height in pixels of the bars
+    highValue: 0.025,   // higest value (in seconds)
+    precision: 3,       // precision to print the divisions on the graph
+    numberOfDivisions: 5,   // number of bars/lables to print
+    barStyle: '#999999',    // color of the bars
+    labelStyle: '#666666',  // color of the labels
+    labelFont: '10px Arial',  // font for the labels
+    topTextOffset: 11,        // text vertical offset for the top labels
+    bottomTextOffset: 3,      // text vertical offset for the bottom labels
   },
 
   // component takes a required array of numbers
@@ -76,10 +73,11 @@ var GraphWave = React.createClass({
     drawContext.strokeStyle = '#0000FF';
 
     // now generate arrays of horizontal and vertical coordinates
-    var horizontalCoords = this.generateHorizontalCoords(
-      Math.floor(data.length * this.scale)
+    var numberOfSamples = (
+      data.length < this.numberOfSamples ? data.length : this.numberOfSamples
     );
-    var verticalCoords = this.generateVerticalCoords(data);
+    var horizontalCoords = this.generateHorizontalCoords(numberOfSamples);
+    var verticalCoords = this.generateVerticalCoords(data, numberOfSamples);
 
     for(var i = 0; i < data.length; i++) {
       if(i !== 0) {
@@ -98,23 +96,20 @@ var GraphWave = React.createClass({
 
   Takes an array of numbers between -1 and 1 and generates an array of values to
   map those points onto a graph having dimensions this.width by this.height
-  using this.usable vertical percent of the graph
   */
-  generateVerticalCoords: function(data) {
-    var {height, usable} = this;
+  generateVerticalCoords: function(data, size) {
+    var {height} = this;
 
     // to fit the graph right, we need to rescale the numbers around 0 and then
     //   shift them up so they're at the center of the graph
     // scaling factor add * -1 since graph origin is at (0, this.height)
-    // var scalingFactor = -1 * height / 2 * usable / 100 / 128;
-    // var shiftingFactor = height / 2;
     var scalingFactor = -1 * height / 256;
     var shiftingFactor = height;
 
     // set up array to return values
     var returnArray = new Array(data.length);
 
-    for(var i = 0; i < data.length; i++) {
+    for(var i = 0; i < size; i++) {
       returnArray[i] = Math.floor(data[i] * scalingFactor + shiftingFactor);
     }
 
@@ -128,7 +123,7 @@ var GraphWave = React.createClass({
   points onto a graph having dimensions this.width by this.height
   */
   generateHorizontalCoords: function(length) {
-    var {width, usable} = this;
+    var {width} = this;
 
     // we should never get < 0 element arrays, but just in case
     if ((length <= 0) || (length === undefined) || isNaN(length)) {
