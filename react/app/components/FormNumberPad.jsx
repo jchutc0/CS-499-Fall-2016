@@ -110,9 +110,8 @@ var FormNumberPad = React.createClass({
     };
     return (
       <div className='numberPadForm'>
-        <div>
-          <fieldset>
-            <legend>Telephony</legend>
+        <div className='row'>
+          <div className='columns small-12 medium-6'>
             {renderButton('1')}
             {renderButton('2')}
             {renderButton('3')}
@@ -128,16 +127,15 @@ var FormNumberPad = React.createClass({
             {renderButton('*')}
             {renderButton('0')}
             {renderButton('#')}
-            <br/>
-          </fieldset>
-        </div>
-        <div>
-          <label htmlFor='gainSlider'>Volume:</label>
-          <input type='range' className='slider'
-            name='gainSlider' ref='gainSlider'
-            min='0' max='10'
-            defaultValue='5'
-            onChange={this.handleGainSliderChange}/>
+          </div>
+          <div className='columns small-12 medium-6'>
+            <label htmlFor='gainSlider'>Volume:</label>
+            <input type='range' className='slider'
+              name='gainSlider' ref='gainSlider'
+              min='0' max='10'
+              defaultValue='5'
+              onChange={this.handleGainSliderChange}/>
+          </div>
         </div>
       </div>
     );        // return value
