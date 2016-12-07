@@ -43,19 +43,11 @@ var FormNav = React.createClass({
 
 
 		return (
-			<div className="top-bar">
-				<div className="top-bar-left">
-					<ul className="menu">
-						<li>
-							Choose One: 
-						</li>
-						<li>
-							<select onChange={this.handleDropdown} ref='selection'>
-								{renderOptions(this.props.formsArray)}
-							</select>
-						</li>
-					</ul>
-				</div>
+			<div>
+				Choose One:
+				<select onChange={this.handleDropdown} ref='selection'>
+					{renderOptions(this.props.formsArray)}
+				</select>
 			</div>
 		);		// return value
 	}				// render function
