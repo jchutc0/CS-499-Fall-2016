@@ -188,31 +188,31 @@ var Form = React.createClass({
 					</div>
 				)
 			},
-			{
-				module: (<FormWavIn/>),
-				label: 'TODO: Wav File Input',
-				note: (
-					<div>
-						<h2>TODO: Wav File Input</h2>
-						<p>
-							This isn't finished yet. Ignore the man behind the curtain.
-						</p>
-					</div>
-				)
-			},
-			{
-				module: (<FormErrorTest/>),
-				label: 'testing - error modal',
-				note: (
-					<div>
-						<h2>testing - error modal</h2>
-						<p>
-							This is just to test stuff. Hopefully we'll remember to take it
-							away before turnin.
-						</p>
-					</div>
-				)
-			}
+			// {
+			// 	module: (<FormWavIn/>),
+			// 	label: 'TODO: Wav File Input',
+			// 	note: (
+			// 		<div>
+			// 			<h2>TODO: Wav File Input</h2>
+			// 			<p>
+			// 				This isn't finished yet. Ignore the man behind the curtain.
+			// 			</p>
+			// 		</div>
+			// 	)
+			// },
+			// {
+			// 	module: (<FormErrorTest/>),
+			// 	label: 'testing - error modal',
+			// 	note: (
+			// 		<div>
+			// 			<h2>testing - error modal</h2>
+			// 			<p>
+			// 				This is just to test stuff. Hopefully we'll remember to take it
+			// 				away before turnin.
+			// 			</p>
+			// 		</div>
+			// 	)
+			// }
 		];
 
 		return {
