@@ -28,6 +28,11 @@ var FormMicrophone = React.createClass({
       audio: true
     }
 
+    navigator.getUserMedia = (
+      navigator.getUserMedia || navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia || navigator.msGetUserMedia
+    );
+
     navigator.getUserMedia(constraints, this.validStream, this.errorReport);
 
   },    // componentDidMount
