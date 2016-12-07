@@ -161,6 +161,7 @@ var Main = React.createClass({
           <div className="columns small-12 medium-10">
             <Form handlePlayFrequency={this.handlePlayFrequency}
               changeForm={this.handleFormChange}
+              soundMute={this.handleSoundMute}
               context={this.state.context}
               analyser={this.state.analyser}/>
           </div>

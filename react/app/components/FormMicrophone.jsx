@@ -37,13 +37,12 @@ var FormMicrophone = React.createClass({
   },
 
   validStream: function(stream) {
-    var analyser = this.props.analyser;
-    var context = this.props.context;
+    var {analyser, context, soundMute} = this.props;
     var input = context.createMediaStreamSource(stream);
-    // console.log('Got stream!');
+    soundMute(false);
+    console.log('Got stream!');
     analyser.disconnect();
     input.connect(analyser);
-    context.resume();
     this.setState({
       streamSource: input
     });
@@ -57,11 +56,12 @@ var FormMicrophone = React.createClass({
   Stops the oscillator to turn off tone generation
   */
   componentWillUnmount: function() {
-    // TODO: need to disconnect input
-    // input.disconnect();
-    this.state.streamSource.disconnect();
-    this.props.analyser.disconnect();
-    this.props.context.suspend();
+    var {streamSource} = this.state;
+    var {analyser, context, soundMute} = this.props;
+    soundMute(true);
+    streamSource.disconnect();
+    analyser.disconnect();
+    analyser.connect(context.destination);
   },
 
 

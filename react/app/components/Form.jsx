@@ -26,7 +26,8 @@ var Form = React.createClass({
 	propTypes: {
 		handlePlayFrequency: React.PropTypes.func.isRequired,
 		changeForm: React.PropTypes.func.isRequired,
-		context: React.PropTypes.object.isRequired
+		context: React.PropTypes.object.isRequired,
+		soundMute: React.PropTypes.func.isRequired
 	},		// propTypes
 
 	/*
@@ -35,7 +36,7 @@ var Form = React.createClass({
 	Set up initial form to display to form 0 (FormFrequency)
 	*/
 	getInitialState: function() {
-		var {handlePlayFrequency, context, analyser} = this.props;
+		var {handlePlayFrequency, context, analyser, soundMute} = this.props;
 
 		var formsArray = [
 			{
@@ -110,7 +111,10 @@ var Form = React.createClass({
 				)
 			},
 			{
-				module: (<FormMicrophone context={context} analyser={analyser}/>),
+				module: (
+					<FormMicrophone context={context} analyser={analyser}
+						soundMute={soundMute}/>
+				),
 				label: 'Microphone Input',
 				note: (
 					<div>
