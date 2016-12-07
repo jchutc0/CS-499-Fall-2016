@@ -275,7 +275,10 @@ var Form = React.createClass({
 		proper form
 		*/
 		var renderCurrentFrom = (form) => {
-
+			if(this.props.hidden) {
+				return '';
+			}
+			
 			if(
 				(Number.isInteger(form)) &&
 				(form >= 0) &&
@@ -292,6 +295,7 @@ var Form = React.createClass({
 				<FormNav
 					setForm={this.setCurrentForm}
 					formsArray={this.state.formsArray}/>
+				{this.props.children}
 				<div>
 					{renderCurrentFrom(this.state.formDisplayed)}
 				</div>

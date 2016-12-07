@@ -149,21 +149,22 @@ var Main = React.createClass({
           </div>
         </div>
         <div className="row">
-          <div className="columns small-12 medium-10 small-centered">
-            <Graph context={this.state.context}
-              analyser={this.state.analyser}
-              muted={this.state.mute}
-              playing={!this.state.paused}
-              handlePlayFrequency={this.handlePlayFrequency}/>
-          </div>
-        </div>
-        <div className="row">
           <div className="columns small-12 medium-10">
             <Form handlePlayFrequency={this.handlePlayFrequency}
               changeForm={this.handleFormChange}
               soundMute={this.handleSoundMute}
               context={this.state.context}
-              analyser={this.state.analyser}/>
+              analyser={this.state.analyser}>
+              <div className="row">
+                <div className="columns small-12 medium-10 small-centered">
+                  <Graph context={this.state.context}
+                    analyser={this.state.analyser}
+                    muted={this.state.mute}
+                    playing={!this.state.paused}
+                    handlePlayFrequency={this.handlePlayFrequency}/>
+                </div>
+              </div>
+            </Form>
           </div>
         </div>
         <div className="row">
