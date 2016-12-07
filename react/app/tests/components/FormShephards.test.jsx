@@ -281,7 +281,7 @@ describe('FormShephards', () => {
         <FormShephards playFrequency={spy}/>
       );
       formShephards.playShephards(0, 0, false);
-      expect(spy).toHaveBeenCalledWith([], []);
+      expect(spy).toHaveBeenCalledWith();
     });       // should send empty sound if !isPlaying
 
     it('should call playFrequency with correct values if isPlaying', () => {

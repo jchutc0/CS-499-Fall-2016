@@ -242,7 +242,7 @@ var Form = React.createClass({
 		// check to see if the form to display has changed from the state
 		if(this.state.formDisplayed != formNumber) {
 			// stop all sound with the mode change
-			this.props.handlePlayFrequency([], []);
+			this.props.handlePlayFrequency();
 			// check valid form
 			if(
 				(Number.isInteger(formNumber)) &&
