@@ -181,28 +181,32 @@ var FormFrequencyTone = React.createClass({
             <form onSubmit={this.handleGainChange}>
               <fieldset>
                 <legend>{this.props.toneID}</legend>
-                <div>
-                  <input type='number' ref='frequency' name='frequency'
-                    id='frequency' maxLength="5"
-                    defaultValue={this.props.defaultTone}
-                    min={this.minFrequency}
-                    max={this.maxFrequency}/>
-                </div>
-                <div>
-                  <label htmlFor='frequencySlider'>Frequency:</label>
-                  <input type='range' className='slider'
-                    name='frequencySlider' ref='frequencySlider'
-                    min={this.minFrequencySlider} max={this.maxFrequencySlider}
-                    defaultValue={this.adjustedLog(this.props.defaultTone)}
-                    onChange={this.handleFrequencySliderChange}/>
-                </div>
-                <div>
-                  <label htmlFor='gain' >Volume:</label>
-                  <input type='range' className='slider'
-                    name='gain' ref='gain'
-                    min='0' max='10'
-                    defaultValue='0'
-                    onChange={this.handleGainChange}/>
+                <div className='row'>
+                  <div className='columns small-12 medium-6'>
+                    <input type='number' ref='frequency' name='frequency'
+                      id='frequency' maxLength="5"
+                      defaultValue={this.props.defaultTone}
+                      min={this.minFrequency}
+                      max={this.maxFrequency}/>
+                  </div>
+                  <div className='columns small-12 medium-6'>
+                    <div>
+                      <label htmlFor='frequencySlider'>Frequency:</label>
+                      <input type='range' className='slider'
+                        name='frequencySlider' ref='frequencySlider'
+                        min={this.minFrequencySlider} max={this.maxFrequencySlider}
+                        defaultValue={this.adjustedLog(this.props.defaultTone)}
+                        onChange={this.handleFrequencySliderChange}/>
+                    </div>
+                    <div>
+                      <label htmlFor='gain' >Volume:</label>
+                      <input type='range' className='slider'
+                        name='gain' ref='gain'
+                        min='0' max='10'
+                        defaultValue='0'
+                        onChange={this.handleGainChange}/>
+                    </div>
+                  </div>
                 </div>
               </fieldset>
             </form>

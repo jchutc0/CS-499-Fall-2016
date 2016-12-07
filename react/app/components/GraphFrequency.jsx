@@ -10,8 +10,8 @@ var React = require('react');
 // Create the GraphFrequency class
 var GraphFrequency = React.createClass({
   // declare width and height constants for easy changes
-  width: 400,
-  height: 200,
+  width: 800,
+  height: 250,
 
   barHeight: 5,
 
@@ -316,7 +316,8 @@ var GraphFrequency = React.createClass({
 
     return (
       <div>
-        <canvas id="GraphFrequencyCanvas" width="400" height="200"
+        <canvas id="GraphFrequencyCanvas"
+          width={this.width} height={this.height}
           ref='frequencyGraphCanvas' style={canvasStyle}>
         </canvas>
       </div>
