@@ -63,7 +63,7 @@ var Graph = React.createClass({
       analyser.getByteFrequencyData(freqArray);
       // console.log(dataArray);
       // this.handleGraphUpdate(dataArray);
-      if(this.props.context.state === 'suspended') {
+      if(this.props.muted || (this.props.context.state === 'suspended')) {
         this.setState({
           waveArray: {},
           freqArray: {}

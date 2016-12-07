@@ -46,6 +46,40 @@ var AudioOut = React.createClass({
     };    // return value
   },      // getDefaultProps function
 
+  getInitialState: function() {
+    var {context, analyser} = this.props;
+    var gain        = context.createGain();
+    gain.gain.value = 0;
+    gain.connect(analyser);
+    return({
+      gain: gain,
+      muted: true
+    });
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    var {
+      frequencyArray, gainArray, whiteNoise, soundMute
+    } = nextProps;
+
+    var muted = Boolean(
+      (frequencyArray.length !== gainArray.length) ||
+      ((frequencyArray.length < 1) && (whiteNoise === undefined))
+    );
+
+    if(muted !== this.state.muted) {
+      this.setState({
+        muted: muted
+      });
+      if(muted) {
+        this.state.gain.gain.value = 0;
+      } else {
+        this.state.gain.gain.value = 1;
+      }
+      soundMute(muted);
+    }
+  },
+
   /*
   render function
 
@@ -62,28 +96,33 @@ var AudioOut = React.createClass({
     */
     var renderAudioOut = (props) => {
       var {
-        frequencyArray, gainArray, whiteNoise, analyser, context, paused
+        frequencyArray, gainArray, whiteNoise, context, paused
       } = props;
-      if((frequencyArray.length !== gainArray.length) || (paused === true)) {
+      var muted = this.state.muted;
+      
+      if(muted || paused) {
         return;
       }
+      // if((frequencyArray.length !== gainArray.length) || (paused === true)) {
+      //   return;
+      // }
 
       if (whiteNoise !== undefined) {
         return (
           <div>
             <AudioOutWhiteNoise amplitude = {Number(whiteNoise) / 10.0}
               context = {context}
-              analyser = {analyser}/>
+              analyser = {this.state.gain}/>
           </div>
         );
       }
 
-      if(frequencyArray.length < 1) {
-        context.suspend();
-        return (
-          <div></div>
-        );
-      }
+      // if(frequencyArray.length < 1) {
+      //   // context.suspend();
+      //   return (
+      //     <div></div>
+      //   );
+      // }
 
       var returnValue = new Array();
       // console.log('frequencyArray.length: '+frequencyArray.length);
@@ -100,7 +139,7 @@ var AudioOut = React.createClass({
                 frequency = {Number(frequencyArray[i])}
                 amplitude = {Number(gainArray[i]) / 10.0}
                 context = {context}
-                analyser = {analyser}/>
+                analyser = {this.state.gain}/>
             </div>
           );
         }

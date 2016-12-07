@@ -83,6 +83,7 @@ var Main = React.createClass({
       audioOutFrequencyArray: [],
       audioOutGainArray: [],
       audioOutWhiteNoise: undefined,
+      mute: false,
       paused: false,
       currentForm: 0
     };        // state object
@@ -119,11 +120,27 @@ var Main = React.createClass({
   },          // handleFormChange function
 
   /*
+  handleSoundMute function
+
+  Invoked from audio class
+  Communicates with graph class to zero out data
+  */
+  handleSoundMute: function(mute) {
+    if (this.state.mute != mute) {
+      this.setState({
+        mute: mute
+      });
+    }
+  },
+
+  /*
   render function
 
   renders the component to the web browser -- the default entry point
   */
   render: function() {
+    var renderMute = this.state.mute ? 'muted' : '';
+
     return (
       <div>
         <div className='row'>
@@ -135,6 +152,7 @@ var Main = React.createClass({
           <div className="columns small-12 medium-10 small-centered">
             <Graph context={this.state.context}
               analyser={this.state.analyser}
+              muted={this.state.mute}
               playing={!this.state.paused}
               handlePlayFrequency={this.handlePlayFrequency}/>
           </div>
@@ -155,6 +173,7 @@ var Main = React.createClass({
               gainArray={this.state.audioOutGainArray}
               whiteNoise={this.state.audioOutWhiteNoise}
               context={this.state.context}
+              soundMute={this.handleSoundMute}
               analyser={this.state.analyser}
               paused={this.state.paused}/>
           </div>
