@@ -57,7 +57,6 @@ var GraphFrequency = React.createClass({
 
   mouseUpListener: function(e) {
     e.preventDefault();
-    console.log('UP');
     this.props.hideForms(false);
     this.props.handlePlayFrequency();
     var canvas = this.refs.frequencyGraphCanvas;

@@ -45,7 +45,6 @@ var FormMicrophone = React.createClass({
     var {analyser, context, soundMute} = this.props;
     var input = context.createMediaStreamSource(stream);
     soundMute(false);
-    console.log('Got stream!');
     analyser.disconnect();
     input.connect(analyser);
     this.setState({
