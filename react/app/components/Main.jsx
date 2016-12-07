@@ -83,7 +83,7 @@ var Main = React.createClass({
       audioOutFrequencyArray: [],
       audioOutGainArray: [],
       audioOutWhiteNoise: undefined,
-      mute: false,
+      mute: true,
       paused: false,
       currentForm: 0
     };        // state object
