@@ -12,7 +12,7 @@ var GraphWave = React.createClass({
 
   // declare width and height constants for easy changes
   width: 800,
-  height: 250,
+  height: 200,
 
   // number of samples is the number of samples between 0 and the max scale
   //   value -- this is Math.floor(samples_per_second * max seconds)
