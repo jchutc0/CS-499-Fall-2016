@@ -86,12 +86,12 @@ var FormFrequency = React.createClass({
     return (
       <div className='frequency-form'>
         <div className='row'>
-          <div className="columns small-12 medium-6">
+          <div>
             <FormFrequencyTone toneID='Tone 1'
               updateTone={this.handleFormFrequencyTone}
               defaultTone={440}/>
           </div>
-          <div className="columns small-12 medium-6">
+          <div>
             <FormFrequencyTone toneID='Tone 2'
               updateTone={this.handleFormFrequencyTone}
               defaultTone={350}/>
