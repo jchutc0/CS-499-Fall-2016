@@ -83,6 +83,7 @@ var Main = React.createClass({
       audioOutFrequencyArray: [],
       audioOutGainArray: [],
       audioOutWhiteNoise: undefined,
+      hideForms: false,
       mute: true,
       paused: false,
       currentForm: 0
@@ -131,7 +132,19 @@ var Main = React.createClass({
         mute: mute
       });
     }
-  },
+  },      // handleSoundMute
+
+  /*
+  handleHideForms function
+
+  Invoked from graph class (frequency graph) with mouse click
+  Hides/reveals forms during/after mouse drags
+  */
+  handleHideForms: function(hide) {
+    this.setState({
+      hideForms: hide
+    });
+  },      // handleHideForms
 
   /*
   render function
@@ -139,8 +152,6 @@ var Main = React.createClass({
   renders the component to the web browser -- the default entry point
   */
   render: function() {
-    var renderMute = this.state.mute ? 'muted' : '';
-
     return (
       <div>
         <div className='row'>
@@ -154,14 +165,16 @@ var Main = React.createClass({
               changeForm={this.handleFormChange}
               soundMute={this.handleSoundMute}
               context={this.state.context}
-              analyser={this.state.analyser}>
+              analyser={this.state.analyser}
+              hidden={this.state.hideForms}>
               <div className="row">
                 <div className="columns small-12 medium-10 small-centered">
                   <Graph context={this.state.context}
                     analyser={this.state.analyser}
                     muted={this.state.mute}
                     playing={!this.state.paused}
-                    handlePlayFrequency={this.handlePlayFrequency}/>
+                    handlePlayFrequency={this.handlePlayFrequency}
+                    hideForms={this.handleHideForms}/>
                 </div>
               </div>
             </Form>

@@ -19,8 +19,8 @@ var GraphFrequency = React.createClass({
   propTypes: {
     handlePlayFrequency: React.PropTypes.func.isRequired,
     data   : React.PropTypes.object.isRequired,
-    frequencyBinCount : React.PropTypes.number.isRequired
-
+    frequencyBinCount : React.PropTypes.number.isRequired,
+    hideForms:    React.PropTypes.func.isRequired
   },    // propTypes
 
 
@@ -36,8 +36,7 @@ var GraphFrequency = React.createClass({
     var canvas = this.refs.frequencyGraphCanvas;
     var freqX = this.calculateMouseFrequency(e.clientX);
     var gainY = this.calculateMouseGain(e.clientY);
-    console.log('gainY: '+gainY);
-    // console.log('DOWN - freq: '+freqX);
+    this.props.hideForms(true);
     this.props.handlePlayFrequency([freqX], [gainY]);
 
     // add a listener for move to get "drag"
@@ -59,6 +58,7 @@ var GraphFrequency = React.createClass({
   mouseUpListener: function(e) {
     e.preventDefault();
     console.log('UP');
+    this.props.hideForms(false);
     this.props.handlePlayFrequency();
     var canvas = this.refs.frequencyGraphCanvas;
 

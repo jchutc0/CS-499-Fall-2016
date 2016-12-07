@@ -18,7 +18,8 @@ var Graph = React.createClass({
   // Require the context object as a prop
   propTypes: {
     handlePlayFrequency: React.PropTypes.func.isRequired,
-    context     : React.PropTypes.object.isRequired
+    context     : React.PropTypes.object.isRequired,
+    hideForms:    React.PropTypes.func.isRequired
   },  // propTypes
 
   /*
@@ -149,7 +150,8 @@ var Graph = React.createClass({
         <GraphFrequency data={graphFreqArray}
           handlePlayFrequency={this.props.handlePlayFrequency}
           frequencyBinCount={this.props.analyser.frequencyBinCount}
-          binSize={this.props.context.sampleRate / this.props.analyser.fftSize}/>
+          binSize={this.props.context.sampleRate / this.props.analyser.fftSize}
+          hideForms={this.props.hideForms}/>
       </div>
     );        // return value
   }           // render function
