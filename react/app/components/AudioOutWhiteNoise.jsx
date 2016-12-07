@@ -37,11 +37,11 @@ var AudioOutWhiteNoise = React.createClass({
     whiteNoise.onaudioprocess = this.generateWhiteNoise;
 
     if(amplitude > 0) {
-      context.resume();
+      // context.resume();
       // analyser.connect(whiteNoise);
       // whiteNoise.connect(context.destination);
       whiteNoise.connect(analyser);
-      analyser.connect(context.destination);
+      // analyser.connect(context.destination);
     }     // if whiteNoise > 0
 
     return {
@@ -90,7 +90,7 @@ var AudioOutWhiteNoise = React.createClass({
   */
   componentWillUnmount: function() {
     this.state.whiteNoise.disconnect();
-    this.props.analyser.disconnect();
+    // this.props.analyser.disconnect();
   },
 
   /*
