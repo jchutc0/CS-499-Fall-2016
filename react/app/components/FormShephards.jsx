@@ -49,19 +49,21 @@ var FormShephards = React.createClass({
       autoDirection: 1,
       lowTone: 0,
       arrayBase: 0,
-      isPlaying: false
+      isPlaying: false,
+      gain: 1
     };
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    var {lowTone, arrayBase, isPlaying} = nextState;
+    var {lowTone, arrayBase, isPlaying, gain} = nextState;
 
     if(
       (lowTone != this.state.lowTone) ||
       (arrayBase != this.state.arrayBase) ||
-      (isPlaying != this.state.isPlaying)
+      (isPlaying != this.state.isPlaying) ||
+      (gain != this.state.gain)
     ) {
-      this.playShephards(lowTone, arrayBase, isPlaying);
+      this.playShephards(lowTone, arrayBase, isPlaying, gain);
     }
   },
 
@@ -69,14 +71,18 @@ var FormShephards = React.createClass({
     clearInterval(this.timer);
   },
 
-  playShephards: function(lowTone, arrayBase, isPlaying) {
+  playShephards: function(lowTone, arrayBase, isPlaying, gain) {
     if(!isPlaying) {
       return this.props.playFrequency();
     }
     var frequencyArray = this.generateFrequencyArray(lowTone, arrayBase);
-    var gainArray = this.generateGainArray(frequencyArray);
+    var gainArray = this.generateGainArray(frequencyArray, gain);
 
-    return this.props.playFrequency(frequencyArray, gainArray);
+    if(gain > 0) {
+      return this.props.playFrequency(frequencyArray, gainArray);
+    } else {
+      return this.props.playFrequency();
+    }
   },
 
   handleSoundUp: function(e) {
@@ -150,7 +156,7 @@ var FormShephards = React.createClass({
     return frequencyArray;
   },
 
-  generateGainArray: function(frequencyArray) {
+  generateGainArray: function(frequencyArray, gain) {
     var arraySize = this.numberOfSamples;
     var gainArray = new Array(arraySize);
     var variance = this.variance;
@@ -159,73 +165,98 @@ var FormShephards = React.createClass({
     for(var i = 0; i < arraySize; i++) {
       gainArray[i] = (
         Math.exp(Math.pow((Math.log2(frequencyArray[i]) - mean), 2)
-        / (variance * -2)));
-      }
+        / (variance * -2)) * gain
+      );
+    }
+    return gainArray;
+  },
 
-      return gainArray;
+  /*
+  handleGainChange function
+  invoked when the volume slider value is changed
 
-    },
+  */
+  handleGainChange: function(e) {
+    // preventDefault so we don't reload the page when the user presses enter
+    e.preventDefault();
+    var newGain = this.refs.gain.value / 10;
 
-    startTimer: function() {
-      this.timer = setInterval(() => {
-        this.changePitch(this.state.autoDirection);
-      }, this.delay);
-    },
+    if(this.state.gain !== newGain) {
+      this.setState({
+        gain: newGain
+      });
+    }
+  },      // handleGainChange function
 
-    stopTimer: function() {
-      clearInterval(this.timer);
-      this.timer = undefined;
-    },
 
-    /*
-    render function
+  startTimer: function() {
+    this.timer = setInterval(() => {
+      this.changePitch(this.state.autoDirection);
+    }, this.delay);
+  },
 
-    renders the component to the web browser -- the default entry point
-    */
-    render: function() {
-      var renderToggleButton = () => {
-        if(this.state.isPlaying) {
-          return (
-            <button type='button' className='alert button' ref='toggleSound'
-              onClick={this.handleToggleSound}>Stop Sound</button>
-          );
-        } else {
-          return (
-            <button type='button' className='success button' ref='toggleSound'
-              onClick={this.handleToggleSound}>Start Sound</button>
-          );
-        }
-      };
-      var renderAutoButton = () => {
-        var playing = 'button';
-        if(this.state.auto) {
-          playing = 'button alert';
-        }
+  stopTimer: function() {
+    clearInterval(this.timer);
+    this.timer = undefined;
+  },
+
+  /*
+  render function
+
+  renders the component to the web browser -- the default entry point
+  */
+  render: function() {
+    var renderToggleButton = () => {
+      if(this.state.isPlaying) {
         return (
-          <div>
-            <button type='button' className={playing} ref='auto'
-              onClick={this.handleAuto}>Auto</button>
-          </div>
+          <button type='button' className='alert button' ref='toggleSound'
+            onClick={this.handleToggleSound}>Stop Sound</button>
+        );
+      } else {
+        return (
+          <button type='button' className='success button' ref='toggleSound'
+            onClick={this.handleToggleSound}>Start Sound</button>
         );
       }
+    };
+    var renderAutoButton = () => {
+      var playing = 'button';
+      if(this.state.auto) {
+        playing = 'button alert';
+      }
       return (
-        <div className='shephards-form'>
-          <div>
-            <button type='button' className='button' ref='soundDown'
-              onClick={this.handleSoundDown}>Sound Down</button>
-            {renderToggleButton()}
-              <button type='button' className='button' ref='soundUp'
-                onClick={this.handleSoundUp}>Sound Up</button>
-          </div>
-          <div>
-            {renderAutoButton()}
-          </div>
-          <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
-          {this.props.children}
+        <div>
+          <button type='button' className={playing} ref='auto'
+            onClick={this.handleAuto}>Auto</button>
         </div>
-      );        // return value
-    }           // render function
-  });           // FormShephards class
+      );
+    }
+    return (
+      <div className='shephards-form'>
+        <div>
+          <button type='button' className='button' ref='soundDown'
+            onClick={this.handleSoundDown}>Sound Down</button>
+          {renderToggleButton()}
+          <button type='button' className='button' ref='soundUp'
+            onClick={this.handleSoundUp}>Sound Up</button>
+        </div>
+        <div>
+          {renderAutoButton()}
+        </div>
+        <div>
+          <label htmlFor='gain' >Volume:</label>
+          <input type='range' className='slider'
+            name='gain' ref='gain'
+            min='0' max='10'
+            defaultValue='10'
+            onChange={this.handleGainChange}/>
+        </div>
+        <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
+        {this.props.children}
+      </div>
+    );        // return value
+  }           // render function
+});           // FormShephards class
 
-  // export FormShephards for other modules to use
-  module.exports = FormShephards;
+// export FormShephards for other modules to use
+module.exports = FormShephards;
