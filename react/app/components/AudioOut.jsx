@@ -70,6 +70,7 @@ var AudioOut = React.createClass({
   /*
   componentWillReceiveProps function
   called when component props are changing
+  takes: nextProps - props to be used for the next render
 
   sets the muted state depending on whether a sound should play with the new
   props and sets the gain to 0 or 1 if it will or will not be muted

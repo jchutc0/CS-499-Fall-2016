@@ -12,14 +12,16 @@ var AudioOutTone = React.createClass({
 
   /*
   define the expected properties
-    - frequency: the numeric frequency in Hz to play (required)
     - amplitude: the amplitude / gain / volume of the tone (required)
-    - context: the audio context that allows sounds to play (required)
+    - analyser: the analyser for the sound to connect
+    - context: the audio context to create audio nodes (required)
+    - frequency: the numeric frequency in Hz to play (required)
   */
   propTypes: {
-    frequency   : React.PropTypes.number.isRequired,
     amplitude   : React.PropTypes.number.isRequired,
-    context     : React.PropTypes.object.isRequired
+    analyser    : React.PropTypes.object.isRequired,
+    context     : React.PropTypes.object.isRequired,
+    frequency   : React.PropTypes.number.isRequired
   },    // propTypes
 
   /*
@@ -41,6 +43,7 @@ var AudioOutTone = React.createClass({
 
     // connect up the audio context to the oscillator then the gain then the
     //   analyser and start the oscillator
+    gain.gain.value = 0;
     oscillator.connect(gain);
     gain.connect(analyser);
     analyser.connect(context.destination);
@@ -66,16 +69,11 @@ var AudioOutTone = React.createClass({
 
   /*
   componentWillReceiveProps function
+  called when component props are changing
+  takes: nextProps - props to be used for the next render
 
-  This function is called before the component starts rendering to make it
-  possible to set state variables based on the upcoming components without
-  causing an infinite loop.
-
-  Determines if a sound is to play, uses the oscillator and gain node to
+  determines if a sound is to play, uses the oscillator and gain node to
   play that sound, and sets the state
-
-  Takes: nextProps - an object of props that are coming into the component
-  for its upcoming render
   */
   componentWillReceiveProps: function(nextProps) {
 
@@ -138,7 +136,6 @@ var AudioOutTone = React.createClass({
     return isPlaying;
   },
 
-
   /*
   componentWillUnmount function
 
@@ -149,12 +146,7 @@ var AudioOutTone = React.createClass({
   componentWillUnmount: function() {
     if(this.state.isPlaying) {
       this.state.gain.gain.value = 0;
-      // this.state.oscillator.stop();
     }
-    // this.state.oscillator.disconnect();
-    // this.state.gain.disconnect();
-    // this.props.analyser.disconnect();
-
   },
 
   /*
