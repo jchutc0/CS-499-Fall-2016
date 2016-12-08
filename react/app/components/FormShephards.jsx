@@ -152,7 +152,7 @@ var FormShephards = React.createClass({
           );
         } else {
           return (
-            <button type='button' className='secondary button' ref='toggleSound'
+            <button type='button' className='success button' ref='toggleSound'
               onClick={this.handleToggleSound}>Start Sound</button>
           );
         }

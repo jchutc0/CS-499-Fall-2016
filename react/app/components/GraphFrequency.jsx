@@ -11,7 +11,7 @@ var React = require('react');
 var GraphFrequency = React.createClass({
   // declare width and height constants for easy changes
   width: 800,
-  height: 200,
+  height: 150,
 
   barHeight: 5,
 

@@ -111,7 +111,7 @@ var FormNumberPad = React.createClass({
     return (
       <div className='numberPadForm'>
         <div className='row'>
-          <div className='columns small-12 medium-6'>
+          <div className='columns small-12 medium-6 text-center'>
             {renderButton('1')}
             {renderButton('2')}
             {renderButton('3')}
