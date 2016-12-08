@@ -37,6 +37,17 @@ Modules to work on:
 - [ ] mouse drag tones take over audio context - maybe a form reset option?
 - [x] Remove testing, unused components from project before turnin
 - [ ] Check to make sure state set with componentWillMount instead of did
+- [ ] Volume control on the Shep form
+- [ ] Undo pause Audio with spacebar
+- [ ] Auto Shephard tone up, down with button
+- [ ] Play / Pause Audio with button
+- [ ] Unfocus (blur()) on menu change
+- [ ] "" "" "" on EVERY button press
+- [ ] Time vs. Displacement
+- [ ] Frequency (Hz) vs. Energy
+- [ ] change "about" to "instructions"
+- [ ] Callout box on paused
+- [ ] Unpause on mode change
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
