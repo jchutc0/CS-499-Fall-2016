@@ -146,17 +146,22 @@ var FormShephards = React.createClass({
     render: function() {
       var renderToggleButton = () => {
         if(this.state.isPlaying) {
-          return "Stop Sound";
+          return (
+            <button type='button' className='alert button' ref='toggleSound'
+              onClick={this.handleToggleSound}>Stop Sound</button>
+          );
         } else {
-          return "Start Sound";
+          return (
+            <button type='button' className='secondary button' ref='toggleSound'
+              onClick={this.handleToggleSound}>Start Sound</button>
+          );
         }
       };
       return (
         <div className='shephards-form'>
           <button type='button' className='button' ref='soundDown'
             onClick={this.handleSoundDown}>Sound Down</button>
-          <button type='button' className='button' ref='toggleSound'
-            onClick={this.handleToggleSound}>{renderToggleButton()}</button>
+          {renderToggleButton()}
             <button type='button' className='button' ref='soundUp'
               onClick={this.handleSoundUp}>Sound Up</button>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
