@@ -218,9 +218,14 @@ var GraphWave = React.createClass({
 
     return (
       <div>
-        <canvas id="GraphWaveCanvas" width={this.width}
-          height={this.height} ref='waveGraphCanvas' style={canvasStyle}>
-        </canvas>
+        <div>
+          <h5>Displacement vs. Time (sec)</h5>
+        </div>
+        <div>
+          <canvas id="GraphWaveCanvas" width={this.width}
+            height={this.height} ref='waveGraphCanvas' style={canvasStyle}>
+          </canvas>
+        </div>
       </div>
     );        // return value
   }           // render function

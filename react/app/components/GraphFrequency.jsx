@@ -315,10 +315,15 @@ var GraphFrequency = React.createClass({
 
     return (
       <div>
-        <canvas id="GraphFrequencyCanvas"
-          width={this.width} height={this.height}
-          ref='frequencyGraphCanvas' style={canvasStyle}>
-        </canvas>
+        <div>
+          <h5>Energy vs. Frequency (Hz)</h5>
+        </div>
+        <div>
+          <canvas id="GraphFrequencyCanvas"
+            width={this.width} height={this.height}
+            ref='frequencyGraphCanvas' style={canvasStyle}>
+          </canvas>
+        </div>
       </div>
     );        // return value
   }           // render function

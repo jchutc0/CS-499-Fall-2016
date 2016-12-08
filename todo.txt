@@ -27,27 +27,24 @@ Modules to work on:
 - [x] Mouse drag for create sounds
 - [x] allow for multi-tonal keyboard output
 - [x] Maybe add a volume / gain slider to keypad and piano forms
-- [ ] .wav file, extract stream in, read
 - [x] Labels for graphs?
-- [ ] TESTING
-- [ ] In button class, add second keypress option to allow multiple keypresses
-      for piano form to allow middle C to be q and , at the same time
-- [ ] Maybe rescale gain for 0 - 100 or 20 since sliders don't care
-- [ ] Shephard option: allow up, down arrows to change base tone
 - [x] mouse drag tones take over audio context - maybe a form reset option?
 - [x] Remove testing, unused components from project before turnin
+- [x] Auto Shephard tone up, down with button
+- [x] Unfocus (blur()) on menu change
+- [x] "" "" "" on EVERY button press
+- [x] change "about" to "instructions"
+- [x] Displacement vs. Time
+- [x] Energy vs. Frequency (Hz)
+- [ ] .wav file, extract stream in, read
+- [ ] TESTING
 - [ ] Check to make sure state set with componentWillMount instead of did
 - [ ] Volume control on the Shep form
 - [ ] Undo pause Audio with spacebar
-- [x] Auto Shephard tone up, down with button
 - [ ] Play / Pause Audio with button
-- [x] Unfocus (blur()) on menu change
-- [x] "" "" "" on EVERY button press
-- [ ] Time vs. Displacement
-- [ ] Frequency (Hz) vs. Energy
-- [x] change "about" to "instructions"
 - [ ] Callout box on paused
 - [ ] Unpause on mode change
+
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html
