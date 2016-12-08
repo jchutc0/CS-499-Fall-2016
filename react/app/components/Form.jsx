@@ -10,14 +10,12 @@ var React = require('react');
 
 // Require other components for sub-forms and form navigation
 var ErrorModal = require('ErrorModal');
-var FormErrorTest = require('FormErrorTest');
 var FormFrequency = require('FormFrequency');
 var FormKeyboard = require('FormKeyboard');
 var FormMicrophone = require('FormMicrophone');
 var FormNav = require('FormNav');
 var FormNumberPad = require('FormNumberPad');
 var FormShephards = require('FormShephards');
-var FormWavIn = require('FormWavIn');
 var FormWhiteNoise = require('FormWhiteNoise');
 
 // Create the Form class

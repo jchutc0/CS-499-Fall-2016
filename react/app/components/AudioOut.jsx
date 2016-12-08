@@ -5,36 +5,39 @@ The purpose of this class is to make decisions about which other audio
 classes to render
 *****/
 
-// Require the React framework
+// require the React framework
 var React = require('react');
 
-// Require AudioOut subclasses to render
+// require AudioOut subclasses to render
 var AudioOutTone = require('AudioOutTone');
 var AudioOutWhiteNoise = require('AudioOutWhiteNoise');
 
 // create the AudioOut class
 var AudioOut = React.createClass({
 
-  // Define the expected properties
+  /*
+  define the expected properties
+    - analyser: produces the data for the graphs from the output (required)
+    - context: the audio context that allows sounds to play (required)
+    - frequencyArray: an array of frequencies to play
+    - gainArray: an array of gain values for the frequencies
+    - paused: boolean reflecting the graph/audio paused state in Main
+    - whiteNoise: the max gain value for the white noise generator
+  */
   propTypes: {
-    // The analyser produces the data for the graphs from the output (required)
     analyser        : React.PropTypes.object.isRequired,
-    // The context is the audio context that allows sounds to play (required)
     context         : React.PropTypes.object.isRequired,
-    // The frequencyArray is an array of frequencies to play
     frequencyArray  : React.PropTypes.array,
-    // The gainArray is an array of gain values for the frequencies
     gainArray       : React.PropTypes.array,
-    // paused is changed when the the graphs and audio are paused in Main
     paused          : React.PropTypes.bool,
-    // whiteNoise is the max gain value for the white noise generator
     whiteNoise      : React.PropTypes.number
   },  // propTypes
 
   /*
   getDefaultProps function
+  called on component render
 
-  Sets default component properties in the event the calling function did not
+  sets default component properties in the event the calling function did not
   pass them -- an empty frequency or gain array will not play a tone
   */
   getDefaultProps: function() {
@@ -46,67 +49,89 @@ var AudioOut = React.createClass({
     };    // return value
   },      // getDefaultProps function
 
+  /*
+  getInitialState function
+  called on component render
+
+  sets default values for the compent state
+  also sets up the master program gain control and mutes it
+  */
   getInitialState: function() {
     var {context, analyser} = this.props;
-    var gain        = context.createGain();
+    var gain = context.createGain();
     gain.gain.value = 0;
     gain.connect(analyser);
     return({
       gain: gain,
       muted: true
-    });
-  },
+    });     // state return
+  },        // getInitialState
 
+  /*
+  componentWillReceiveProps function
+  called when component props are changing
+
+  sets the muted state depending on whether a sound should play with the new
+  props and sets the gain to 0 or 1 if it will or will not be muted
+  */
   componentWillReceiveProps: function(nextProps) {
     var {
       frequencyArray, gainArray, whiteNoise, soundMute
     } = nextProps;
 
+    // set muted based on whether a sound should play
     var muted = Boolean(
       (frequencyArray.length !== gainArray.length) ||
       ((frequencyArray.length < 1) && (whiteNoise === undefined))
     );
 
+    // set muted in the state if it changes
     if(muted !== this.state.muted) {
       this.setState({
         muted: muted
       });
+
+      // set the gain value if muted has changed
       if(muted) {
         this.state.gain.gain.value = 0;
       } else {
         this.state.gain.gain.value = 1;
       }
+
+      // tell Main the sound is muted for the graphs
       soundMute(muted);
-    }
-  },
+    }     // if muted has changed
+  },      // componentWillReceiveProps
 
   /*
   render function
+  called when the component is rendered
 
   renders the component to the web browser -- the default entry point
+  conditionally renders the AudioOutWhiteNoise or AudioOutTone components as
+  required
   */
   render: function() {
+
+    var {
+      frequencyArray, gainArray, whiteNoise, context, paused
+    } = this.props;
+    var muted = this.state.muted;
 
     /*
     renderAudioOut function
 
-    Looks at the props.frequencyObj and either renders AudioOutWhiteNoise if
-    a whiteNoise value has been passed down or else renders the dual tone
-    generator
+    determines whether to render nothing (no audio), the AudioOutWhiteNoise
+    module (for white noise), or 1 or more AudioOutTone components
     */
-    var renderAudioOut = (props) => {
-      var {
-        frequencyArray, gainArray, whiteNoise, context, paused
-      } = props;
-      var muted = this.state.muted;
-      
+    var renderAudioOut = () => {
+
+      // if the component is muted or paused, render no audio
       if(muted || paused) {
         return;
       }
-      // if((frequencyArray.length !== gainArray.length) || (paused === true)) {
-      //   return;
-      // }
 
+      // if props.whitenoise is set, render the AudioOutWhiteNoise module
       if (whiteNoise !== undefined) {
         return (
           <div>
@@ -115,23 +140,13 @@ var AudioOut = React.createClass({
               analyser = {this.state.gain}/>
           </div>
         );
-      }
+      }     // if whiteNoise is set
 
-      // if(frequencyArray.length < 1) {
-      //   // context.suspend();
-      //   return (
-      //     <div></div>
-      //   );
-      // }
-
+      // if not muted and whiteNoise is not set, generate an array of
+      // AudioOutTone modules
       var returnValue = new Array();
-      // console.log('frequencyArray.length: '+frequencyArray.length);
 
-      for(
-        var i = 0;
-        ((i < frequencyArray.length) && (i < gainArray.length));
-        i ++
-      ) {
+      for(var i = 0; (i < frequencyArray.length); i++) {
         if(gainArray[i] > 0) {
           returnValue.push(
             <div key={i}>
@@ -141,18 +156,16 @@ var AudioOut = React.createClass({
                 context = {context}
                 analyser = {this.state.gain}/>
             </div>
-          );
-        }
-      } // for loop
-
+          );  // returnValue
+        }     // if valid gain
+      }       // for loop
       return returnValue;
-
     }       // renderAudioOut function
 
     // visual aspect of the component
     return(
       <div>
-        {renderAudioOut(this.props)}
+        {renderAudioOut()}
       </div>
     );  // return value
   }     // render function
