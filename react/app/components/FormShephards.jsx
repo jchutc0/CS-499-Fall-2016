@@ -74,37 +74,37 @@ var FormShephards = React.createClass({
 
   handleSoundUp: function(e) {
     e.preventDefault();
-    var arraySize = this.lowTones.length;
-    var numberOfSamples = this.numberOfSamples;
-    var newTone = (this.state.lowTone + 1) % arraySize;
-    var newArrayBase = this.state.arrayBase;
-    if(newTone < this.state.lowTone) {
-      newArrayBase = (newArrayBase + numberOfSamples - 1) % numberOfSamples;
-    }
-    this.setState({
-      lowTone: newTone,
-      arrayBase: newArrayBase,
-      isPlaying: true
-    });
+    this.refs.soundUp.blur();
+    this.changePitch(1);
   },
 
   handleSoundDown: function(e) {
     e.preventDefault();
+    this.refs.soundDown.blur();
+    this.changePitch(-1);
+  },
+
+  changePitch: function(change) {
     var arraySize = this.lowTones.length;
     var numberOfSamples = this.numberOfSamples;
-    var newTone = (this.state.lowTone + arraySize - 1) % arraySize;
-    var newArrayBase = this.state.arrayBase;
-    if(newTone > this.state.lowTone) {
-      newArrayBase = (newArrayBase + 1) % numberOfSamples;
+    var newTone = (this.state.lowTone + arraySize + change) % arraySize;
+    var arrayBase = this.state.arrayBase;
+    if(
+      ((newTone < this.state.lowTone) && (change > 0)) ||
+      ((newTone > this.state.lowTone) && (change < 0))
+    ) {
+      arrayBase = (arrayBase + numberOfSamples - change) % numberOfSamples;
     }
     this.setState({
       lowTone: newTone,
-      arrayBase: newArrayBase,
+      arrayBase: arrayBase,
       isPlaying: true
     });
   },
 
   handleToggleSound: function(e) {
+    e.preventDefault();
+    this.refs.toggleSound.blur();
     this.setState({
       isPlaying: !this.state.isPlaying
     });
