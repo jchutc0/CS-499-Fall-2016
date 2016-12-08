@@ -204,6 +204,7 @@ var FormKeyboard = React.createClass({
             min='0' max='10'
             defaultValue='5'
             onChange={this.handleGainSliderChange}/>
+          {this.props.children}
         </div>
       </div>
     );    // return value

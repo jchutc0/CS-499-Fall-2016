@@ -97,6 +97,7 @@ var FormFrequency = React.createClass({
               defaultTone={350}/>
           </div>
         </div>
+        {this.props.children}
       </div>
     );      // return value
   }         // render function

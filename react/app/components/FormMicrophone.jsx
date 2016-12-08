@@ -77,9 +77,7 @@ var FormMicrophone = React.createClass({
   render: function() {
     return (
       <div>
-        <p>
-          This class will read in data from the microphone.
-        </p>
+        {this.props.children}
       </div>
     );    // return value
   }       // render function

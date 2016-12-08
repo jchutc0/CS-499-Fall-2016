@@ -160,6 +160,7 @@ var FormShephards = React.createClass({
             <button type='button' className='button' ref='soundUp'
               onClick={this.handleSoundUp}>Sound Up</button>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
+          {this.props.children}
         </div>
       );        // return value
     }           // render function

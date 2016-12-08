@@ -36,6 +36,7 @@ Modules to work on:
 - [ ] Shephard option: allow up, down arrows to change base tone
 - [ ] mouse drag tones take over audio context - maybe a form reset option?
 - [x] Remove testing, unused components from project before turnin
+- [ ] Check to make sure state set with componentWillMount instead of did
 
 React Component Lifecycle
 https://facebook.github.io/react/docs/react-component.html

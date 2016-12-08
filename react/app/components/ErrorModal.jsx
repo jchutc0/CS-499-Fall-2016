@@ -1,9 +1,7 @@
 /*****
 ErrorModal Class
 
-The purpose of this class is to get audio data in from the microphone and
-return it to the calling program in a helpful way. It is not currenly
-implemented.
+The purpose of this class is to test the ErrorModal
 *****/
 
 // Require the React framework
@@ -12,40 +10,9 @@ var React = require('react');
 // create the ErrorModal class
 var ErrorModal = React.createClass({
 
-  // require the clearError function as a passed property
-  propTypes: {
-    clearError: React.PropTypes.func.isRequired
-  },			// propTypes
-
-  getInitialState: function() {
-    var title = 'Error';
-    if(this.props.title !== undefined) {
-      title = this.props.title;
-    }
-    return ({
-      title: title
-    });
-  },
-
-  /*
-  componentDidMount function
-
-  invoked after component mounts
-  */
-  componentDidMount: function() {
-    var modal = new Foundation.Reveal($('#error-modal'));
-    if(this.props.message !== undefined) {
-      modal.open();
-    }
-    // display the ErrorModal
-  },
-
-  handleButton: function(e) {
-    this.props.clearError();
-  },
-
-  clearError: function() {
-    this.props.clearError();
+  showModal: function(e) {
+    var modal = new Foundation.Reveal($('#exampleModal1'));
+    modal.open();
   },
 
   /*
@@ -56,20 +23,19 @@ var ErrorModal = React.createClass({
   render: function() {
     return (
       <div>
-        <p>
-          Rendered ErrorModal
-        </p>
-        <p>
-          <a data-open='error-modal'>Click me for a modal</a>
-        </p>
-        <div className='reveal' id='error-modal' ref='error-modal' data-reveal
-          text-center>
-          <h1>Modal Title!</h1>
-          <p>Some text</p>
-          <button className='button hollow' data-close>
-            Close modal
+        <div className="reveal" id='exampleModal1' ref='exampleModal1'
+          data-reveal=''>
+          {this.props.children}
+          <button className="close-button" data-close=''
+            aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <p>
+          <button className='button' onClick={this.showModal}>
+            about
+          </button>
+        </p>
       </div>
     );    // return value
   }       // render function

@@ -54,6 +54,7 @@ var FormWhiteNoise = React.createClass({
             min='0' max='10' defaultValue='0'
             onChange={this.playWhiteNoise}/>
         </fieldset>
+        {this.props.children}
       </div>
     );        // return value
   }           // render function
