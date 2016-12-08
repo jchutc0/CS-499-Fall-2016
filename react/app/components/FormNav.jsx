@@ -23,6 +23,7 @@ var FormNav = React.createClass({
 	*/
 	handleDropdown: function(e) {
 		e.preventDefault();
+		this.refs.selection.blur();
 		return this.props.setForm(this.refs.selection.selectedIndex);
 	},			// handleDropdown
 
@@ -50,7 +51,7 @@ var FormNav = React.createClass({
 				<div className='columns small-12 medium-10'>
 					<select onChange={this.handleDropdown} ref='selection'>
 						{renderOptions(this.props.formsArray)}
-					</select>					
+					</select>
 				</div>
 			</div>
 		);		// return value

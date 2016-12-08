@@ -45,7 +45,7 @@ Modules to work on:
 - [ ] "" "" "" on EVERY button press
 - [ ] Time vs. Displacement
 - [ ] Frequency (Hz) vs. Energy
-- [ ] change "about" to "instructions"
+- [x] change "about" to "instructions"
 - [ ] Callout box on paused
 - [ ] Unpause on mode change
 
