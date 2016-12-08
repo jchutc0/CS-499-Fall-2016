@@ -30,7 +30,6 @@ var AudioOutTone = React.createClass({
 
   sets default values for the compent state
   also creates the oscillator and gain values used to play a desired frequency
-  sets up isPlaying so the component knows if a sound is playing
   */
   getInitialState: function() {
     // set up the frequency oscillators and gain values
@@ -49,8 +48,8 @@ var AudioOutTone = React.createClass({
     analyser.connect(context.destination);
     oscillator.start(0);
 
-    // Start sound playing if valid inputs and get isPlaying status for state
-    var isPlaying = this.playSound({
+    // Start sound playing if valid inputs
+    this.playSound({
       context: context,
       oscillator: oscillator,
       gain: gain,
@@ -62,8 +61,7 @@ var AudioOutTone = React.createClass({
     // set those values in the state
     return {
       oscillator    : oscillator,
-      gain          : gain,
-      isPlaying     : isPlaying
+      gain          : gain
     };      // return value
   },        // getInitialState function
 
@@ -77,8 +75,8 @@ var AudioOutTone = React.createClass({
   */
   componentWillReceiveProps: function(nextProps) {
 
-    // Start sound playing if valid inputs and get isPlaying status for state
-    var isPlaying = this.playSound({
+    // Start sound playing if valid inputs
+    this.playSound({
       context: nextProps.context,
       oscillator: this.state.oscillator,
       gain: this.state.gain,
@@ -86,13 +84,6 @@ var AudioOutTone = React.createClass({
       frequency: nextProps.frequency,
       analyser: nextProps.analyser
     });
-
-    // if isPlaying isn't already at the correct value in the state, set it
-    if(isPlaying !== this.state.isPlaying) {
-      this.setState({
-        isPlaying: isPlaying
-      });
-    }       // if we need to update isPlaying
   },        // componentWillReceiveProps function
 
   /*
@@ -118,22 +109,12 @@ var AudioOutTone = React.createClass({
       analyser
     } = soundObj;
 
-    // set isPlaying based on upcoming props
-    // check for a valid (>0) frequency and gain value and set
-    //   isPlaying true if so
-    var isPlaying = (
-      (frequency > 0) &&
-      (amplitude > 0)
-    );
-
     // if sound is to play, play sound
-    if(isPlaying) {
+    if((frequency > 0) && (amplitude > 0)) {
       gain.gain.value = amplitude;
       oscillator.frequency.value = frequency;
       context.resume();
     }
-
-    return isPlaying;
   },
 
   /*
@@ -144,9 +125,7 @@ var AudioOutTone = React.createClass({
   Stops the oscillator to turn off tone generation
   */
   componentWillUnmount: function() {
-    if(this.state.isPlaying) {
-      this.state.gain.gain.value = 0;
-    }
+    this.state.gain.gain.value = 0;
   },
 
   /*
