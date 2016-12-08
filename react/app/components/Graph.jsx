@@ -50,6 +50,10 @@ var Graph = React.createClass({
     });
   },
 
+  componentWillUnmount: function() {
+    clearInterval(this.timer);
+  },
+
   startTimer: function() {
     var analyser = this.props.analyser;
 

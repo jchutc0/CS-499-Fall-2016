@@ -65,6 +65,10 @@ var FormShephards = React.createClass({
     }
   },
 
+  componentWillUnmount: function() {
+    clearInterval(this.timer);
+  },
+
   playShephards: function(lowTone, arrayBase, isPlaying) {
     if(!isPlaying) {
       return this.props.playFrequency();
