@@ -41,9 +41,12 @@ var FormShephards = React.createClass({
   // 10 was chosen since maximum number of samples all musical pitches can
   //   represent and still be heard by the human ear
   numberOfSamples: 10,
+  delay: 1000,
 
   getInitialState: function() {
     return {
+      auto: false,
+      autoDirection: 1,
       lowTone: 0,
       arrayBase: 0,
       isPlaying: false
@@ -98,16 +101,37 @@ var FormShephards = React.createClass({
     this.setState({
       lowTone: newTone,
       arrayBase: arrayBase,
-      isPlaying: true
+      isPlaying: true,
+      autoDirection: change
     });
   },
 
   handleToggleSound: function(e) {
     e.preventDefault();
     this.refs.toggleSound.blur();
+    var auto = this.state.auto && !this.state.isPlaying;
+    if(!auto) {
+      this.stopTimer();
+    }
     this.setState({
+      auto: auto,
       isPlaying: !this.state.isPlaying
     });
+  },
+
+  handleAuto: function(e) {
+    e.preventDefault();
+    var auto = !this.state.auto;
+    this.refs.auto.blur();
+    this.setState({
+      auto: auto,
+      isPlaying: true
+    });
+    if(auto) {
+      this.startTimer();
+    } else {
+      this.stopTimer();
+    }
   },
 
   generateFrequencyArray: function(lowTone, arrayBase) {
@@ -138,6 +162,17 @@ var FormShephards = React.createClass({
 
     },
 
+    startTimer: function() {
+      this.timer = setInterval(() => {
+        this.changePitch(this.state.autoDirection);
+      }, this.delay);
+    },
+
+    stopTimer: function() {
+      clearInterval(this.timer);
+      this.timer = undefined;
+    },
+
     /*
     render function
 
@@ -157,13 +192,30 @@ var FormShephards = React.createClass({
           );
         }
       };
+      var renderAutoButton = () => {
+        var playing = 'button';
+        if(this.state.auto) {
+          playing = 'button alert';
+        }
+        return (
+          <div>
+            <button type='button' className={playing} ref='auto'
+              onClick={this.handleAuto}>Auto</button>
+          </div>
+        );
+      }
       return (
         <div className='shephards-form'>
-          <button type='button' className='button' ref='soundDown'
-            onClick={this.handleSoundDown}>Sound Down</button>
-          {renderToggleButton()}
-            <button type='button' className='button' ref='soundUp'
-              onClick={this.handleSoundUp}>Sound Up</button>
+          <div>
+            <button type='button' className='button' ref='soundDown'
+              onClick={this.handleSoundDown}>Sound Down</button>
+            {renderToggleButton()}
+              <button type='button' className='button' ref='soundUp'
+                onClick={this.handleSoundUp}>Sound Up</button>
+          </div>
+          <div>
+            {renderAutoButton()}
+          </div>
           <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
           {this.props.children}
         </div>
