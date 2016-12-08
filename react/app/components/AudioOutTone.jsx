@@ -10,20 +10,27 @@ var React = require('react');
 // create the AudioOutTone class
 var AudioOutTone = React.createClass({
 
+  /*
+  define the expected properties
+    - frequency: the numeric frequency in Hz to play (required)
+    - amplitude: the amplitude / gain / volume of the tone (required)
+    - context: the audio context that allows sounds to play (required)
+  */
   propTypes: {
     frequency   : React.PropTypes.number.isRequired,
     amplitude   : React.PropTypes.number.isRequired,
     context     : React.PropTypes.object.isRequired
-  },
+  },    // propTypes
 
   /*
   getInitialState function
+  called on component render
 
-  Creates the oscillator and gain values used to play a desired frequency.
-  Also sets up isPlaying so the component knows if a sound is playing.
+  sets default values for the compent state
+  also creates the oscillator and gain values used to play a desired frequency
+  sets up isPlaying so the component knows if a sound is playing
   */
   getInitialState: function() {
-    // console.log('  frequency: ' + this.props.frequency);
     // set up the frequency oscillators and gain values
     var context     = this.props.context;
     var oscillator  = context.createOscillator();
