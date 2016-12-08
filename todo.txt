@@ -34,15 +34,15 @@ Modules to work on:
       for piano form to allow middle C to be q and , at the same time
 - [ ] Maybe rescale gain for 0 - 100 or 20 since sliders don't care
 - [ ] Shephard option: allow up, down arrows to change base tone
-- [ ] mouse drag tones take over audio context - maybe a form reset option?
+- [x] mouse drag tones take over audio context - maybe a form reset option?
 - [x] Remove testing, unused components from project before turnin
 - [ ] Check to make sure state set with componentWillMount instead of did
 - [ ] Volume control on the Shep form
 - [ ] Undo pause Audio with spacebar
-- [ ] Auto Shephard tone up, down with button
+- [x] Auto Shephard tone up, down with button
 - [ ] Play / Pause Audio with button
-- [ ] Unfocus (blur()) on menu change
-- [ ] "" "" "" on EVERY button press
+- [x] Unfocus (blur()) on menu change
+- [x] "" "" "" on EVERY button press
 - [ ] Time vs. Displacement
 - [ ] Frequency (Hz) vs. Energy
 - [x] change "about" to "instructions"
