@@ -42,7 +42,6 @@ module.exports = {
 			GraphFrequency: 	'app/components/GraphFrequency.jsx',
 			GraphWave: 				'app/components/GraphWave.jsx',
 			Main: 						'app/components/Main.jsx',
-			NotesToUser: 			'app/components/NotesToUser.jsx',
 			applicationStyles: 'app/styles/app.scss'
 
 		},

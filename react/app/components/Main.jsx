@@ -14,7 +14,6 @@ var React = require('react');
 // var GraphFrequency = require('GraphFrequency');
 var Graph = require('Graph');
 var Form = require('Form');
-var NotesToUser = require('NotesToUser');
 var AudioOut = require('AudioOut');
 var FormKeyboard = require('FormKeyboard');
 
@@ -77,7 +76,6 @@ var Main = React.createClass({
     // };
 
     return {
-      userMessage: '',
       context: context,
       analyser: analyser,
       audioOutFrequencyArray: [],
@@ -86,7 +84,6 @@ var Main = React.createClass({
       hideForms: false,
       mute: true,
       paused: false,
-      currentForm: 0
     };        // state object
   },          // getInitialState function
 
@@ -94,8 +91,7 @@ var Main = React.createClass({
   handlePlayFrequency function
 
   Invoked from form classes
-  Saves gathered frequency information to state for passing to AudioOut and
-  NotesToUser
+  Saves gathered frequency information to state for passing to AudioOut
   */
   handlePlayFrequency: function(
     audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise
@@ -106,19 +102,6 @@ var Main = React.createClass({
       audioOutWhiteNoise: audioOutWhiteNoise
     });       // state object
   },          // handlePlayFrequency function
-
-  /*
-  handleFormChange function
-
-  Invoked from form classes
-  Sets the NotesToUser message and the currentForm in the state
-  */
-  handleFormChange: function(formNumber, messageToUser) {
-    this.setState({
-      currentForm: formNumber,
-      userMessage: messageToUser
-    });       // state object
-  },          // handleFormChange function
 
   /*
   handleSoundMute function
@@ -162,7 +145,6 @@ var Main = React.createClass({
         <div className="row">
           <div className="columns small-12 medium-10">
             <Form handlePlayFrequency={this.handlePlayFrequency}
-              changeForm={this.handleFormChange}
               soundMute={this.handleSoundMute}
               context={this.state.context}
               analyser={this.state.analyser}
@@ -182,7 +164,6 @@ var Main = React.createClass({
         </div>
         <div className="row">
           <div className="columns small-12">
-            <NotesToUser message={this.state.userMessage}/>
             <AudioOut
               frequencyArray={this.state.audioOutFrequencyArray}
               gainArray={this.state.audioOutGainArray}

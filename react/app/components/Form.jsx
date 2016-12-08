@@ -26,7 +26,6 @@ var Form = React.createClass({
 	//   back through Main
 	propTypes: {
 		handlePlayFrequency: React.PropTypes.func.isRequired,
-		changeForm: React.PropTypes.func.isRequired,
 		context: React.PropTypes.object.isRequired,
 		soundMute: React.PropTypes.func.isRequired
 	},		// propTypes
@@ -235,13 +234,6 @@ var Form = React.createClass({
 	};		// return object
 },			// getInitialState function
 
-componentDidMount: function() {
-	// update info in Main
-	this.props.changeForm(0, this.state.formsArray[0].note
-	);
-},
-
-
 /*
 setCurrentForm function
 
@@ -259,10 +251,6 @@ setCurrentForm: function(formNumber) {
 			(formNumber >= 0) &&
 			(formNumber <= this.state.formsArray.length)
 		) {
-			// update info in Main
-			this.props.changeForm(
-				formNumber, this.state.formsArray[formNumber].note
-			);
 			// update the state
 			this.setState ({
 				formDisplayed: formNumber
