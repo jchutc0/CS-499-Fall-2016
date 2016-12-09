@@ -33,7 +33,7 @@ var ErrorModal = React.createClass({
         </div>
         <p>
           <button className='button' onClick={this.showModal}>
-            instructions
+            Instructions
           </button>
         </p>
       </div>
