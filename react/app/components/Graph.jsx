@@ -42,7 +42,6 @@ var Graph = React.createClass({
 
     this.startTimer();
 
-
     return ({
       waveArray: {},
       freqArray: {},
@@ -146,7 +145,15 @@ var Graph = React.createClass({
     // create generic data to send to GraphWave
     var graphWaveArray = this.state.waveArray; // this.generateWaveform(1024, 11);
     var graphFreqArray = this.state.freqArray;   //  this.generateFrequencyWave(128, 3);
-    // [.1, .2, .3, .4, .5];
+    var muted = () => {
+      if(!this.state.playing) {
+        return (
+          <div className='callout alert round text-center'>
+            <p><strong>Graph Paused</strong> (press the spacebar to resume)</p>
+          </div>
+        );
+      }
+    }
 
     return (
       <div>
@@ -156,6 +163,7 @@ var Graph = React.createClass({
           frequencyBinCount={this.props.analyser.frequencyBinCount}
           binSize={this.props.context.sampleRate / this.props.analyser.fftSize}
           hideForms={this.props.hideForms}/>
+        {muted()}
       </div>
     );        // return value
   }           // render function

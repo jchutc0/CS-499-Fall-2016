@@ -39,11 +39,11 @@ Modules to work on:
 - [x] Volume control on the Shep form
 - [x] Undo pause Audio with spacebar
 - [x] Unpause on mode change
+- [x] Callout box on paused
 - [ ] .wav file, extract stream in, read
 - [ ] TESTING
 - [ ] Check to make sure state set with componentWillMount instead of did
 - [ ] Play / Pause Audio with button
-- [ ] Callout box on paused
 
 
 React Component Lifecycle
