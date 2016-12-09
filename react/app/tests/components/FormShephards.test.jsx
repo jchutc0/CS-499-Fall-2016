@@ -227,20 +227,20 @@ describe('FormShephards', () => {
       }     // i loop
     });     // should generate 10 sample arrays
 
-    it('should generate arrays increasing up to 440Hz then decreasing', () => {
+    it('should generate arrays increasing up to 632Hz then decreasing', () => {
       for(var i = 0; i < toneLength; i++) {
         for(var j = 0; j < numberOfSamples; j++) {
           var frequencyArray = formShephards.generateFrequencyArray(i, j);
-          var result = formShephards.generateGainArray(frequencyArray);
+          var result = formShephards.generateGainArray(frequencyArray, 1);
           for(var k = 0; k < numberOfSamples - 1; k++) {
             if(
-              (frequencyArray[k] < 440) &&
-              (frequencyArray[k+1] <= 440)
+              (frequencyArray[k] < 632) &&
+              (frequencyArray[k+1] <= 632)
             ) {
               expect(result[k] < result[k+1]).toBe(true);
             } else if (
-              (frequencyArray[k] >= 440) &&
-              (frequencyArray[k+1] > 440)
+              (frequencyArray[k] >= 632) &&
+              (frequencyArray[k+1] > 632)
             ) {
               expect(result[k] > result[k+1]).toBe(true);
             }
@@ -294,12 +294,12 @@ describe('FormShephards', () => {
             <FormShephards playFrequency={spy}/>
           );
           var frequencyArray = formShephards.generateFrequencyArray(i, j);
-          var gainArray = formShephards.generateGainArray(frequencyArray);
+          var gainArray = formShephards.generateGainArray(frequencyArray, 1);
           var toneLength = formShephards.lowTones.length;
           expect(toneLength).toEqual(maxi);
           var numberOfSamples = formShephards.numberOfSamples;
           expect(numberOfSamples).toEqual(maxj);
-          formShephards.playShephards(i, j, true);
+          formShephards.playShephards(i, j, true, 1);
           expect(spy).toHaveBeenCalledWith(frequencyArray, gainArray);
         }   // j loop
       }     // i loop
