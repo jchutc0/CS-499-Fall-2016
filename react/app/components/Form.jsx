@@ -58,8 +58,8 @@ var Form = React.createClass({
 									bottom.
 								</p>
 								<p>
-									Anywhere in this program, you can pause the sound and the graph
-									by pressing the spacebar.
+									Anywhere in this program, you can pause the graph by
+									pressing the spacebar.
 								</p>
 								<h2>Frequency Generator</h2>
 								<p>
@@ -73,7 +73,7 @@ var Form = React.createClass({
 								</p>
 								<p>
 									Human hearing goes from about 20Hz - 20,000Hz, so if you're
-									ussing the text box, put a frequency in there between those
+									using the text box, put a frequency in there between those
 									values.
 								</p>
 							</div>
@@ -90,9 +90,9 @@ var Form = React.createClass({
 							<div>
 								<h2>Number Pad</h2>
 								<p>
-									This part of the progam acts as a number pad, just like on a
-									telephone dialpad. Press a button, and you can hear the tone a
-									telephone sends if that button is pressed.
+									This part of the program acts as a number pad, just like on a
+									telephone dial pad. Press a button, and you can hear the tone
+									a telephone sends if that button is pressed.
 								</p>
 								<p>
 									You can also dial the numbers by using the number keys on your
@@ -146,9 +146,9 @@ var Form = React.createClass({
 									If you make a noise that has a pitch, and then make another that
 									has a higher pitch, check out how the waveform looks a little
 									more tightly packed and how the frequency bars move to the right
-									to follow the pitch. Also notice how the waveform stretches
-									taller with louder sounds and keeps close to the line when things
-									are softer.
+									to follow the pitch. Also, notice how the waveform stretches
+									taller with louder sounds and keeps close to the line when
+									things are quieter.
 								</p>
 							</div>
 						</ErrorModal>
@@ -198,25 +198,30 @@ var Form = React.createClass({
 							<div>
 								<h2>Shephard's Tone</h2>
 								<p>
-									This is an example of an audio illusion, where your ear hears
-									things that aren't really there.
+									This is an example of an audio illusion, where your ears
+									hear things that aren’t really there.
 								</p>
 								<p>
-									Click the Start Sound button to start playing a sound. Now click
-									on the Sound Up button. It should sound higher pitched. Click the
-									Sound Up button again. It should be higher again. Do it 10 more
-									times. Each sound should sound higher than the last one. The
-									illusion is that after 12 increases, the sound is the same as the
-									first sound.
+									Click the Start Sound button to start playing a sound.
+									Notice the Current Pitch below the Auto button on the right
+									says C. Now click the Sound Up button. It should sound
+									higher pitched. Either click the Auto button on the right to
+									listen through the next 11 pitches or else click the Sound
+									Up button 11 more times. After those increases, the Current
+									Pitch should say C. That is the same sound you started with!
+									If you clicked Auto, you can click it again to stop
+									increasing the pitches.
 								</p>
 								<p>
-									This also works going down the scale. You can use the Sound Down
-									button to hear that.
+									This also works going down the scale. If you click the Sound
+									Down button and then click the Auto button, you can listen
+									as the tone goes down and down to the same pitch you started
+									on.
 								</p>
 								<p>
-									The Stop Sound button stops the sounds.
+									The Stop Sound button stops all the sounds. You can also
+									control the volume with the Volume slider control.
 								</p>
-
 							</div>
 						</ErrorModal>
 					</FormShephards>
