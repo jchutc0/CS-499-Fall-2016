@@ -38,6 +38,7 @@ var Form = React.createClass({
 
 		var formsArray = [
 			{
+				label: 'Frequency Generator',
 				module: (
 					<FormFrequency playFrequency={handlePlayFrequency}>
 						<ErrorModal>
@@ -79,11 +80,10 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormFrequency>
-				),
-				label: 'Frequency Generator',
-				note: ''
+				)
 			},
 			{
+				label: 'Number Pad',
 				module: (
 					<FormNumberPad playFrequency={handlePlayFrequency}>
 						<ErrorModal>
@@ -104,11 +104,10 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormNumberPad>
-				),
-				label: 'Number Pad',
-				note: ''
+				)
 			},
 			{
+				label: 'White Noise Generator',
 				module: (
 					<FormWhiteNoise playWhiteNoise={handlePlayFrequency}>
 						<ErrorModal>
@@ -125,11 +124,10 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormWhiteNoise>
-				),
-				label: 'White Noise Generator',
-				note: ''
+				)
 			},
 			{
+				label: 'Microphone Input',
 				module: (
 					<FormMicrophone context={context} analyser={analyser}
 						soundMute={soundMute}>
@@ -153,11 +151,10 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormMicrophone>
-				),
-				label: 'Microphone Input',
-				note: ''
+				)
 			},
 			{
+				label: 'Music Keyboard Input',
 				module: (
 					<FormKeyboard playFrequency={handlePlayFrequency}>
 						<ErrorModal>
@@ -187,11 +184,10 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormKeyboard>
-				),
-				label: 'Music Keyboard Input',
-				note: ''
+				)
 			},
 			{
+				label: "Shephard's Tone",
 				module: (
 					<FormShephards playFrequency={handlePlayFrequency}>
 						<ErrorModal>
@@ -225,9 +221,7 @@ var Form = React.createClass({
 							</div>
 						</ErrorModal>
 					</FormShephards>
-				),
-				label: "Shephard's Tone",
-				note: ''
+				)
 			}
 	];
 
