@@ -21,7 +21,6 @@ var AudioOut = React.createClass({
     - context: the audio context that allows sounds to play (required)
     - frequencyArray: an array of frequencies to play
     - gainArray: an array of gain values for the frequencies
-    - paused: boolean reflecting the graph/audio paused state in Main
     - whiteNoise: the max gain value for the white noise generator
   */
   propTypes: {
@@ -29,7 +28,6 @@ var AudioOut = React.createClass({
     context         : React.PropTypes.object.isRequired,
     frequencyArray  : React.PropTypes.array,
     gainArray       : React.PropTypes.array,
-    paused          : React.PropTypes.bool,
     whiteNoise      : React.PropTypes.number
   },  // propTypes
 
@@ -44,7 +42,6 @@ var AudioOut = React.createClass({
     return {
       frequencyArray: [],
       gainArray: [],
-      paused: false,
       whiteNoise: undefined
     };    // return value
   },      // getDefaultProps function
@@ -115,7 +112,7 @@ var AudioOut = React.createClass({
   render: function() {
 
     var {
-      frequencyArray, gainArray, whiteNoise, context, paused
+      frequencyArray, gainArray, whiteNoise, context
     } = this.props;
     var muted = this.state.muted;
 
@@ -127,8 +124,8 @@ var AudioOut = React.createClass({
     */
     var renderAudioOut = () => {
 
-      // if the component is muted or paused, render no audio
-      if(muted || paused) {
+      // if the component is muted, render no audio
+      if(muted) {
         return;
       }
 

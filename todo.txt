@@ -37,10 +37,10 @@ Modules to work on:
 - [x] Displacement vs. Time
 - [x] Energy vs. Frequency (Hz)
 - [x] Volume control on the Shep form
+- [x] Undo pause Audio with spacebar
 - [ ] .wav file, extract stream in, read
 - [ ] TESTING
 - [ ] Check to make sure state set with componentWillMount instead of did
-- [ ] Undo pause Audio with spacebar
 - [ ] Play / Pause Audio with button
 - [ ] Callout box on paused
 - [ ] Unpause on mode change

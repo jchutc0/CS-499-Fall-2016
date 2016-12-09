@@ -170,8 +170,7 @@ var Main = React.createClass({
               whiteNoise={this.state.audioOutWhiteNoise}
               context={this.state.context}
               soundMute={this.handleSoundMute}
-              analyser={this.state.analyser}
-              paused={this.state.paused}/>
+              analyser={this.state.analyser}/>
           </div>
         </div>
         <div className='row'>
