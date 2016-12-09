@@ -33,8 +33,8 @@ var FormShephards = React.createClass({
   ],
 
   // variance and mean are used to determine the shape of the bell curve
-  variance: 1,
-  meanFreq: 440,
+  variance: 2,
+  meanFreq: 632,
 
   // numberOfSamples, the number of samples to play
   //   with 10 samples, high values go from 8371.2 (C) to 15,805.44 (B)
@@ -233,25 +233,31 @@ var FormShephards = React.createClass({
     }
     return (
       <div className='shephards-form'>
-        <div>
-          <button type='button' className='button' ref='soundDown'
-            onClick={this.handleSoundDown}>Sound Down</button>
-          {renderToggleButton()}
-          <button type='button' className='button' ref='soundUp'
-            onClick={this.handleSoundUp}>Sound Up</button>
+        <div className='row'>
+          <div className='columns small-12 medium-6'>
+            <button type='button' className='button' ref='soundDown'
+              onClick={this.handleSoundDown}>Sound Down</button>
+            {renderToggleButton()}
+            <button type='button' className='button' ref='soundUp'
+              onClick={this.handleSoundUp}>Sound Up</button>
+          </div>
+          <div className='columns small-12 medium-6 text-right'>
+            {renderAutoButton()}
+          </div>
         </div>
-        <div>
-          {renderAutoButton()}
+        <div className='row'>
+          <div className='columns small-12 medium-6'>
+            <label htmlFor='gain' >Volume:</label>
+            <input type='range' className='slider'
+              name='gain' ref='gain'
+              min='0' max='10'
+              defaultValue='10'
+              onChange={this.handleGainChange}/>
+          </div>
+          <div className='columns small-12 medium-6 text-right'>
+            Curent Pitch: {this.lowTones[this.state.lowTone].pitch}
+          </div>
         </div>
-        <div>
-          <label htmlFor='gain' >Volume:</label>
-          <input type='range' className='slider'
-            name='gain' ref='gain'
-            min='0' max='10'
-            defaultValue='10'
-            onChange={this.handleGainChange}/>
-        </div>
-        <p>Curent Pitch: {this.lowTones[this.state.lowTone].pitch}</p>
         {this.props.children}
       </div>
     );        // return value
