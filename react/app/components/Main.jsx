@@ -91,15 +91,21 @@ var Main = React.createClass({
   handlePlayFrequency function
 
   Invoked from form classes
-  Saves gathered frequency information to state for passing to AudioOut
+  saves gathered frequency information to state for passing to AudioOut
+  if AudioOut reports a mode change, unpause the graph
   */
   handlePlayFrequency: function(
-    audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise
+    audioOutFrequencyArray, audioOutGainArray, audioOutWhiteNoise, modeChange
   ) {
+    var paused = this.state.paused;
+    if(modeChange !== undefined) {
+      paused = false;
+    }
     this.setState({
       audioOutFrequencyArray: audioOutFrequencyArray,
       audioOutGainArray: audioOutGainArray,
-      audioOutWhiteNoise: audioOutWhiteNoise
+      audioOutWhiteNoise: audioOutWhiteNoise,
+      paused: paused
     });       // state object
   },          // handlePlayFrequency function
 
